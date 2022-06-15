@@ -11,12 +11,13 @@
 Vector2 Movable::MoveStep(int step,int dir){
     Vector2 foo = position_;
     for(int i=0;i<step;i++){
-        int a = foo.x_ + dx[dir], b = foo.y_ + dy[dir];
+        int a = foo.x_ + dx_[dir], b = foo.y_ + dy_[dir];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) continue;
         int bar = Helper::GetIndex(a, b);
         if(CanMove(bar)){
             foo.x_ = a;
             foo.y_ = b;
+            last_frame_ = frame_count;
             continue;
         }
         else break;

@@ -13,8 +13,7 @@
 #include "SDL2/SDL.h"
 #include "Global.hpp"
 #include "Vector2.hpp"
-const int w = 512;
-const int m = 9;
+
 class Helper{
 public:
     
@@ -29,11 +28,11 @@ public:
     }
     
     static int GetIndex(int x, int y){
-        return x + (y << m);
+        return x + (y << kSimulationWidthPower2Expoent);
     }
     
     static Vector2 GetCords(int idx){
-        return Vector2((double)(idx & (w-1)),(double)(idx >> m));
+        return Vector2((double)(idx & (kSimulationWidth-1)),(double)(idx >> kSimulationWidthPower2Expoent));
     }
     
     static int GetChunk(int idx){
@@ -47,12 +46,11 @@ public:
     
     static double fRand(double fMin, double fMax)
     {
-        double f = (double)rand() / RAND_MAX;
-        return fMin + f * (fMax - fMin);
+        return std::uniform_real_distribution<double>(fMin, fMax )(rng);
     }
-    static int CoinToss()
+    static bool CoinToss()
     {
-        return rand() & 1;
+        return std::uniform_int_distribution<int>(0, 1)(rng);
     }
     //http://oeis.org/A295344
     static std::vector<Vector2> LatticePointsOnCircle(int radius,Vector2 center = Vector2(0,0)){

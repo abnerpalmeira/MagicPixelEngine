@@ -138,10 +138,10 @@ void Chunk::Update(){
             active_.push_back(Vector2(i,j));
         }
     }
-    std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-    for (int i = 0; i < active_.size(); i++){
-        std::swap(active_[i], active_[std::uniform_int_distribution<int>(0, i)(rng)]);
-    }
+    std::shuffle(active_.begin(), active_.end(), rng);
+//    for (int i = 0; i < active_.size(); i++){
+//        std::swap(active_[i], active_[std::uniform_int_distribution<int>(0, i)(rng)]);
+//    }
     for(int k = 0;k<active_.size();k++){
         MoveCell(active_[k].x_,active_[k].y_);
     }

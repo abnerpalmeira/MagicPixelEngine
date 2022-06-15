@@ -8,20 +8,25 @@
 #ifndef Global_hpp
 #define Global_hpp
 #include "SDL2/SDL.h"
+#include <random>
 
 extern Uint32 frame_count;
 extern Uint32 current_tick;
 extern Uint32 last_tick;
 extern float delta_time;
 extern SDL_PixelFormat* pixel_format;
+extern std::mt19937 rng;
 
 constexpr Uint32 kScreenWidth = 1920;
 constexpr Uint32 kScreenHeight = 1080;
 constexpr Uint32 kSimulationWidth = 512;
 constexpr Uint32 kSimulationHeight = 512;
+constexpr Uint32 kSimulationWidthPower2Expoent = 9;
 constexpr Uint32 kViewportWidth = 496;
 constexpr Uint32 kViewportHeight = 279;
 constexpr int kChunkSize = 64;
+constexpr int kDx[8] = {0,1,-1,1,-1,1,-1};
+constexpr int kDy[8] = {1,1,1,-1,-1,0,0};
 
 constexpr SDL_Rect kSimulationRect = {0, 0, kSimulationWidth, kSimulationHeight};
 constexpr SDL_Rect kViewportRect = {0, 0, kViewportWidth, kViewportHeight};

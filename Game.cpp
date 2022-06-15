@@ -89,8 +89,8 @@ Game::~Game(){
     delete material_ui_;
 }
 
-void Game::Init(const char *title, int x, int y, int w, int h, bool fullscreen)
-{
+void Game::Init(const char *title, int x, int y, int w, int h, bool fullscreen){
+    
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) return;
     std::cout << "Subsystem Initialised...." << std::endl;
     int flags = 0;
@@ -230,8 +230,7 @@ void Game::Update(){
     SDL_UpdateTexture(viewport_->object_texture_, nullptr, viewport_->draw_buffer_, (kViewportWidth) * sizeof(Uint32));
 }
 
-void Game::Render()
-{
+void Game::Render(){
     SDL_RenderClear(renderer_);
     SDL_RenderCopy(renderer_, background, NULL, NULL);
     viewport_->Render();

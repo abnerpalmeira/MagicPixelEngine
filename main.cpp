@@ -13,6 +13,7 @@
 Game *game = nullptr;
 
 int main(int argc, char **argv){
+        rng.seed(std::chrono::steady_clock::now().time_since_epoch().count());
         game = new Game("Magic Pixel Engine",0,0,kScreenWidth, kScreenHeight,false);
         while (game->Running()) {
             game->HandleEvents();

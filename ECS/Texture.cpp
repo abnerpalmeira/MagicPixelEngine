@@ -18,3 +18,4 @@ SDL_Texture* Texture::LoadTexture(const char *file){
 SDL_Texture* Texture::LoadTexture(SDL_Renderer *renderer,SDL_Rect rect){
     return SDL_CreateTexture(renderer, kPixelFormat, SDL_TEXTUREACCESS_STREAMING, rect.w, rect.h);
 }
+

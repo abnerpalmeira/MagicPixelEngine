@@ -35,6 +35,9 @@ public:
         index_ = index;
         position_ = Helper::GetCords(index);
     }
+    bool IsUpdated(){
+        return last_frame_ == frame_count;
+    }
 };
 
 

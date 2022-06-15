@@ -44,12 +44,15 @@ public:
         return (y >> 6) * (kSimulationWidth >> 6) + (x >> 6);
     }
     
-    static double fRand(double fMin, double fMax)
-    {
-        return std::uniform_real_distribution<double>(fMin, fMax )(rng);
+    static double RandomDoubleOnInterval(double min, double max){
+        return std::uniform_real_distribution<double>(min, max )(rng);
     }
-    static bool CoinToss()
-    {
+    
+    static int RandomIntOnInterval(int min, int max){
+        return std::uniform_int_distribution<int>(min, max)(rng);
+    }
+    
+    static bool CoinToss(){
         return std::uniform_int_distribution<int>(0, 1)(rng);
     }
     //http://oeis.org/A295344

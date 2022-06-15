@@ -17,7 +17,7 @@ public:
         index_ = index;
         buffer_ = buffer;
         color_ = Color(58,50,50,255);
-        if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::fRand(0.0, 0.15));
+        if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.15));
     }
     void Update(){
  

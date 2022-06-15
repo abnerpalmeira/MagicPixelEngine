@@ -27,8 +27,8 @@ public:
       UP_RIGHT,
       UP_LEFT,
     };
-    int dx[8] = {0, 0, 1,-1,1,-1, 1,-1};
-    int dy[8] = {1,-1, 0, 0,1, 1,-1,-1};
+    int dx_[8] = {0, 0, 1,-1,1,-1, 1,-1};
+    int dy_[8] = {1,-1, 0, 0,1, 1,-1,-1};
     virtual bool CanMove(int idx){ return false; }
     Vector2 LineCover(Vector2 target, bool super = false);
     Vector2 MoveStep(int step,int direction);

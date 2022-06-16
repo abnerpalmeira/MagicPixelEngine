@@ -20,8 +20,6 @@
 #include "Chunk.hpp"
 #include "Job.hpp"
 
-const SDL_Color EMPTY_COLOR = {0, 0, 0, 0};
-
 class Simulation{
 public:
     Simulation();
@@ -30,19 +28,19 @@ public:
 	void Update();
     void Playground();
 	void Reset();
-    void SetCellRadius(SDL_Point pos, Uint16 rad, MaterialType mat, bool physics = false);
+    void SetCellInsideRadius(SDL_Point point, Uint16 rad, MaterialType material, bool physics = false);
+    void SetCell(SDL_Point point, MaterialType material, bool physics = false);
     std::vector<MagicPixel*> buffer_;
 private:
+    Uint16 width_, height_;
     Chunk *chunk_;
-    int *revive_,revive_count_;
-	Uint16 width_, height_;
-	Uint64 size_;
+    Uint64 size_;
     ThreadPool pool_;
 	SDL_PixelFormat *pixel_format_;
     Job *jobs_;
-	void SetCell(Uint32 index, MaterialType mat, bool physics = false);
-    void Red();
-    void Green();
-    void Blue();
-    void Orange();
+    int first_batch_[kChunkBatchSize] = {0,4,10,14,16,20,26,30,32,36,42,46,48,52,58,62};
+    int second_batch_[kChunkBatchSize] = {1,5,11,15,17,21,27,31,33,37,43,47,49,53,59,63};
+    int third_batch_[kChunkBatchSize] = {2,6,8,12,18,22,24,28,34,38,40,44,50,54,56,60};
+    int fourth_batch_[kChunkBatchSize] = {3,7,9,13,19,23,25,29,35,39,41,45,51,55,57,61};
+    void ProcessChunk(int *chunks);
 };

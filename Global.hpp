@@ -26,6 +26,7 @@ constexpr Uint32 kSimulationWidthPower2Expoent = 9;
 constexpr Uint32 kViewportWidth = 496;
 constexpr Uint32 kViewportHeight = 279;
 constexpr int kChunkSize = 64;
+constexpr int kChunkBatchSize = 16;
 constexpr int kDx[8] = {0,1,-1,1,-1,1,-1};
 constexpr int kDy[8] = {1,1,1,-1,-1,0,0};
 

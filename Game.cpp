@@ -204,9 +204,9 @@ void Game::Update(){
         foo.y = foo.y/viewport_->scale_;
         SDL_ShowCursor(SDL_DISABLE);
         if(mbr_held_) {
-            simulation_->simulation_->SetCellRadius(foo, draw_radius_, material_);
+            simulation_->simulation_->SetCellInsideRadius(foo, draw_radius_, material_);
         }
-        if(mbl_held_) { simulation_->simulation_->SetCellRadius(cursor_, draw_radius_, material_,true); }
+        if(mbl_held_) { simulation_->simulation_->SetCellInsideRadius(cursor_, draw_radius_, material_,true); }
     }
     if(!paused_) { simulation_->simulation_->Update(); }
     last_cursor_ = cursor_;

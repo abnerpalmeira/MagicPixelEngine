@@ -51,7 +51,7 @@ void  Chunk::MoveCell(int x,int y){
     int chunk = Helper::GetChunk(to);
     if(&chunk_[chunk] != this){
         Vector2 cord = Helper::GetCords(to);
-        UpdateRect(cord.x_, cord.y_);
+        RemoveCell(cord.x_, cord.y_);
         chunk_[chunk].AddCell(cord.x_, cord.y_);
     }else{
         min_x_ = std::min(min_x_,x);

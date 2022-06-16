@@ -20,7 +20,6 @@ class Chunk{
 public:
     Chunk *chunk_;
     std::vector<MagicPixel*> *buffer_;
-    Uint32 *draw_buffer_;
     Uint32 last_frame_;
     std::vector<Vector2> active_;
     int notify_;
@@ -31,7 +30,7 @@ public:
     int size_;
     int live_pixel_;
     Chunk(){};
-    Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer, Uint32 *draw_buffer);
+    Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer);
     void Update();
     void UpdateRect(int x, int y);
     void AddCell(int x, int y);

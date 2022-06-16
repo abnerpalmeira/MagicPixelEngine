@@ -14,9 +14,10 @@
 
 class Color{
     bool changed_;
-    Uint32 pixel_value_;
+   
     int r_,g_,b_,a_;
 public:
+    Uint32 pixel_value_;
     Color();
     Color(int r,int g,int b,int a);
     Uint32 GetSDLMap();

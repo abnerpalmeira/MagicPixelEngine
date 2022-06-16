@@ -8,22 +8,21 @@
 
 #include "Movable.hpp"
 
-Vector2 Movable::MoveStep(int step,int dir){
-    Vector2 foo = position_;
+void Movable::MoveStep(int step,int dir){
+    int new_index = -1;
     for(int i=0;i<step;i++){
-        int a = foo.x_ + dx_[dir], b = foo.y_ + dy_[dir];
+        int a = position_.x_ + dx_[dir], b = position_.y_ + dy_[dir];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) continue;
         int bar = Helper::GetIndex(a, b);
         if(CanMove(bar)){
-            foo.x_ = a;
-            foo.y_ = b;
+            new_index = bar;
             last_frame_ = frame_count;
             continue;
         }
         else break;
     }
-    if(foo != position_) UpdatePosition(foo);
-    return foo;
+    if(new_index != -1) UpdateIndex(new_index);
+    return;
 }
 
 Vector2 Movable::LineCover(Vector2 target, bool super){

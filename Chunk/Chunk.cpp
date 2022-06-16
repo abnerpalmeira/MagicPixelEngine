@@ -7,7 +7,7 @@
 
 #include "Chunk.hpp"
 
-Chunk::Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer, Uint32 *draw_buffer){
+Chunk::Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer){
     x_ = x;
     y_ = y;
     w_ = w;
@@ -20,7 +20,6 @@ Chunk::Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> 
     live_pixel_ = 0;
     notify_ = 0;
     buffer_ = buffer;
-    draw_buffer_ = draw_buffer;
     ResetRect();
 }
 
@@ -48,11 +47,10 @@ void  Chunk::MoveCell(int x,int y){
     current->Update();
     int to = current->index_;
     if(from == to) return;
-    Vector2 cord = Helper::GetCords(to);
-    std::swap((*buffer_)[from],(*buffer_)[to]);
-    std::swap(draw_buffer_[from],draw_buffer_[to]);
+
     int chunk = Helper::GetChunk(to);
     if(&chunk_[chunk] != this){
+        Vector2 cord = Helper::GetCords(to);
         UpdateRect(cord.x_, cord.y_);
         chunk_[chunk].AddCell(cord.x_, cord.y_);
     }else{

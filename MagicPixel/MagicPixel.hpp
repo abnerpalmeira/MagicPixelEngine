@@ -27,13 +27,13 @@ public:
     std::vector<MagicPixel*> *buffer_;
     MagicPixel(){}
     virtual void Update(){}
-    void UpdatePosition(Vector2 position){
-        position_ = position;
-        index_ = Helper::GetIndex(position.x_, position_.y_);
+    void UpdateBuffer(int new_index){
+        std::swap((*buffer_)[index_],(*buffer_)[new_index]);
     }
-    void UpdateIndex(int index){
-        index_ = index;
-        position_ = Helper::GetCords(index);
+    void UpdateIndex(int new_index){
+        UpdateBuffer(new_index);
+        index_ = new_index;
+        position_ = Helper::GetCords(new_index);
     }
     bool IsUpdated(){
         return last_frame_ == frame_count;

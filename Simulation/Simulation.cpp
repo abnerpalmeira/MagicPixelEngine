@@ -18,12 +18,15 @@ Simulation::Simulation(int width, int height){
         jobs_[i] = Job(chunk_[i]);
     }
     pool_.Start();
-	Reset();
 }
 
 void Simulation::Reset(){
-    for(std::vector<MagicPixel *>::iterator it = buffer_.begin(); it != buffer_.end(); it++){
-        if(*it != nullptr) delete *it;
+    for(int i=0;i<buffer_.size();i++){
+        if(buffer_[i] != nullptr){
+            delete buffer_[i];
+            buffer_[i] = nullptr;
+        }
+        
     }
 }
 

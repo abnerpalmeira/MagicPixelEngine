@@ -26,6 +26,7 @@ public:
     MaterialType material_;
     std::vector<MagicPixel*> *buffer_;
     MagicPixel(){}
+    virtual ~MagicPixel(){}
     virtual void Update(){}
     void UpdateBuffer(int new_index){
         std::swap((*buffer_)[index_],(*buffer_)[new_index]);

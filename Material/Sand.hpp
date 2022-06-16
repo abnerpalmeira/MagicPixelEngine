@@ -25,7 +25,7 @@ public:
     }
     
     bool CanMove(int index){
-        return (*buffer_)[index] == NULL;
+        return (*buffer_)[index] == nullptr;
     }
     
     void Update(){

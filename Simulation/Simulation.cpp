@@ -81,7 +81,6 @@ void Simulation::SetCellInsideRadius(SDL_Point point, Uint16 rad, MaterialType m
                 if(y >= 0 && y < height_ && x >= 0 && x < width_){
                     SetCell({x,y}, material,physics);
                 }
-                
             }
         }
     }

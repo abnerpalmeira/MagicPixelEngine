@@ -31,9 +31,9 @@ public:
     void SetCellInsideRadius(SDL_Point point, Uint16 rad, MaterialType material, bool physics = false);
     void SetCell(SDL_Point point, MaterialType material, bool physics = false);
     std::vector<MagicPixel*> buffer_;
+    Chunk *chunk_;
 private:
     Uint16 width_, height_;
-    Chunk *chunk_;
     Uint64 size_;
     ThreadPool pool_;
 	SDL_PixelFormat *pixel_format_;

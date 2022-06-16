@@ -42,9 +42,7 @@ void Chunk::RemoveCell(int x, int y){
 
 void Chunk::Notify(int x, int y) {
     if(y == min_y_ && y) notify_ |= 1;
-    if(x == min_x_ && x){
-        notify_ |= 2;
-    }
+    if(x == min_x_ && x) notify_ |= 2;
     else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 4;
     if(x == min_x_ && y == min_y_ && x && y) notify_ |= 8;
     else if(x == max_x_ && x+1 < kSimulationWidth && y) notify_ |= 16;
@@ -105,12 +103,12 @@ void Chunk::NotifyRight(int min_y,int max_y){
 }
 
 void Chunk::NotifyBottomLeft(){
-    dirty_rect_max_x_ = max_x_;
+    dirty_rect_min_x_ = min_x_;
     dirty_rect_max_y_ = max_y_;
 }
 
 void Chunk::NotifyBottomRight(){
-    dirty_rect_min_x_ = min_x_;
+    dirty_rect_max_x_ = max_x_;
     dirty_rect_max_y_ = max_y_;
 }
 

@@ -32,6 +32,7 @@ public:
     int live_pixel_;
     Chunk(){};
     Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer);
+    void Debug(SDL_Renderer *renderer,float scale);
     void Update();
     void UpdateRect(int x, int y);
     void AddCell(int x, int y);

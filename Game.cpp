@@ -237,6 +237,9 @@ void Game::Render(){
     SDL_RenderCopy(renderer_, background, NULL, NULL);
     viewport_->Render();
     performance_bar_->Render();
+    for(int i=0;i<64;i++){
+        simulation_->simulation_->chunk_[i].Debug(renderer_,viewport_->scale_);
+    }
     if(!toggle_){
         SDL_SetRenderDrawColor(renderer_, 128, 128, 128, 255);
         SDL_RenderFillRect(renderer_, &kUIRect);

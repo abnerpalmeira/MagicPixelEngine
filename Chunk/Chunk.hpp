@@ -23,10 +23,11 @@ public:
     Uint32 last_frame_;
     std::vector<Vector2> active_;
     int notify_;
-    int min_x_,min_y_,max_x_,max_y_;
-    int x_,y_;
-    int xw_,yh_;
-    int w_,h_;
+    int dirty_rect_min_x_,dirty_rect_min_y_;
+    int dirty_rect_max_x_,dirty_rect_max_y_;
+    int min_x_,min_y_;
+    int max_x_,max_y_;
+    int width_,height_;
     int size_;
     int live_pixel_;
     Chunk(){};

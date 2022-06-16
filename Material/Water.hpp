@@ -22,7 +22,7 @@ public:
     }
     
     bool CanMove(int index){
-        return (*buffer_)[index] == NULL;
+        return (*buffer_)[index] == nullptr;
     }
     
     void CelularAutomata(){
@@ -37,9 +37,8 @@ public:
         MoveStep(5, dir_[3]);
         if(IsUpdated()) return;
         MoveStep(5, dir_[4]);
-        
-        
     }
+    
     void Update(){
         CelularAutomata();
     }

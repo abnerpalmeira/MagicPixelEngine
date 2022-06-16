@@ -27,6 +27,7 @@ public:
       UP_RIGHT,
       UP_LEFT,
     };
+    virtual ~Movable(){}
     int dx_[8] = {0, 0, 1,-1,1,-1, 1,-1};
     int dy_[8] = {1,-1, 0, 0,1, 1,-1,-1};
     virtual bool CanMove(int idx){ return false; }

@@ -40,6 +40,16 @@ void Chunk::RemoveCell(int x, int y){
     UpdateRect(x, y);
 }
 
+void Chunk::Notify(int x, int y) {
+    if(y == min_y_ && y) notify_ |= 1;
+    if(x == min_x_ && x){
+        notify_ |= 2;
+    }
+    else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 4;
+    if(x == min_x_ && y == min_y_ && x && y) notify_ |= 8;
+    else if(x == max_x_ && x+1 < kSimulationWidth && y) notify_ |= 16;
+}
+
 void  Chunk::MoveCell(int x,int y){
     int from = Helper::GetIndex(x, y);
     MagicPixel *current =(*buffer_)[from];
@@ -52,51 +62,46 @@ void  Chunk::MoveCell(int x,int y){
         Vector2 cord = Helper::GetCords(to);
         RemoveCell(cord.x_, cord.y_);
         chunk_[chunk].AddCell(cord.x_, cord.y_);
-        if(y && y == min_y_) notify_ |= 1;
-        if(x && x == min_x_) notify_ |= 2;
-        else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 4;
-        if(x && y && x == min_x_ && y == min_y_) notify_ |= 8;
-        else if(y && x == max_x_ && x+1 < kSimulationWidth) notify_ |= 16;
     }else{
         UpdateRect(x,y);
     }
-  
 }
 
 void Chunk::NotifyPeers(){
     if(notify_ & 1){
-        chunk_[Helper::GetChunk(Vector2(min_x_,min_y_-1))].NotifyBottom();
+        chunk_[Helper::GetChunk(Vector2(min_x_,min_y_-1))].NotifyBottom(dirty_rect_min_x_,dirty_rect_max_x_);
     }
     if(notify_ & 2){
-        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_))].NotifyLeft();
+        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_))].NotifyRight(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 4){
-        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_))].NotifyRight();
+        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_))].NotifyLeft(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 8){
-        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_-1))].NotifyBottomLeft();
+        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_-1))].NotifyBottomRight();
     }
     if(notify_ & 16){
-        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_-1))].NotifyBottomRight();
+        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_-1))].NotifyBottomLeft();
     }
 }
 
-void Chunk::NotifyBottom(){
+
+void Chunk::NotifyBottom(int min_x,int max_x){
     dirty_rect_max_y_ = max_y_;
-    dirty_rect_min_x_ = min_x_;
-    dirty_rect_max_x_ = max_x_;
+    dirty_rect_min_x_ = std::min(min_x,dirty_rect_min_x_);
+    dirty_rect_max_x_ = std::max(max_x,dirty_rect_max_x_);
 }
 
-void Chunk::NotifyLeft(){
-    dirty_rect_max_x_ = max_x_;
-    dirty_rect_min_y_ = min_y_;
-    dirty_rect_max_y_ = max_y_;
+void Chunk::NotifyLeft(int min_y,int max_y){
+    dirty_rect_min_x_ = min_x_;
+    dirty_rect_min_y_ = std::min(min_y,dirty_rect_min_y_);
+    dirty_rect_max_y_ = std::max(max_y,dirty_rect_max_y_);
 }
 
-void Chunk::NotifyRight(){
-    dirty_rect_min_x_ = min_x_;
-    dirty_rect_min_y_ = min_y_;
-    dirty_rect_max_y_ = max_y_;
+void Chunk::NotifyRight(int min_y,int max_y){
+    dirty_rect_max_x_ = max_x_;
+    dirty_rect_min_y_ = std::min(min_y,dirty_rect_min_y_);
+    dirty_rect_max_y_ = std::max(max_y,dirty_rect_max_y_);
 }
 
 void Chunk::NotifyBottomLeft(){
@@ -121,11 +126,11 @@ void Chunk::Update(){
         last_frame_ = frame_count;
         return;
     }
-    notify_ = 0;
     int min_x = std::clamp(dirty_rect_min_x_-1,min_x_,max_x_);
     int min_y = std::clamp(dirty_rect_min_y_-1,min_y_,max_y_);
     int max_x = std::clamp(dirty_rect_max_x_+1,min_x_,max_x_);
     int max_y = std::clamp(dirty_rect_max_y_+1,min_y_,max_y_);
+    notify_ = 0;
     active_.clear();
     ResetRect();
     for(int i=min_x;i<=max_x;i++){
@@ -134,11 +139,14 @@ void Chunk::Update(){
         }
     }
     std::shuffle(active_.begin(), active_.end(), rng);
-    assert(notify_ == 0);
     for(int k = 0;k<active_.size();k++){
         MoveCell(active_[k].x_,active_[k].y_);
     }
-    NotifyPeers();
+    if(dirty_rect_min_x_ <= dirty_rect_max_x_ && dirty_rect_min_y_ <= dirty_rect_max_y_){
+        Notify(dirty_rect_min_x_, dirty_rect_min_y_);
+        Notify(dirty_rect_max_x_, dirty_rect_min_y_);
+        NotifyPeers();
+    }
     last_frame_ = frame_count;
 }
 
@@ -147,11 +155,11 @@ void Chunk::Debug(SDL_Renderer *renderer,float scale){
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderDrawRectF(renderer, &rectToDraw);
     
-    int min_x = std::max(dirty_rect_min_x_-1,min_x_);
-    int min_y = std::max(dirty_rect_min_y_-1,min_y_);
-    int max_x = std::min(dirty_rect_max_x_+1,max_x_);
-    int max_y = std::min(dirty_rect_max_y_+1,max_y_);
-
+    int min_x = std::clamp(dirty_rect_min_x_-1,min_x_,max_x_);
+    int min_y = std::clamp(dirty_rect_min_y_-1,min_y_,max_y_);
+    int max_x = std::clamp(dirty_rect_max_x_+1,min_x_,max_x_);
+    int max_y = std::clamp(dirty_rect_max_y_+1,min_y_,max_y_);
+    
     if(live_pixel_ && min_x <= max_x && min_y <= max_y_){
         rectToDraw = {scale*min_x,scale*min_y,scale*(max_x-min_x+1),scale*(max_y-min_y+1)};
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);

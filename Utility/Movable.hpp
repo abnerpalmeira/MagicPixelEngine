@@ -31,7 +31,7 @@ public:
     int dy_[8] = {1,-1, 0, 0,1, 1,-1,-1};
     virtual bool CanMove(int idx){ return false; }
     Vector2 LineCover(Vector2 target, bool super = false);
-    Vector2 MoveStep(int step,int direction);
+    void MoveStep(int step,int direction);
 };
 
 #endif /* Navigation_hpp */

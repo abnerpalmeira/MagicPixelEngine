@@ -22,8 +22,7 @@
 
 const SDL_Color EMPTY_COLOR = {0, 0, 0, 0};
 
-class Simulation
-{
+class Simulation{
 public:
     Simulation();
 	Simulation(int _width, int _height);
@@ -32,7 +31,6 @@ public:
     void Playground();
 	void Reset();
     void SetCellRadius(SDL_Point pos, Uint16 rad, MaterialType mat, bool physics = false);
-    Uint32 *draw_buffer_;
     std::vector<MagicPixel*> buffer_;
 private:
     Chunk *chunk_;

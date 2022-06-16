@@ -224,7 +224,9 @@ void Game::Update(){
         for(int j=0;j<viewport_->rect_->h;j++){
             int foo = i + j * kViewportWidth;
             int bar = i + j * kSimulationWidth;
-            viewport_->draw_buffer_[foo] = simulation_->simulation_->draw_buffer_[bar];
+            MagicPixel *current = simulation_->simulation_->buffer_[bar];
+            viewport_->draw_buffer_[foo] = (current == nullptr) ? empty_pixel_value : current->color_.GetSDLMap();
+
         }
     }
     SDL_UpdateTexture(viewport_->object_texture_, nullptr, viewport_->draw_buffer_, (kViewportWidth) * sizeof(Uint32));

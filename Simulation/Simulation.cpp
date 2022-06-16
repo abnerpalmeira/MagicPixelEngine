@@ -6,12 +6,11 @@ Simulation::Simulation(int width, int height){
 	size_ = width * height;
     buffer_ = std::vector<MagicPixel*>(size_,nullptr);
     revive_ = new int[size_];
-    draw_buffer_ = new Uint32[size_];
     chunk_ = new Chunk[64];
     jobs_ = new Job[64];
     int x = 0, y = 0;
     for(int i=0;i<64;i++){
-        chunk_[i] = Chunk(x,y,kChunkSize,kChunkSize,chunk_,&buffer_,draw_buffer_);
+        chunk_[i] = Chunk(x,y,kChunkSize,kChunkSize,chunk_,&buffer_);
         x += kChunkSize;
         if(x >= kSimulationWidth){
             x = 0;
@@ -23,12 +22,15 @@ Simulation::Simulation(int width, int height){
 	Reset();
 }
 
+void Simulation::Reset(){
+    
+}
+
 Simulation::~Simulation(){
     for(std::vector<MagicPixel *>::iterator it = buffer_.begin(); it != buffer_.end(); it++){
         if(*it != NULL) delete *it;
     }
     delete[] chunk_;
-	delete[] draw_buffer_;
 	SDL_FreeFormat(pixel_format_);
     pool_.Stop();
 }
@@ -90,15 +92,10 @@ void Simulation::Update(){
 
 }
 
-void Simulation::Reset(){
-	memset(draw_buffer_, SDL_MapRGBA(pixel_format, EMPTY_COLOR.r, EMPTY_COLOR.g, EMPTY_COLOR.b, EMPTY_COLOR.a), size_ * sizeof(Uint32));
-}
-
 void Simulation::SetCell(Uint32 index, MaterialType material, bool physics){
     if(material == MaterialType::EMPTY && buffer_[index] != nullptr){
         delete buffer_[index];
         buffer_[index] = nullptr;
-        draw_buffer_[index] = SDL_MapRGBA(pixel_format, EMPTY_COLOR.r, EMPTY_COLOR.g, EMPTY_COLOR.b, EMPTY_COLOR.a);
     }
 	else if(material != MaterialType::EMPTY && buffer_[index] == nullptr){
         buffer_[index] = Material::Init(index, material, &buffer_);
@@ -107,7 +104,6 @@ void Simulation::SetCell(Uint32 index, MaterialType material, bool physics){
 //            buffer_[_index].velocity_ = Vector2(std::uniform_int_distribution<int>(0, 5)(rng),std::uniform_int_distribution<int>(0, 5)(rng));
 //            buffer_[_index].has_velocity_ = true;
         }
-        draw_buffer_[index] = buffer_[index]->color_.GetSDLMap();
 	}
 }
 

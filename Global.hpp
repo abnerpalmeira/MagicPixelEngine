@@ -13,6 +13,7 @@
 extern Uint32 frame_count;
 extern Uint32 current_tick;
 extern Uint32 last_tick;
+extern Uint32 empty_pixel_value;
 extern float delta_time;
 extern SDL_PixelFormat* pixel_format;
 extern std::mt19937 rng;

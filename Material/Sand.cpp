@@ -21,20 +21,14 @@ bool Sand::CanMove(int index){
 }
 
 void Sand::Update(){
-    int *first,*second;
     MoveStep(Helper::RandomIntOnInterval(1,3), movement_priority_[0]);
-    goto HEAVEN;
-    if(IsUpdated()) return;
-    if(!IsUpdated() && Helper::CoinToss()){
-        first = &
-    }
     if(IsUpdated()) return;
     if(Helper::CoinToss()){
-        std::swap(movement_priority_[1],movement_priority_[2]);
+        MoveStep(1, movement_priority_[1]);
+        MoveStep(1, movement_priority_[2]);
     }
-    MoveStep(1, movement_priority_[1]);
-    if(IsUpdated()) return;
-    MoveStep(1, movement_priority_[2]);
-    HEAVEN:
-    return;
+    else{
+        MoveStep(1, movement_priority_[2]);
+        MoveStep(1, movement_priority_[1]);
+    }
 }

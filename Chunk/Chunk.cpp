@@ -45,24 +45,22 @@ void Chunk::Notify(int x, int y) {
     if(x == min_x_ && x) notify_ |= 2;
     else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 4;
     if(x == min_x_ && y == min_y_ && x && y) notify_ |= 8;
-    else if(x == max_x_ && x+1 < kSimulationWidth && y) notify_ |= 16;
+    else if(x == max_x_ && y == min_y_ && x+1 < kSimulationWidth && y) notify_ |= 16;
 }
 
-void  Chunk::MoveCell(int x,int y){
+void  Chunk::ProcessCell(int x,int y){
     int from = Helper::GetIndex(x, y);
     MagicPixel *current =(*buffer_)[from];
     if(current == nullptr || current->last_frame_ == frame_count) return;
     current->Update();
-    int to = current->index_;
-    if(from == to) return;
-    int chunk = Helper::GetChunk(to);
+    if(from == current->index_) return;
+    int chunk = Helper::GetChunk(current->index_);
     if(&chunk_[chunk] != this){
-        Vector2 cord = Helper::GetCords(to);
-        RemoveCell(cord.x_, cord.y_);
+        Vector2 cord = current->position_;
+        live_pixel_--;
         chunk_[chunk].AddCell(cord.x_, cord.y_);
-    }else{
-        UpdateRect(x,y);
     }
+    UpdateRect(x,y);
 }
 
 void Chunk::NotifyPeers(){
@@ -82,7 +80,6 @@ void Chunk::NotifyPeers(){
         chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_-1))].NotifyBottomLeft();
     }
 }
-
 
 void Chunk::NotifyBottom(int min_x,int max_x){
     dirty_rect_max_y_ = max_y_;
@@ -119,18 +116,23 @@ void Chunk::ResetRect(){
     dirty_rect_max_y_ = min_y_;
 }
 
+void Chunk::GetCurrentDirtyRect(int &max_x, int &max_y, int &min_x, int &min_y) {
+    min_x = std::clamp(dirty_rect_min_x_-1,min_x_,max_x_);
+    min_y = std::clamp(dirty_rect_min_y_-1,min_y_,max_y_);
+    max_x = std::clamp(dirty_rect_max_x_+1,min_x_,max_x_);
+    max_y = std::clamp(dirty_rect_max_y_+1,min_y_,max_y_);
+}
+
 void Chunk::Update(){
     if(!live_pixel_){
         last_frame_ = frame_count;
         return;
     }
-    int min_x = std::clamp(dirty_rect_min_x_-1,min_x_,max_x_);
-    int min_y = std::clamp(dirty_rect_min_y_-1,min_y_,max_y_);
-    int max_x = std::clamp(dirty_rect_max_x_+1,min_x_,max_x_);
-    int max_y = std::clamp(dirty_rect_max_y_+1,min_y_,max_y_);
+    int min_x,min_y,max_x,max_y;
+    GetCurrentDirtyRect(max_x, max_y, min_x, min_y);
+    ResetRect();
     notify_ = 0;
     active_.clear();
-    ResetRect();
     for(int i=min_x;i<=max_x;i++){
         for(int j=min_y;j<=max_y;j++){
             active_.push_back(Vector2(i,j));
@@ -138,7 +140,7 @@ void Chunk::Update(){
     }
     std::shuffle(active_.begin(), active_.end(), rng);
     for(int k = 0;k<active_.size();k++){
-        MoveCell(active_[k].x_,active_[k].y_);
+        ProcessCell(active_[k].x_,active_[k].y_);
     }
     if(dirty_rect_min_x_ <= dirty_rect_max_x_ && dirty_rect_min_y_ <= dirty_rect_max_y_){
         Notify(dirty_rect_min_x_, dirty_rect_min_y_);
@@ -152,12 +154,8 @@ void Chunk::Debug(SDL_Renderer *renderer,float scale){
     SDL_FRect rectToDraw = {scale*min_x_,scale*min_y_,scale*width_,scale*height_};
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderDrawRectF(renderer, &rectToDraw);
-    
-    int min_x = std::clamp(dirty_rect_min_x_-1,min_x_,max_x_);
-    int min_y = std::clamp(dirty_rect_min_y_-1,min_y_,max_y_);
-    int max_x = std::clamp(dirty_rect_max_x_+1,min_x_,max_x_);
-    int max_y = std::clamp(dirty_rect_max_y_+1,min_y_,max_y_);
-    
+    int min_x,min_y,max_x,max_y;
+    GetCurrentDirtyRect(max_x, max_y, min_x, min_y);
     if(live_pixel_ && min_x <= max_x && min_y <= max_y_){
         rectToDraw = {scale*min_x,scale*min_y,scale*(max_x-min_x+1),scale*(max_y-min_y+1)};
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);

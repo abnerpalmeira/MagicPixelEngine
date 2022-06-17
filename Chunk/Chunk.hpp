@@ -33,13 +33,14 @@ public:
     Chunk(){};
     Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> *buffer);
     void Debug(SDL_Renderer *renderer,float scale);
+    void GetCurrentDirtyRect(int &max_x, int &max_y, int &min_x, int &min_y);
     void Update();
     void UpdateRect(int x, int y);
     void AddCell(int x, int y);
     void RemoveCell(int x, int y);
     void Notify(int x, int y);
     
-    void MoveCell(int from,int to);
+    void ProcessCell(int from,int to);
     void NotifyBottom(int min_x,int max_x);
     void NotifyLeft(int min_y,int max_y);
     void NotifyRight(int min_y,int max_y);

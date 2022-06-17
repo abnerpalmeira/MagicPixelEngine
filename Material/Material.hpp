@@ -18,6 +18,7 @@
 #include "Sand.hpp"
 #include "Water.hpp"
 #include "Rock.hpp"
+#include "Gas.hpp"
 
 class Material{
 public:
@@ -31,6 +32,9 @@ public:
                 break;
             case MaterialType::ROCK:
                 return new Rock(index,buffer);
+                break;
+            case MaterialType::GAS:
+                return new Gas(index,buffer);
                 break;
             default:
                 break;

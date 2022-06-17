@@ -47,6 +47,7 @@ private:
     bool is_running_ = false;
     bool toggle_ = true;
     bool draw_rad_changed_;
+    bool debug_mode_ = false;
     bool mbr_pressed_ = false;
     bool mbr_held_ = false;
     bool mbl_pressed_ = false;

@@ -119,9 +119,11 @@ void Game::KeyPressed(SDL_Event e) {
         case SDLK_TAB:
             toggle_ ^= true;
             break;
-            
         case SDLK_SPACE:
             paused_ = !paused_;
+            break;
+        case SDLK_r:
+            debug_mode_ ^= true;
             break;
         default:
             break;
@@ -237,8 +239,10 @@ void Game::Render(){
     SDL_RenderCopy(renderer_, background, NULL, NULL);
     viewport_->Render();
     performance_bar_->Render();
-    for(int i=0;i<64;i++){
-        simulation_->simulation_->chunk_[i].Debug(renderer_,viewport_->scale_);
+    if(debug_mode_){
+        for(int i=0;i<64;i++){
+            simulation_->simulation_->chunk_[i].Debug(renderer_,viewport_->scale_);
+        }
     }
     if(!toggle_){
         SDL_SetRenderDrawColor(renderer_, 128, 128, 128, 255);
@@ -246,7 +250,7 @@ void Game::Render(){
         tools_ui_->Render();
         material_ui_->Render();
     }
-    Graphics::drawCircle(renderer_, &cursor_, &kScreenRect, draw_radius_*5);
+    Graphics::drawCircle(renderer_, &cursor_, &kScreenRect, draw_radius_*viewport_->scale_);
     Graphics::setRenderColor(renderer_, &kCursorColor);
     SDL_RenderPresent(renderer_);
 }

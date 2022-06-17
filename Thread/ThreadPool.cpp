@@ -16,6 +16,7 @@ void ThreadPool::Start() {
 }
 
 void ThreadPool::ThreadLoop() {
+    rng.seed(std::chrono::steady_clock::now().time_since_epoch().count());
     while (true) {
         Job *job;
         {

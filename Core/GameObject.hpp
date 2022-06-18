@@ -22,8 +22,6 @@ public:
     Texture *texture_;
     Uint32 *draw_buffer_;
     SDL_Renderer *renderer_;
-    SDL_Rect *src_ = nullptr;
-    Simulation *simulation_;
 private:
 };
 

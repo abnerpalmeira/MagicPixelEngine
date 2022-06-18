@@ -43,7 +43,7 @@ private:
     void CreateSimulation();
     void CreateViewPort();
     void CreatePerfomanceBar();
-    void CreateToolUI();
+    void CreateUI();
     void CreateMaterialUI();
     void ResetVariables();
     bool is_running_ = false;
@@ -67,7 +67,7 @@ private:
     Simulation *simulation_;
     GameObject *viewport_;
     UI *performance_bar_;
-    UI *tools_ui_;
+    UI *ui_;
     UI *material_ui_;
     SDL_Window *window_;
 };

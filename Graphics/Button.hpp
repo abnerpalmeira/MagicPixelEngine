@@ -15,6 +15,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2_ttf/SDL_ttf.h"
 #include "Global.hpp"
+#include "Color.hpp"
 
 struct ButtonText{
     SDL_Rect rect_;
@@ -23,11 +24,11 @@ struct ButtonText{
 
 class ButtonGroup{
 public:
-    ButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text, TTF_Font *font_);
+    ButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text, const char *font_file);
     SDL_Surface* ToSurface();
+    SDL_Rect rect_;
 private:
     TTF_Font *font_;
-    SDL_Rect rect_;
     std::vector<ButtonText> buttons_;
 };
 

@@ -44,6 +44,14 @@ public:
         return (y >> 6) * (kSimulationWidth >> 6) + (x >> 6);
     }
     
+    static int ScreenWidthPoint(int x){
+        return x * kScreenWidth/16;
+    }
+    
+    static int ScreenHeightPoint(int y){
+        return y * kScreenHeight/9;
+    }
+    
     static double RandomDoubleOnInterval(double min, double max){
         return std::uniform_real_distribution<double>(min, max )(rng);
     }

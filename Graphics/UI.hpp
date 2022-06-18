@@ -11,16 +11,22 @@
 #include <stdio.h>
 #include <sstream>
 #include <string>
+#include "SDL2/SDL.h"
 #include "SDL2_ttf/SDL_ttf.h"
+#include "GameObject.hpp"
 #include "Texture.hpp"
 #include "Button.hpp"
+#include "Color.hpp"
 
-class UI : public Texture{
+class UI : public GameObject{
 public:
-    UI(SDL_Renderer *renderer, float scale, SDL_Rect rect, const char *font_file);
-    void AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text);
+    UI(SDL_Renderer *renderer, SDL_Rect rect, Color color);
+    ~UI();
+    void AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,const char *font_file);
 private:
-    TTF_Font *font_;
+    void CreateTexture();
+    Color color_;
+    SDL_Rect rect_;
     std::vector<ButtonGroup> button_group_;
 };
 

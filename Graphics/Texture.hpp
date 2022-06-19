@@ -23,11 +23,11 @@ public:
     void Render();
     float GetScale();
     SDL_Rect rect_;
-protected:
     SDL_Texture *texture_;
-    SDL_Renderer *renderer_;
-private:
     float scale_;
+protected:
+    SDL_Renderer *renderer_;
+    
 };
 
 #endif /* Texture_hpp */

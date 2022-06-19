@@ -23,6 +23,12 @@ void UI::CreateTexture(){
         SDL_BlitSurface(temp_surf, NULL, surf, &button_group_[i].rect_);
         SDL_FreeSurface(temp_surf);
     }
+    for(int i=0;i<text_.size();i++){
+        SDL_Surface *temp_surf = text_[i].ToSurface();
+        SDL_BlitSurface(temp_surf, NULL, surf, &button_group_[i].rect_);
+        SDL_FreeSurface(temp_surf);
+        
+    }
     texture_ = new Texture(renderer_,rect_, surf);
     SDL_FreeSurface(surf);
 }
@@ -31,20 +37,27 @@ UI::~UI(){
     delete texture_;
 }
 
-void UI::AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,const char *font_file){
-    button_group_.push_back(ButtonGroup(group_rect,button_rect,text,font_file));
+void UI::AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,std::function<void(int)> fn){
+    button_group_.push_back(ButtonGroup(group_rect,button_rect,text,fn));
     CreateTexture();
 }
 
-//bool UI::IsButtonClicked(const SDL_Point *click_position, Uint8 &button) const{
-//    for(int i = 0; i < button_count_; ++i){
-//        if(SDL_PointInRect(click_position, &buttons_[i])){
-//            _button = i;
-//            return true;
-//        }
-//    }
-//    return false;
-//}
+void UI::AddText(SDL_Rect text_rect, std::string text){
+    text_.push_back(Text(text_rect,text));
+    CreateTexture();
+}
+
+void UI::Click(){
+    SDL_Point click_position = cursor;
+    click_position.x -= rect_.x;
+    click_position.y -= rect_.y;
+    for(int i=0;i<button_group_.size();i++){
+        button_group_[i].Click(click_position);
+    }
+}
+
+void UI::Update(){
+}
 
 //void Texture::changeText(std::string _text){
 //    SDL_Surface *surf = TTF_RenderText_Solid(font_, _text.c_str(), kTextColor);

@@ -22,7 +22,7 @@ public:
         DOWNREPEAT
       };
     std::map<SDL_Keycode, KeyState> key_states_;
-    std::map<SDL_Keycode, KeyState> mouse_states_;
+    std::map<Uint8, KeyState> mouse_states_;
     void PreUpdate();
     void Handle(const SDL_Event* event);
 private:

@@ -12,5 +12,8 @@ Uint32 last_tick = 0;
 float delta_time = 0;
 SDL_PixelFormat* pixel_format = SDL_AllocFormat(kPixelFormat);
 Uint32 empty_pixel_value = SDL_MapRGBA(pixel_format, 0, 0, 0, 0);
+SDL_Point cursor = {-1,-1};
+InputManager input_manager;
+TTF_Font *font = nullptr;
 
 thread_local std::mt19937 rng;

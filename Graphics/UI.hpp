@@ -17,16 +17,22 @@
 #include "Texture.hpp"
 #include "Button.hpp"
 #include "Color.hpp"
+#include "Global.hpp"
+#include "Text.hpp"
 
 class UI : public GameObject{
 public:
     UI(SDL_Renderer *renderer, SDL_Rect rect, Color color);
     ~UI();
-    void AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,const char *font_file);
-private:
+    void Update();
+    void Click();
     void CreateTexture();
-    Color color_;
+    void AddText(SDL_Rect text_rect, std::string text);
+    void AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text, std::function<void(int)> fn);
     SDL_Rect rect_;
+    std::vector<Text> text_;
+private:
+    Color color_;
     std::vector<ButtonGroup> button_group_;
 };
 

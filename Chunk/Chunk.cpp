@@ -138,11 +138,15 @@ void Chunk::Update(){
         last_frame_ = frame_count;
         return;
     }
-    for(int i=0;i<64;i++){
-        for(int j=0;j<64;j++){
-            int from = Helper::GetIndex(i, j);
-            MagicPixel *current =(*buffer_)[from];
-            if(current == nullptr || current->last_frame_ == frame_count) continue;
+    for(int i=min_x_;i<=max_x_;i++){
+        for(int j=min_y_;j<=max_y_;j++){
+            int index = Helper::GetIndex(i, j);
+            MagicPixel *current =(*buffer_)[index];
+            if(current != nullptr && current->ttl_ && current_tick >= current->ttl_){
+                delete (*buffer_)[index];
+                (*buffer_)[index] = nullptr;
+                RemoveCell(i,j);
+            }
         }
     }
     int min_x,min_y,max_x,max_y;

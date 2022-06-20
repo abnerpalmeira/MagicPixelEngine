@@ -44,6 +44,10 @@ public:
         return (y >> 6) * (kSimulationWidth >> 6) + (x >> 6);
     }
     
+    static int GetChunk(int x,int y){
+        return (y >> 6) * (kSimulationWidth >> 6) + (x >> 6);
+    }
+    
     static int ScreenWidthPoint(int x){
         return x * kScreenWidth/16;
     }

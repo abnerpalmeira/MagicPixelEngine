@@ -65,19 +65,19 @@ void  Chunk::ProcessCell(int x,int y){
 
 void Chunk::NotifyPeers(){
     if(notify_ & 1){
-        chunk_[Helper::GetChunk(Vector2(min_x_,min_y_-1))].NotifyBottom(dirty_rect_min_x_,dirty_rect_max_x_);
+        chunk_[Helper::GetChunk(min_x_,min_y_-1)].NotifyBottom(dirty_rect_min_x_,dirty_rect_max_x_);
     }
     if(notify_ & 2){
-        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_))].NotifyRight(dirty_rect_min_y_,dirty_rect_max_y_);
+        chunk_[Helper::GetChunk(min_x_-1,min_y_)].NotifyRight(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 4){
-        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_))].NotifyLeft(dirty_rect_min_y_,dirty_rect_max_y_);
+        chunk_[Helper::GetChunk(max_x_+1,min_y_)].NotifyLeft(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 8){
-        chunk_[Helper::GetChunk(Vector2(min_x_-1,min_y_-1))].NotifyBottomRight();
+        chunk_[Helper::GetChunk(min_x_-1,min_y_-1)].NotifyBottomRight();
     }
     if(notify_ & 16){
-        chunk_[Helper::GetChunk(Vector2(max_x_+1,min_y_-1))].NotifyBottomLeft();
+        chunk_[Helper::GetChunk(max_x_+1,min_y_-1)].NotifyBottomLeft();
     }
 }
 

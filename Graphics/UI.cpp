@@ -25,7 +25,7 @@ void UI::CreateTexture(){
     }
     for(int i=0;i<text_.size();i++){
         SDL_Surface *temp_surf = text_[i].ToSurface();
-        SDL_BlitSurface(temp_surf, NULL, surf, &button_group_[i].rect_);
+        SDL_BlitSurface(temp_surf, NULL, surf, &text_[i].rect_);
         SDL_FreeSurface(temp_surf);
         
     }

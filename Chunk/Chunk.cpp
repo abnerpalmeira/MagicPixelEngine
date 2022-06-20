@@ -42,10 +42,11 @@ void Chunk::RemoveCell(int x, int y){
 
 void Chunk::Notify(int x, int y) {
     if(y == min_y_ && y) notify_ |= 1;
-    if(x == min_x_ && x) notify_ |= 2;
-    else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 4;
-    if(x == min_x_ && y == min_y_ && x && y) notify_ |= 8;
-    else if(x == max_x_ && y == min_y_ && x+1 < kSimulationWidth && y) notify_ |= 16;
+    else if(y == max_y_ && y+1 < kSimulationHeight) notify_ |= 2;
+    if(x == min_x_ && x) notify_ |= 4;
+    else if(x == max_x_ && x+1 < kSimulationWidth) notify_ |= 8;
+    if(x == min_x_ && y == min_y_ && x && y) notify_ |= 16;
+    else if(x == max_x_ && y == min_y_ && x+1 < kSimulationWidth && y) notify_ |= 32;
 }
 
 void  Chunk::ProcessCell(int x,int y){
@@ -68,17 +69,26 @@ void Chunk::NotifyPeers(){
         chunk_[Helper::GetChunk(min_x_,min_y_-1)].NotifyBottom(dirty_rect_min_x_,dirty_rect_max_x_);
     }
     if(notify_ & 2){
-        chunk_[Helper::GetChunk(min_x_-1,min_y_)].NotifyRight(dirty_rect_min_y_,dirty_rect_max_y_);
+        chunk_[Helper::GetChunk(min_x_,max_y_+1)].NotifyTop(dirty_rect_min_x_,dirty_rect_max_x_);
     }
     if(notify_ & 4){
-        chunk_[Helper::GetChunk(max_x_+1,min_y_)].NotifyLeft(dirty_rect_min_y_,dirty_rect_max_y_);
+        chunk_[Helper::GetChunk(min_x_-1,min_y_)].NotifyRight(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 8){
-        chunk_[Helper::GetChunk(min_x_-1,min_y_-1)].NotifyBottomRight();
+        chunk_[Helper::GetChunk(max_x_+1,min_y_)].NotifyLeft(dirty_rect_min_y_,dirty_rect_max_y_);
     }
     if(notify_ & 16){
+        chunk_[Helper::GetChunk(min_x_-1,min_y_-1)].NotifyBottomRight();
+    }
+    if(notify_ & 32){
         chunk_[Helper::GetChunk(max_x_+1,min_y_-1)].NotifyBottomLeft();
     }
+}
+
+void Chunk::NotifyTop(int min_x,int max_x){
+    dirty_rect_min_y_ = min_y_;
+    dirty_rect_min_x_ = std::min(min_x,dirty_rect_min_x_);
+    dirty_rect_max_x_ = std::max(max_x,dirty_rect_max_x_);
 }
 
 void Chunk::NotifyBottom(int min_x,int max_x){
@@ -128,6 +138,13 @@ void Chunk::Update(){
         last_frame_ = frame_count;
         return;
     }
+    for(int i=0;i<64;i++){
+        for(int j=0;j<64;j++){
+            int from = Helper::GetIndex(i, j);
+            MagicPixel *current =(*buffer_)[from];
+            if(current == nullptr || current->last_frame_ == frame_count) continue;
+        }
+    }
     int min_x,min_y,max_x,max_y;
     GetCurrentDirtyRect(max_x, max_y, min_x, min_y);
     ResetRect();
@@ -145,6 +162,7 @@ void Chunk::Update(){
     if(dirty_rect_min_x_ <= dirty_rect_max_x_ && dirty_rect_min_y_ <= dirty_rect_max_y_){
         Notify(dirty_rect_min_x_, dirty_rect_min_y_);
         Notify(dirty_rect_max_x_, dirty_rect_min_y_);
+        Notify(dirty_rect_min_x_, dirty_rect_max_y_);
         NotifyPeers();
     }
     last_frame_ = frame_count;

@@ -9,7 +9,11 @@
 
 void InputManager::PreUpdate(){
     for(auto& [key_index, state] : key_states_){
-        state = (state == KeyState::JUSTUP)? KeyState::UP : KeyState::DOWN;
+        if(state == KeyState::JUSTUP){
+            state = KeyState::UP;
+        }else if(state == KeyState::JUSTDOWN){
+            state = KeyState::DOWN;
+        }
     }
 }
 

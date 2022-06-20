@@ -12,7 +12,7 @@ void Movable::MoveStep(int step,int dir){
     int new_index = -1;
     for(int i=0;i<step;i++){
         int a = position_.x_ + dx_[dir], b = position_.y_ + dy_[dir];
-        if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) continue;
+        if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) break;
         int bar = Helper::GetIndex(a, b);
         if(CanMove(bar)){
             new_index = bar;
@@ -40,7 +40,7 @@ Vector2 Movable::LineCover(Vector2 target, bool super){
     dy = abs(dy);
     int ddx = 2*dx, ddy = 2*dy;
     int errorprev = dy, error = dy;
-    Vector2 foo;
+    Vector2 ans = position_;
     for(int i = 0;i<dy;i++){
         y += y_step;
         error += ddx;
@@ -49,14 +49,19 @@ Vector2 Movable::LineCover(Vector2 target, bool super){
             error -= ddy;
             if(super){
                 if(error + errorprev <= ddy){
-                    foo = Vector2(x-x_step,y);
+                    Vector2(x-x_step,y);
                 }
                 if(error + errorprev >= ddy){
-                    foo = Vector2(x,y-y_step);
+                    Vector2(x,y-y_step);
                 }
             }
         }
-        foo = Vector2(x,y);
+        int bar = Helper::GetIndex(x, y);
+        if(CanMove(bar)){
+            ans = Vector2(x,y);
+            last_frame_ = frame_count;
+        }
     }
-    return foo;
+    if(swap) std::swap(ans.x_,ans.y_);
+    return ans;
 }

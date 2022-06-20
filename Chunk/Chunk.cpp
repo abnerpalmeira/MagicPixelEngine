@@ -133,8 +133,8 @@ void Chunk::Update(){
     ResetRect();
     notify_ = 0;
     active_.clear();
-    for(int i=min_x;i<=max_x;i++){
-        for(int j=min_y;j<=max_y;j++){
+    for(int j=max_y;j>=min_y;j--){
+        for(int i=min_x;i<=max_x;i++){
             active_.push_back(Vector2(i,j));
         }
     }

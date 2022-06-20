@@ -11,9 +11,12 @@
 #include <stdio.h>
 #include "MagicPixel.hpp"
 #include "Movable.hpp"
+#include "Random.hpp"
 
 class Sand : public Movable{
 private:
+    void CelularAutomata();
+    void PhysicSimulation();
     static int movement_priority_[3];
 public:
     Sand(int index, std::vector<MagicPixel*> *buffer);

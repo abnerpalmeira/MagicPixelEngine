@@ -26,17 +26,27 @@ public:
     }
     
     void CelularAutomata(){
-        MoveStep(2, dir_[0]);
+        MoveStep(Random::IntOnInterval(1, 3), Orientation::DOWN);
         if(IsUpdated()) return;
-        if(Helper::CoinToss()) std::swap(dir_[1],dir_[2]);
-        MoveStep(1, dir_[1]);
+        if(Random::CoinToss()){
+            MoveStep(1, Orientation::DOWN_RIGHT);
+            MoveStep(1, Orientation::DOWN_LEFT);
+        }
+        else{
+            MoveStep(1, Orientation::DOWN_LEFT);
+            MoveStep(1, Orientation::DOWN_RIGHT);
+        }
         if(IsUpdated()) return;
-        MoveStep(1, dir_[2]);
-        if(IsUpdated()) return;
-        if(Helper::CoinToss()) std::swap(dir_[3],dir_[4]);
-        MoveStep(5, dir_[3]);
-        if(IsUpdated()) return;
-        MoveStep(5, dir_[4]);
+        if(Random::CoinToss()){
+            MoveStep(1,Orientation::RIGHT);
+            if(IsUpdated()) return;
+            MoveStep(1,Orientation::LEFT);
+        }
+        else{
+            MoveStep(1,Orientation::LEFT);
+            if(IsUpdated()) return;
+            MoveStep(1,Orientation::RIGHT);
+        }
     }
     
     void Update(){

@@ -24,6 +24,7 @@ Game::~Game(){
     delete viewport_;
     delete ui_;
     delete material_ui_;
+    TTF_CloseFont(font);
 }
 
 void Game::Init(const char *title, int x, int y, int w, int h){
@@ -122,9 +123,9 @@ void Game::HandleEvents(){
 void Game::Update(){
     PreUpdate();
     ui_->Update();
-    if(SDL_PointInRect(&cursor,&ui_->rect_) &&  input_manager.mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
+    if(SDL_PointInRect(&cursor,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
-        ui_->Click();
+        if(input_manager.mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
     }else if(SDL_PointInRect(&cursor, &kScreenRect)){
         SDL_ShowCursor(SDL_DISABLE);
         SDL_Point foo = cursor;
@@ -156,6 +157,7 @@ void  Game::LateUpdate(){
     last_cursor_ = cursor;
     std::ostringstream stream;
     Uint32 last_update = SDL_GetTicks();
+    last_tick = current_tick;
     float frame_time = (last_update - current_tick) / 1000.0f;
     tick_count_ += last_update - current_tick;
     if(count_++ == 60){
@@ -178,17 +180,12 @@ void Game::Render(){
             simulation_->chunk_[i].Debug(renderer_,viewport_->texture_->GetScale());
         }
     }
+    Graphics::setRenderColor(renderer_, &kCursorColor);
     Graphics::drawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->texture_->GetScale());
-//    Graphics::setRenderColor(renderer_, &kCursorColor);
     SDL_RenderPresent(renderer_);
 }
 
-
-
 void Game::Clean(){
-    delete simulation_;
-    delete viewport_;
-    delete ui_;
     SDL_DestroyWindow(window_);
     SDL_DestroyRenderer(renderer_);
     SDL_Quit();

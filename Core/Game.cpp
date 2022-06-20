@@ -64,7 +64,7 @@ void Game::CreateUI() {
     ui_ = new UI(renderer_,{Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255));
     ui_->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
     ui_->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
-    ui_->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Fire Gas",set_material);
+    ui_->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Fire Gas Wood",set_material);
 }
 
 bool Game::Running(){
@@ -90,16 +90,17 @@ void Game::ResetVariables() {
 }
 
 void Game::PreUpdate(){
-    input_manager.PreUpdate();
     current_tick = SDL_GetTicks();
     frame_count++;
     delta_time = (current_tick - last_tick) / 1000.0f;;
 }
 
 void Game::HandleEvents(){
+    input_manager.PreUpdate();
     while(SDL_PollEvent(&e_)){
         switch (e_.type) {
             case SDL_KEYDOWN:
+            case SDL_KEYUP:
             case SDL_MOUSEBUTTONDOWN:
             case SDL_MOUSEBUTTONUP:
                 input_manager.Handle(&e_);
@@ -138,12 +139,15 @@ void Game::Update(){
             simulation_->SetCellInsideRadius(foo, draw_radius_, material_,true);
         }
     }
+    if(input_manager.key_states_.find(SDLK_s) != input_manager.key_states_.end() && (input_manager.key_states_[SDLK_s] == InputManager::KeyState::DOWN or input_manager.key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
+        viewport_->texture_->rect_.y = std::clamp(viewport_->texture_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
+    }
     if(!paused_) {
         simulation_->Update();
         for(int i=0;i<kViewportWidth;i++){
             for(int j=0;j<kViewportHeight;j++){
                 int foo = i + j * kViewportWidth;
-                int bar = i + j * kSimulationWidth;
+                int bar = i + (j+viewport_->texture_->rect_.y) * kSimulationWidth;
                 MagicPixel *current = simulation_->buffer_[bar];
                 viewport_->draw_buffer_[foo] = (current == nullptr) ? empty_pixel_value : current->color_.GetSDLMap();
             }
@@ -180,8 +184,8 @@ void Game::Render(){
             simulation_->chunk_[i].Debug(renderer_,viewport_->texture_->GetScale());
         }
     }
-    Graphics::setRenderColor(renderer_, &kCursorColor);
-    Graphics::drawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->texture_->GetScale());
+    SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);
+    Graphics::DrawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->texture_->GetScale());
     SDL_RenderPresent(renderer_);
 }
 

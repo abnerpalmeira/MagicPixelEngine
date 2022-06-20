@@ -16,14 +16,8 @@ enum class MaterialType{
     SAND,
     WATER,
     FIRE,
-    LAVA,
-    OIL,
-    ICE,
     GAS,
-    STEAM,
-    GRAVEL,
     WOOD,
-    PLASMA,
 };
 
 #endif /* MaterialType_hpp */

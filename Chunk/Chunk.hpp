@@ -39,8 +39,8 @@ public:
     void AddCell(int x, int y);
     void RemoveCell(int x, int y);
     void Notify(int x, int y);
-    
     void ProcessCell(int from,int to);
+    void NotifyTop(int min_x,int max_x);
     void NotifyBottom(int min_x,int max_x);
     void NotifyLeft(int min_y,int max_y);
     void NotifyRight(int min_y,int max_y);

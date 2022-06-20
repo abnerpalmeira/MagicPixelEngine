@@ -10,13 +10,14 @@
 
 void Movable::MoveStep(int step,int dir){
     int new_index = -1;
+    int a = position_.x_, b = position_.y_;
     for(int i=0;i<step;i++){
-        int a = position_.x_ + dx_[dir], b = position_.y_ + dy_[dir];
+        a += dx_[dir];
+        b += dy_[dir];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) break;
         int bar = Helper::GetIndex(a, b);
         if(CanMove(bar)){
             new_index = bar;
-            last_frame_ = frame_count;
             continue;
         }
         else break;

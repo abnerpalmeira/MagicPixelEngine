@@ -18,6 +18,7 @@
 
 class MagicPixel{
 public:
+    Uint32 ttl_ = 0;
     int index_;
     Uint32 last_frame_;
     Color color_;
@@ -33,6 +34,7 @@ public:
     }
     void UpdateIndex(int new_index){
         UpdateBuffer(new_index);
+        last_frame_ = frame_count;
         index_ = new_index;
         position_ = Helper::GetCords(new_index);
     }

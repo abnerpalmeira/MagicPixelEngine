@@ -16,9 +16,11 @@
 
 class Gas : public Movable{
 private:
-    static int movement_priority_[3];
+    bool up_ = true;
 public:
     Gas(int index, std::vector<MagicPixel*> *buffer);
+    void CelularAutomata();
+    virtual ~Gas(){}
     bool CanMove(int index);
     void Update();
 };

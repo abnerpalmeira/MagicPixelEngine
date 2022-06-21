@@ -18,29 +18,36 @@
 
 class MagicPixel{
 public:
-    Uint32 ttl_ = 0;
+    MagicPixel();
+    virtual ~MagicPixel(){}
+    virtual void Update(){}
+    virtual void ApplyEffects(){}
+    static void Swap(MagicPixel *a, MagicPixel *b){
+        a->UpdateIndex(b->index_);
+        b->UpdateIndex(a->index_);
+        std::swap(a,b);
+    }
+    static void Destroy(MagicPixel *a){
+        delete a;
+        a = nullptr;
+    }
+    static void Mutate(MagicPixel *a, MaterialType material){
+        Destroy(a);
+    }
+    void Move(int new_index);
+    void UpdateIndex(int new_index);
+    bool IsUpdated();
+    bool die_ = false;
+    bool moved_ = true;
+    int desinty_;
     int index_;
+    Uint32 ttl_;
     Uint32 last_frame_;
     Color color_;
     Vector2 velocity_;
     Vector2 position_;
     MaterialType material_;
     std::vector<MagicPixel*> *buffer_;
-    MagicPixel(){}
-    virtual ~MagicPixel(){}
-    virtual void Update(){}
-    void UpdateBuffer(int new_index){
-        std::swap((*buffer_)[index_],(*buffer_)[new_index]);
-    }
-    void UpdateIndex(int new_index){
-        UpdateBuffer(new_index);
-        last_frame_ = frame_count;
-        index_ = new_index;
-        position_ = Helper::GetCords(new_index);
-    }
-    bool IsUpdated(){
-        return last_frame_ == frame_count;
-    }
 };
 
 

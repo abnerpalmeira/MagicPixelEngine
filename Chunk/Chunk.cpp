@@ -19,6 +19,7 @@ Chunk::Chunk(int x, int y, int w, int h, Chunk *chunk, std::vector<MagicPixel*> 
     last_frame_ = 0;
     live_pixel_ = 0;
     notify_ = 0;
+    check_all_ = 0;
     buffer_ = buffer;
     ResetRect();
 }
@@ -54,14 +55,17 @@ void  Chunk::ProcessCell(int x,int y){
     MagicPixel *current =(*buffer_)[from];
     if(current == nullptr || current->last_frame_ == frame_count) return;
     current->Update();
-    if(from == current->index_) return;
+    if(from == current->index_){
+        if(current->last_frame_+20 == frame_count) UpdateRect(x,y);
+        return;
+    }
     int chunk = Helper::GetChunk(current->index_);
+    Vector2 cord = current->position_;
     if(&chunk_[chunk] != this){
-        Vector2 cord = current->position_;
         live_pixel_--;
         chunk_[chunk].AddCell(cord.x_, cord.y_);
     }
-    UpdateRect(x,y);
+    UpdateRect(cord.x_,cord.y_);
 }
 
 void Chunk::NotifyPeers(){
@@ -142,7 +146,8 @@ void Chunk::Update(){
         for(int j=min_y_;j<=max_y_;j++){
             int index = Helper::GetIndex(i, j);
             MagicPixel *current =(*buffer_)[index];
-            if(current != nullptr && current->ttl_ && current_tick >= current->ttl_){
+            if(current == nullptr or current->last_frame_ == frame_count) continue;
+            if(current->ttl_ && current_tick >= current->ttl_){
                 delete (*buffer_)[index];
                 (*buffer_)[index] = nullptr;
                 RemoveCell(i,j);

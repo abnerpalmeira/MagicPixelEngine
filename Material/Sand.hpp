@@ -20,7 +20,7 @@ private:
     static int movement_priority_[3];
 public:
     Sand(int index, std::vector<MagicPixel*> *buffer);
-    bool CanMove(int index);
+    int CanMove(int index);
     void Update();
 };
 

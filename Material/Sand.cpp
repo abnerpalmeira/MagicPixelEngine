@@ -7,8 +7,6 @@
 
 #include "Sand.hpp"
 
-int Sand::movement_priority_[3] = {Orientation::DOWN,Orientation::DOWN_RIGHT,Orientation::DOWN_LEFT};
-
 Sand::Sand(int index, std::vector<MagicPixel*> *buffer){
     index_ = index;
     position_ = Helper::GetCords(index);
@@ -22,15 +20,15 @@ int Sand::CanMove(int index){
 }
 
 void Sand::CelularAutomata(){
-    MoveStep(Random::IntOnInterval(1, 3), movement_priority_[0]);
+    MoveStep(Random::IntOnInterval(1, 3), Orientation::DOWN);
     if(IsUpdated()) return;
     if(Random::CoinToss()){
-        MoveStep(1, movement_priority_[1]);
-        MoveStep(1, movement_priority_[2]);
+        MoveStep(1, Orientation::DOWN_RIGHT);
+        MoveStep(1, Orientation::DOWN_LEFT);
     }
     else{
-        MoveStep(1, movement_priority_[2]);
-        MoveStep(1, movement_priority_[1]);
+        MoveStep(1, Orientation::DOWN_LEFT);
+        MoveStep(1, Orientation::DOWN_RIGHT);
     }
 }
 

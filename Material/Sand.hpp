@@ -17,7 +17,6 @@ class Sand : public Movable{
 private:
     void CelularAutomata();
     void PhysicSimulation();
-    static int movement_priority_[3];
 public:
     Sand(int index, std::vector<MagicPixel*> *buffer);
     int CanMove(int index);

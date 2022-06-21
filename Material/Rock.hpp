@@ -13,19 +13,9 @@
 
 class Rock : public MagicPixel{
 public:
-    Rock(int index, std::vector<MagicPixel*> *buffer){
-        index_ = index;
-        buffer_ = buffer;
-        color_ = Color(58,50,50,255);
-        if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.15));
-    }
-    void Update(){
- 
-    }
-    
-    bool CanMove(int idx){
-        return true;
-    }
+    Rock(int index, std::vector<MagicPixel*> *buffer);
+    void Update();
+    bool CanMove(int idx);
 };
 
 

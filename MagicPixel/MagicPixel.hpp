@@ -22,6 +22,9 @@ public:
     virtual ~MagicPixel(){}
     virtual void Update(){}
     virtual void ApplyEffects(){}
+    static void Create(MagicPixel *a, std::vector<MagicPixel*> *buffer){
+  
+    }
     static void Swap(MagicPixel *a, MagicPixel *b){
         a->UpdateIndex(b->index_);
         b->UpdateIndex(a->index_);

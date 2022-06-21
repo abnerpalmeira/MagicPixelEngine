@@ -17,8 +17,8 @@ Sand::Sand(int index, std::vector<MagicPixel*> *buffer){
     velocity_ = Vector2(0,0);
 }
 
-bool Sand::CanMove(int index){
-    return (*buffer_)[index] == nullptr;
+int Sand::CanMove(int index){
+    return (int)((*buffer_)[index] == nullptr);
 }
 
 void Sand::CelularAutomata(){

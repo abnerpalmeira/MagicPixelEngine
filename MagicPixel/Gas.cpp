@@ -18,8 +18,15 @@ Gas::Gas(int index, std::vector<MagicPixel*> *buffer){
     material_ = MaterialType::GAS;
 }
     
-bool Gas::CanMove(int index){
-    return (*buffer_)[index] == nullptr;
+int Gas::CanMove(int index){
+    MagicPixel *current = (*buffer_)[index];
+    if(current == nullptr){
+        return 1;
+    }
+    else if(current->material_ == MaterialType::GAS){
+        return -1;
+    }
+    return 0;
 }
 
 void Gas::CelularAutomata(){

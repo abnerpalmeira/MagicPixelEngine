@@ -21,7 +21,7 @@ public:
     Gas(int index, std::vector<MagicPixel*> *buffer);
     void CelularAutomata();
     virtual ~Gas(){}
-    bool CanMove(int index);
+    int CanMove(int index);
     void Update();
 };
 

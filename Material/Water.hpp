@@ -21,8 +21,8 @@ public:
         color_ = Color(131,215,238,180);
     }
     
-    bool CanMove(int index){
-        return (*buffer_)[index] == nullptr;
+    int CanMove(int index){
+        return (int)((*buffer_)[index] == nullptr);
     }
     
     void CelularAutomata(){

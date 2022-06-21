@@ -22,6 +22,7 @@ public:
     std::vector<MagicPixel*> *buffer_;
     Uint32 last_frame_;
     std::vector<Vector2> active_;
+    int check_all_;
     int notify_;
     int dirty_rect_min_x_,dirty_rect_min_y_;
     int dirty_rect_max_x_,dirty_rect_max_y_;

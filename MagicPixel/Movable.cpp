@@ -16,11 +16,13 @@ void Movable::MoveStep(int step,int dir){
         b += dy_[dir];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kScreenHeight) break;
         int bar = Helper::GetIndex(a, b);
-        if(CanMove(bar)){
+        int can_move = CanMove(bar);
+        if(can_move == 1){
             new_index = bar;
             continue;
+        }else if(!can_move){
+            break;
         }
-        else break;
     }
     if(new_index != -1) UpdateIndex(new_index);
     return;

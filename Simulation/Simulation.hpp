@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
-#include <stack>
+#include <array>
+#include <memory>
 #include <random>
 #include <string>
 #include <fstream>
@@ -14,29 +14,24 @@
 #include "Material.hpp"
 #include "MagicPixel.hpp"
 #include "Graphics.hpp"
-#include "RandomAcessTable.hpp"
-#include "Fenwick.hpp"
 #include "Vector2.hpp"
 #include "Chunk.hpp"
 #include "Job.hpp"
+#include "Buffer.hpp"
 
 class Simulation{
 public:
     Simulation();
-	Simulation(int _width, int _height);
 	~Simulation();
 	void Update();
     void Playground();
 	void Reset();
-    void SetCellInsideRadius(SDL_Point point, Uint16 rad, MaterialType material, bool physics = false);
+    void SetCellInsideCircle(SDL_Point point, Uint16 rad, MaterialType material, bool physics = false);
     void SetCell(SDL_Point point, MaterialType material, bool physics = false);
-    std::vector<MagicPixel*> buffer_;
-    Chunk *chunk_;
+    std::shared_ptr<Buffer> buffer_ptr_;
+    std::shared_ptr<std::array<Chunk,kMaxChunk> > chunks_ptr_;
 private:
-    Uint16 width_, height_;
-    Uint64 size_;
     ThreadPool pool_;
-	SDL_PixelFormat *pixel_format_;
     Job *jobs_;
     int first_batch_[kChunkBatchSize] = {0,4,10,14,16,20,26,30,32,36,42,46,48,52,58,62};
     int second_batch_[kChunkBatchSize] = {1,5,11,15,17,21,27,31,33,37,43,47,49,53,59,63};

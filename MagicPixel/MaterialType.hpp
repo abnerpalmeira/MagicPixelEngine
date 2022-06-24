@@ -5,8 +5,7 @@
 //  Created by Abner Palmeira on 11/06/22.
 //
 
-#ifndef MaterialType_hpp
-#define MaterialType_hpp
+#pragma once
 
 #include <stdio.h>
 
@@ -19,5 +18,3 @@ enum class MaterialType{
     GAS,
     WOOD,
 };
-
-#endif /* MaterialType_hpp */

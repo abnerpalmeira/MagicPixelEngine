@@ -11,17 +11,15 @@
 #include <thread>
 #include "SDL2/SDL.h"
 #include "SDL2_ttf/SDL_ttf.h"
-#include "InputManager.hpp"
 
 extern Uint32 frame_count;
 extern Uint32 current_tick;
 extern Uint32 last_tick;
-extern Uint32 empty_pixel_value;
+extern Uint32 kEmptyPixelValue;
 extern float delta_time;
 extern SDL_PixelFormat* pixel_format;
 extern SDL_Point cursor;
 extern TTF_Font *font;
-extern InputManager input_manager;
 extern thread_local std::mt19937 rng;
 
 constexpr Uint32 kScreenWidth = 1920;
@@ -31,7 +29,8 @@ constexpr Uint32 kSimulationHeight = 512;
 constexpr Uint32 kSimulationWidthPower2Expoent = 9;
 constexpr Uint32 kViewportWidth = 496;
 constexpr Uint32 kViewportHeight = 279;
-constexpr int kChunkSize = 64;
+constexpr Uint32 kMaxCell = kSimulationWidth*kSimulationHeight;
+constexpr int kMaxChunk = 64;
 constexpr int kChunkBatchSize = 16;
 constexpr int kDx[8] = {0,1,-1,1,-1,1,-1};
 constexpr int kDy[8] = {1,1,1,-1,-1,0,0};

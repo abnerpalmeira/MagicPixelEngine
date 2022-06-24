@@ -7,16 +7,13 @@
 
 #include "Sand.hpp"
 
-Sand::Sand(int index, std::vector<MagicPixel*> *buffer){
-    index_ = index;
-    position_ = Helper::GetCords(index);
-    buffer_ = buffer;
+Sand::Sand(){
     color_ = Color::Interpolate(Color(255,207,92,255), Color::Black, Random::DoubleOnInterval(0.0, 0.15));
     velocity_ = Vector2(0,0);
 }
 
 int Sand::CanMove(int index){
-    return (int)((*buffer_)[index] == nullptr);
+    return 0;
 }
 
 void Sand::CelularAutomata(){

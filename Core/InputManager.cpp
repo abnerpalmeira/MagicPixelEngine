@@ -7,6 +7,8 @@
 
 #include "InputManager.hpp"
 
+InputManager* InputManager::ptr_instance_ = nullptr;
+
 void InputManager::PreUpdate(){
     for(auto& [key_index, state] : key_states_){
         if(state == KeyState::JUSTUP){

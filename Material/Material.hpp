@@ -25,13 +25,13 @@ public:
     static MagicPixel* Init(int index, MaterialType material, std::vector<MagicPixel*> *buffer){
         switch (material) {
             case MaterialType::SAND:
-                return new Sand(index,buffer);
+                return new Sand();
                 break;
             case MaterialType::WATER:
                 return new Water(index,buffer);
                 break;
             case MaterialType::ROCK:
-                return new Rock(index,buffer);
+                return new Rock();
                 break;
             case MaterialType::GAS:
                 return new Gas(index,buffer);

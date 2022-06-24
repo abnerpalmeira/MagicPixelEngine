@@ -21,10 +21,21 @@ public:
         JUSTDOWN,
         DOWNREPEAT
       };
-    std::map<SDL_Keycode, KeyState> key_states_;
-    std::map<Uint8, KeyState> mouse_states_;
+    static InputManager* Instance(){
+        if(!ptr_instance_)
+            ptr_instance_ = new InputManager;
+        return ptr_instance_;
+    }
     void PreUpdate();
     void Handle(const SDL_Event* event);
+    std::map<SDL_Keycode, KeyState> key_states_;
+    std::map<Uint8, KeyState> mouse_states_;
 private:
+    InputManager() = default;
+    InputManager(const InputManager&);
+    InputManager& operator=(const InputManager&);
+    ~InputManager();
+    static InputManager* ptr_instance_;
 };
+
 #endif /* InputManager_hpp */

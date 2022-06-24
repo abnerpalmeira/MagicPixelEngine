@@ -12,6 +12,7 @@ Color::Color(){
     b_ = 0;
     g_ = 0;
     a_ = 0;
+    pixel_value_ = 0;
     changed_ = true;
 }
 

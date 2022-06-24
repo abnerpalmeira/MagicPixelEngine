@@ -10,12 +10,11 @@
 Water::Water(int index, std::vector<MagicPixel*> *buffer){
     index_ = index;
     position_ = Helper::GetCords(index);
-    buffer_ = buffer;
     color_ = Color(131,215,238,180);
 }
 
 int Water::CanMove(int index){
-    return (int)((*buffer_)[index] == nullptr);
+    return 0;
 }
 
 void Water::CelularAutomata(){

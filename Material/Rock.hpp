@@ -5,18 +5,22 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#ifndef Rock_hpp
-#define Rock_hpp
+#pragma once
 
-#include <stdio.h>
 #include "MagicPixel.hpp"
+#include "MaterialType.hpp"
+#include "MagicPixelFactory.hpp"
 
 class Rock : public MagicPixel{
 public:
-    Rock(int index, std::vector<MagicPixel*> *buffer);
+    Rock();
     void Update();
     bool CanMove(int idx);
 };
 
-
-#endif /* Rock_hpp */
+namespace{
+    std::unique_ptr<MagicPixel> CreateRock(){
+        return std::make_unique<Rock>();
+    }
+    const bool registered_rock = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::ROCK, CreateRock);
+}

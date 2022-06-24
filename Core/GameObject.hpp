@@ -20,8 +20,8 @@ public:
     void Update();
     void Render();
     Texture *texture_;
-    Uint32 *draw_buffer_;
     SDL_Renderer *renderer_;
+    Uint32 *draw_buffer_;
 private:
 };
 

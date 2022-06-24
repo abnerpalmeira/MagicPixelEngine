@@ -5,22 +5,27 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#ifndef Sand_hpp
-#define Sand_hpp
+#pragma once
 
-#include <stdio.h>
 #include "MagicPixel.hpp"
+#include "MagicPixelFactory.hpp"
+#include "MaterialType.hpp"
 #include "Movable.hpp"
 #include "Random.hpp"
 
 class Sand : public Movable{
+public:
+    Sand();
+    int CanMove(int index);
+    void Update();
 private:
     void CelularAutomata();
     void PhysicSimulation();
-public:
-    Sand(int index, std::vector<MagicPixel*> *buffer);
-    int CanMove(int index);
-    void Update();
 };
 
-#endif /* Sand_hpp */
+namespace{
+    std::unique_ptr<MagicPixel> CreateSand(){
+        return std::make_unique<Sand>();
+    }
+    const bool registered_sand = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::SAND, CreateSand);
+}

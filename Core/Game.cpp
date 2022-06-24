@@ -41,7 +41,7 @@ void Game::InitFont(){
 }
 
 void Game::CreateSimulation() {
-    simulation_ = new Simulation(kSimulationWidth, kSimulationHeight);
+    simulation_ = new Simulation();
 }
 
 void Game::CreatePerfomanceBar() {
@@ -96,14 +96,14 @@ void Game::PreUpdate(){
 }
 
 void Game::HandleEvents(){
-    input_manager.PreUpdate();
+    InputManager::Instance()->PreUpdate();
     while(SDL_PollEvent(&e_)){
         switch (e_.type) {
             case SDL_KEYDOWN:
             case SDL_KEYUP:
             case SDL_MOUSEBUTTONDOWN:
             case SDL_MOUSEBUTTONUP:
-                input_manager.Handle(&e_);
+                InputManager::Instance()->Handle(&e_);
                 break;
             case SDL_MOUSEWHEEL:
                 draw_radius_ = std::clamp<Sint16>(draw_radius_ + e_.wheel.y,kMinDrawRadius,kMaxDrawRadius);
@@ -126,20 +126,20 @@ void Game::Update(){
     ui_->Update();
     if(SDL_PointInRect(&cursor,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
-        if(input_manager.mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
+        if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
     }else if(SDL_PointInRect(&cursor, &kScreenRect)){
         SDL_ShowCursor(SDL_DISABLE);
         SDL_Point foo = cursor;
         foo.x = foo.x/viewport_->texture_->scale_;
         foo.y = foo.y/viewport_->texture_->scale_;
-        if(input_manager.mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
-            simulation_->SetCellInsideRadius(foo, draw_radius_, material_);
+        if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
+            simulation_->SetCellInsideCircle(foo, draw_radius_, material_);
         }
-        else if(input_manager.mouse_states_[SDL_BUTTON_RIGHT] == InputManager::KeyState::DOWN) {
-            simulation_->SetCellInsideRadius(foo, draw_radius_, material_,true);
+        else if(InputManager::Instance()->mouse_states_[SDL_BUTTON_RIGHT] == InputManager::KeyState::DOWN) {
+            simulation_->SetCellInsideCircle(foo, draw_radius_, material_,true);
         }
     }
-    if(input_manager.key_states_.find(SDLK_s) != input_manager.key_states_.end() && (input_manager.key_states_[SDLK_s] == InputManager::KeyState::DOWN or input_manager.key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
+    if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
         viewport_->texture_->rect_.y = std::clamp(viewport_->texture_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
     }
     if(!paused_) {
@@ -147,9 +147,7 @@ void Game::Update(){
         for(int i=0;i<kViewportWidth;i++){
             for(int j=0;j<kViewportHeight;j++){
                 int foo = i + j * kViewportWidth;
-                int bar = i + (j+viewport_->texture_->rect_.y) * kSimulationWidth;
-                MagicPixel *current = simulation_->buffer_[bar];
-                viewport_->draw_buffer_[foo] = (current == nullptr) ? empty_pixel_value : current->color_.GetSDLMap();
+                viewport_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
             }
         }
         SDL_UpdateTexture(viewport_->texture_->texture_, nullptr, viewport_->draw_buffer_, (kViewportWidth) * sizeof(Uint32));
@@ -181,7 +179,7 @@ void Game::Render(){
     ui_->Render();
     if(true){
         for(int i=0;i<64;i++){
-            simulation_->chunk_[i].Debug(renderer_,viewport_->texture_->GetScale());
+//            simulation_->chunk_[i].Debug(renderer_,viewport_->texture_->GetScale());
         }
     }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);

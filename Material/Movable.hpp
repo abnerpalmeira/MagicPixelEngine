@@ -5,17 +5,16 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#ifndef Movable_hpp
-#define Movable_hpp
+#pragma once
 
 #include <stdio.h>
 #include <vector>
+#include "Buffer.hpp"
 #include "Global.hpp"
 #include "MagicPixel.hpp"
 #include "Vector2.hpp"
 
 class Movable : virtual public MagicPixel{
-private:
 public:
     enum Orientation{
       DOWN,
@@ -27,12 +26,10 @@ public:
       UP_RIGHT,
       UP_LEFT,
     };
-    virtual ~Movable(){}
+    virtual int CanMove(Buffer &buffer, int x, int y){ return false; }
+    bool MoveStep(Buffer &buffer,int step,int direction,int x,int y);
+    bool LineCover(Buffer &buffer, Vector2 target,int x, int y, bool super = false);
     int dx_[8] = {0, 0, 1,-1,1,-1, 1,-1};
     int dy_[8] = {1,-1, 0, 0,1, 1,-1,-1};
-    virtual int CanMove(int idx){ return false; }
-    Vector2 LineCover(Vector2 target, bool super = false);
-    void MoveStep(int step,int direction);
+private:
 };
-
-#endif /* Navigation_hpp */

@@ -5,38 +5,26 @@
 //  Created by Abner Palmeira on 01/06/22.
 //
 
-#ifndef MagicPixel_hpp
-#define MagicPixel_hpp
-#include "MaterialType.hpp"
+#pragma once
+
+#include <memory>
+#include "SDL2/SDL.h"
 #include "Color.hpp"
 #include "Global.hpp"
-#include "Fenwick.hpp"
 #include "Helper.hpp"
+#include "MaterialType.hpp"
 #include "Vector2.hpp"
-#include "SDL2/SDL.h"
 
-
+class Buffer;
 class MagicPixel{
 public:
     MagicPixel();
     virtual ~MagicPixel(){}
-    virtual void Update(){}
-    virtual void ApplyEffects(){}
-   
-    void Move(int new_index);
-    void UpdateIndex(int new_index);
-    bool IsUpdated();
-    bool die_ = false;
-
-    int desinty_;
-    int index_;
+    virtual void Update(Buffer &buffer,int x,int y){}
+    Vector2 velocity_;
+    Color color_;
+    MaterialType material_;
     Uint32 ttl_;
     Uint32 last_frame_;
-    Color color_;
-    Vector2 velocity_;
-    Vector2 position_;
-    MaterialType material_;
+    int desinty_;
 };
-
-
-#endif /* MagicPixel_hpp */

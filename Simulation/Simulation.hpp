@@ -11,7 +11,6 @@
 #include <algorithm>
 #include "ThreadPool.hpp"
 #include "Global.hpp"
-#include "Material.hpp"
 #include "MagicPixel.hpp"
 #include "Graphics.hpp"
 #include "Vector2.hpp"

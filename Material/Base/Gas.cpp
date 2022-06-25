@@ -9,8 +9,6 @@
 
 
 Gas::Gas(int index, std::vector<MagicPixel*> *buffer){
-    index_ = index;
-    position_ = Helper::GetCords(index);
     color_ = Color(201,208,210,128);
 //    color_ = Color::Interpolate(Color(201,208,210,128), Color::White, Random::DoubleOnInterval(0.0, 0.4));
     ttl_ = current_tick + Random::IntOnInterval(0, 50000);
@@ -29,23 +27,23 @@ int Gas::CanMove(int index){
 }
 
 void Gas::CelularAutomata(){
-    if(up_){
-        MoveStep(4, Orientation::UP);
-    }else{
-        MoveStep(2, Orientation::DOWN);
-    }
-    up_ = !up_;
-    if(IsUpdated()){
-        return;
-    }
-    if(Random::CoinToss()){
-        MoveStep(1, Orientation::UP_RIGHT);
-        MoveStep(1, Orientation::UP_LEFT);
-    }
-    else{
-        MoveStep(1, Orientation::UP_LEFT);
-        MoveStep(1, Orientation::UP_RIGHT);
-    }
+//    if(up_){
+//        MoveStep(4, Orientation::UP);
+//    }else{
+//        MoveStep(2, Orientation::DOWN);
+//    }
+//    up_ = !up_;
+////    if(IsUpdated()){
+////        return;
+////    }
+//    if(Random::CoinToss()){
+//        MoveStep(1, Orientation::UP_RIGHT);
+//        MoveStep(1, Orientation::UP_LEFT);
+//    }
+//    else{
+//        MoveStep(1, Orientation::UP_LEFT);
+//        MoveStep(1, Orientation::UP_RIGHT);
+//    }
 }
 
 void Gas::Update(){

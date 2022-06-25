@@ -177,9 +177,9 @@ void Game::Render(){
     viewport_->Render();
     performance_bar_->Render();
     ui_->Render();
-    if(true){
+    if(false){
         for(int i=0;i<64;i++){
-//            simulation_->chunk_[i].Debug(renderer_,viewport_->texture_->GetScale());
+            (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->texture_->GetScale());
         }
     }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);

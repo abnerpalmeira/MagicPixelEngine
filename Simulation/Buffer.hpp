@@ -13,14 +13,15 @@
 
 class Buffer{
 public:
-    bool IsCellEmpty(int x,int y);
-    bool IsCellEmpty(int index);
-    void CreateMagicPixel(MaterialType material,int x,int y);
+    Buffer();
     Uint32 GetCellColor(int x,int y);
+    bool IsCellEmpty(int x,int y);
+    void CreateMagicPixel(MaterialType material,int x,int y);
+    void RemoveMagicPixel(int x,int y);
+    void SwapCell(int x,int y,int a ,int b);
+    void MoveCell(int x,int y,int a ,int b);
+    std::array<std::array<Cell,kSimulationHeight>,kSimulationWidth> buffer_;
 private:
-    std::array<Cell,kMaxCell> buffer_;
-    
-
 //    static void Create(){
 //  
 //    }

@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Buffer.hpp"
 #include "MagicPixel.hpp"
 #include "MagicPixelFactory.hpp"
 #include "MaterialType.hpp"
@@ -16,10 +17,10 @@
 class Sand : public Movable{
 public:
     Sand();
-    int CanMove(int index);
-    void Update();
+    int CanMove(Buffer &buffer, int x, int y);
+    void Update(Buffer &buffer,int x,int y);
 private:
-    void CelularAutomata();
+    void CelularAutomata(Buffer &buffer,int x,int y);
     void PhysicSimulation();
 };
 

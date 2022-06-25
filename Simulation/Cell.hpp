@@ -11,16 +11,15 @@
 #include "MagicPixel.hpp"
 #include "MagicPixelFactory.hpp"
 
+class Buffer;
 class Cell{
 public:
     Cell() = default;
-    void CreateMagicPixel(MaterialType material);
     bool Empty();
+    void Update(Buffer &buffer);
+    void CreateMagicPixel(MaterialType material);
+    void SetUpdateFlag();
     std::unique_ptr<MagicPixel> magic_pixel_ptr_;
-    Uint32 ttl_;
+    bool update_;
     int x_,y_;
-    int index_;
-    bool moved_;
-    bool die_;
-    
 };

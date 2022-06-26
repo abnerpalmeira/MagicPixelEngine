@@ -24,7 +24,7 @@ public:
     Vector2 velocity_;
     Color color_;
     MaterialType material_;
-    Uint32 ttl_;
+    Uint32 ttl_ = 0;
     Uint32 last_frame_;
     int desinty_;
 };

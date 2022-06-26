@@ -5,20 +5,25 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#ifndef Water_hpp
-#define Water_hpp
+#pragma once
 
-#include <stdio.h>
+#include "Buffer.hpp"
 #include "MagicPixel.hpp"
+#include "MaterialType.hpp"
 #include "Movable.hpp"
 #include "Random.hpp"
 
 class Water : public Movable{
 public:
-    Water(int index, std::vector<MagicPixel*> *buffer);
-    int CanMove(int index);
-    void CelularAutomata();
-    void Update();
+    Water();
+    int CanMove(Buffer &buffer, int x, int y);
+    void CelularAutomata(Buffer &buffer,int x,int y);
+    void Update(Buffer &buffer,int x,int y);
 };
 
-#endif /* Water_hpp */
+namespace{
+    std::unique_ptr<MagicPixel> CreateWater(){
+        return std::make_unique<Water>();
+    }
+    const bool registered_water = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::WATER, CreateWater);
+}

@@ -177,7 +177,7 @@ void Game::Render(){
     viewport_->Render();
     performance_bar_->Render();
     ui_->Render();
-    if(false){
+    if(true){
         for(int i=0;i<64;i++){
             (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->texture_->GetScale());
         }

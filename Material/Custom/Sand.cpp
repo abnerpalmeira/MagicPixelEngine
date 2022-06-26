@@ -10,6 +10,7 @@
 Sand::Sand(){
     color_ = Color::Interpolate(Color(255,207,92,255), Color::Black, Random::DoubleOnInterval(0.0, 0.15));
     velocity_ = Vector2(0,0);
+    material_ = MaterialType::SAND;
 }
 
 int Sand::CanMove(Buffer &buffer, int x, int y){

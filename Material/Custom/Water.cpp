@@ -7,39 +7,41 @@
 
 #include "Water.hpp"
 
-Water::Water(int index, std::vector<MagicPixel*> *buffer){
+Water::Water(){
     color_ = Color(131,215,238,180);
+    velocity_ = Vector2(0,0);
     material_ = MaterialType::WATER;
 }
 
-int Water::CanMove(int index){
-    return 0;
+int Water::CanMove(Buffer &buffer, int x, int y){
+    return buffer.IsCellEmpty(x, y);
 }
 
-void Water::CelularAutomata(){
-//    MoveStep(Random::IntOnInterval(1, 3), Orientation::DOWN);
-////    if(IsUpdated()) return;
-//    if(Random::CoinToss()){
-//        MoveStep(1, Orientation::DOWN_RIGHT);
-//        MoveStep(1, Orientation::DOWN_LEFT);
-//    }
-//    else{
-//        MoveStep(1, Orientation::DOWN_LEFT);
-//        MoveStep(1, Orientation::DOWN_RIGHT);
-//    }
-////    if(IsUpdated()) return;
-//    if(Random::CoinToss()){
-//        MoveStep(1,Orientation::RIGHT);
-////        if(IsUpdated()) return;
-//        MoveStep(1,Orientation::LEFT);
-//    }
-//    else{
-//        MoveStep(1,Orientation::LEFT);
-////        if(IsUpdated()) return;
-//        MoveStep(1,Orientation::RIGHT);
-//    }
+void Water::CelularAutomata(Buffer &buffer,int x,int y){
+    if(MoveStep(buffer,Random::IntOnInterval(1, 3), Orientation::DOWN,x,y)) return;
+    if(Random::CoinToss()){
+        if(MoveStep(buffer,1, Orientation::DOWN_RIGHT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::DOWN_LEFT,x,y)) return;
+    }
+    else{
+        if(MoveStep(buffer,1, Orientation::DOWN_LEFT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::DOWN_RIGHT,x,y)) return;
+    }
+    if(Random::CoinToss()){
+        if(MoveStep(buffer,1, Orientation::RIGHT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::LEFT,x,y)) return;
+    }
+    else{
+        if(MoveStep(buffer,1, Orientation::LEFT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::RIGHT,x,y)) return;
+    }
 }
 
-void Water::Update(){
-    CelularAutomata();
+void Water::Update(Buffer &buffer,int x,int y){
+    if(velocity_.x_ == 0 && velocity_.y_ == 0){
+        CelularAutomata(buffer,x,y);
+    }
+    else{
+//        PhysicSimulation();
+    }
 }

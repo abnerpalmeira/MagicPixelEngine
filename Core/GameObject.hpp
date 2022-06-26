@@ -19,7 +19,7 @@ public:
 //    ~GameObject();
     void Update();
     void Render();
-    Texture *texture_;
+    Texture *object_texture_ptr_;
     SDL_Renderer *renderer_;
     Uint32 *draw_buffer_;
 private:

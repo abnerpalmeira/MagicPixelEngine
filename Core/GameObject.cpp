@@ -12,5 +12,5 @@ GameObject::GameObject(){}
 void GameObject::Update(){}
 
 void GameObject::Render(){
-    if(texture_ != NULL) texture_->Render();
+    if(object_texture_ptr_ != NULL) object_texture_ptr_->Render();
 }

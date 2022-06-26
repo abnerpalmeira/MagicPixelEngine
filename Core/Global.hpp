@@ -48,7 +48,7 @@ constexpr Uint16 kMaxDrawRadius = 75;
 constexpr SDL_Color kCursorColor = {255, 255, 255, 255};
 constexpr SDL_Color kUIPanelColor = {0, 0, 0, 255};
 
-constexpr SDL_PixelFormatEnum kPixelFormat = SDL_PIXELFORMAT_ARGB8888;
+constexpr SDL_PixelFormatEnum kPixelFormat = SDL_PIXELFORMAT_BGRA8888;
 
 constexpr Uint8 kButtonsInRow = 3;
 constexpr float kButtonMargin = 0.05f;

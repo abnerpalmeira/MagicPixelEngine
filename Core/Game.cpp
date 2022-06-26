@@ -51,9 +51,9 @@ void Game::CreatePerfomanceBar() {
 
 void Game::CreateViewPort() {
     viewport_ = new GameObject();
-    viewport_->texture_ =  new Texture(renderer_,(float)kScreenWidth/kViewportWidth,kViewportRect);
-    viewport_->texture_->SetTextureBlendMode(SDL_BLENDMODE_BLEND);
-    viewport_->texture_->SetTextureAlphaMod(255);
+    viewport_->object_texture_ptr_ =  new Texture(renderer_,(float)kScreenWidth/kViewportWidth,kViewportRect);
+    viewport_->object_texture_ptr_->SetTextureBlendMode(SDL_BLENDMODE_BLEND);
+    viewport_->object_texture_ptr_->SetTextureAlphaMod(255);
     viewport_->draw_buffer_ = new Uint32[kViewportWidth*kViewportHeight];
 }
 
@@ -130,8 +130,8 @@ void Game::Update(){
     }else if(SDL_PointInRect(&cursor, &kScreenRect)){
         SDL_ShowCursor(SDL_DISABLE);
         SDL_Point foo = cursor;
-        foo.x = foo.x/viewport_->texture_->scale_;
-        foo.y = foo.y/viewport_->texture_->scale_;
+        foo.x = foo.x/viewport_->object_texture_ptr_->scale_;
+        foo.y = foo.y/viewport_->object_texture_ptr_->scale_;
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
             simulation_->SetCellInsideCircle(foo, draw_radius_, material_);
         }
@@ -140,9 +140,11 @@ void Game::Update(){
         }
     }
     if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
-        viewport_->texture_->rect_.y = std::clamp(viewport_->texture_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
+        viewport_->object_texture_ptr_->rect_.y = std::clamp(viewport_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
     }
     if(!paused_) {
+        int pitch = (kViewportWidth) * 8;
+        SDL_LockTexture(viewport_->object_texture_ptr_->texture_, nullptr, (void**) &viewport_->draw_buffer_, &pitch);
         simulation_->Update();
         for(int i=0;i<kViewportWidth;i++){
             for(int j=0;j<kViewportHeight;j++){
@@ -150,7 +152,7 @@ void Game::Update(){
                 viewport_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
             }
         }
-        SDL_UpdateTexture(viewport_->texture_->texture_, nullptr, viewport_->draw_buffer_, (kViewportWidth) * sizeof(Uint32));
+        SDL_UnlockTexture(viewport_->object_texture_ptr_->texture_);
     }
     LateUpdate();
 }
@@ -179,11 +181,11 @@ void Game::Render(){
     ui_->Render();
     if(true){
         for(int i=0;i<64;i++){
-            (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->texture_->GetScale());
+            (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->object_texture_ptr_->GetScale());
         }
     }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);
-    Graphics::DrawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->texture_->GetScale());
+    Graphics::DrawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->object_texture_ptr_->GetScale());
     SDL_RenderPresent(renderer_);
 }
 

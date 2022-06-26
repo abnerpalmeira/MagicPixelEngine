@@ -8,7 +8,7 @@
 #include "Wood.h"
 
 Wood::Wood(){
-    color_ = Color(133,94,66,255);
+    color_ = Color(58,50,50,255);
     if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::Black, Helper::RandomDoubleOnInterval(0.0, 0.15));
 }
 

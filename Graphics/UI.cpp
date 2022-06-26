@@ -15,7 +15,7 @@ UI::UI(SDL_Renderer *renderer, SDL_Rect rect, Color color){
 }
 
 void UI::CreateTexture(){
-    if(texture_ != NULL) delete texture_;
+    if(object_texture_ptr_ != NULL) delete object_texture_ptr_;
     SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0,rect_.w,rect_.h,32,kPixelFormat);
     SDL_FillRect(surf, NULL, color_.GetSDLMap());
     for(int i=0;i<button_group_.size();i++){
@@ -29,12 +29,12 @@ void UI::CreateTexture(){
         SDL_FreeSurface(temp_surf);
         
     }
-    texture_ = new Texture(renderer_,rect_, surf);
+    object_texture_ptr_ = new Texture(renderer_,rect_, surf);
     SDL_FreeSurface(surf);
 }
 
 UI::~UI(){
-    delete texture_;
+    delete object_texture_ptr_;
 }
 
 void UI::AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,std::function<void(int)> fn){

@@ -28,12 +28,12 @@ void Water::CelularAutomata(Buffer &buffer,int x,int y){
         if(MoveStep(buffer,1, Orientation::DOWN_RIGHT,x,y)) return;
     }
     if(Random::CoinToss()){
-        if(MoveStep(buffer,1, Orientation::RIGHT,x,y)) return;
-        if(MoveStep(buffer,1, Orientation::LEFT,x,y)) return;
+        if(MoveStep(buffer,5, Orientation::RIGHT,x,y)) return;
+        if(MoveStep(buffer,5, Orientation::LEFT,x,y)) return;
     }
     else{
-        if(MoveStep(buffer,1, Orientation::LEFT,x,y)) return;
-        if(MoveStep(buffer,1, Orientation::RIGHT,x,y)) return;
+        if(MoveStep(buffer,5, Orientation::LEFT,x,y)) return;
+        if(MoveStep(buffer,5, Orientation::RIGHT,x,y)) return;
     }
 }
 

@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "MagicPixel.hpp"
 #include "Movable.hpp"
-#include "Random.hpp"
+#include "Random.h"
 
 
 class Gas : public Movable{

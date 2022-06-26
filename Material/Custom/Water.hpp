@@ -11,7 +11,7 @@
 #include "MagicPixel.hpp"
 #include "MaterialType.hpp"
 #include "Movable.hpp"
-#include "Random.hpp"
+#include "Random.h"
 
 class Water : public Movable{
 public:

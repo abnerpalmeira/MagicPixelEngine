@@ -5,4 +5,4 @@
 //  Created by Abner Palmeira on 17/06/22.
 //
 
-#include "Random.hpp"
+#include "Random.h"

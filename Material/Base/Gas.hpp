@@ -5,10 +5,8 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#ifndef Gas_hpp
-#define Gas_hpp
+#pragma once
 
-#include <stdio.h>
 #include "MagicPixel.hpp"
 #include "Movable.hpp"
 #include "Random.h"
@@ -25,4 +23,3 @@ public:
     void Update();
 };
 
-#endif /* Gas_hpp */

@@ -27,6 +27,10 @@ bool Buffer::IsCellEmpty(int x,int y){
     return buffer_[x][y].magic_pixel_ptr_ == nullptr;
 }
 
+bool Buffer::IsExpired(int x,int y){
+    return (buffer_[x][y].magic_pixel_ptr_ != nullptr) && (buffer_[x][y].magic_pixel_ptr_->ttl_) && (buffer_[x][y].magic_pixel_ptr_->ttl_ <= current_tick);
+}
+
 void Buffer::CreateMagicPixel(MaterialType material,int x,int y){
     buffer_[x][y].magic_pixel_ptr_ = MagicPixelFactory::Instance()->CreateMagicPixel(material);
     buffer_[x][y].update_ = true;

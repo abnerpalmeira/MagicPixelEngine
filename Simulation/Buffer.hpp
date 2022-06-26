@@ -16,6 +16,7 @@ public:
     Buffer();
     Uint32 GetCellColor(int x,int y);
     bool IsCellEmpty(int x,int y);
+    bool IsExpired(int x,int y);
     void CreateMagicPixel(MaterialType material,int x,int y);
     void RemoveMagicPixel(int x,int y);
     void SwapCell(int x,int y,int a ,int b);

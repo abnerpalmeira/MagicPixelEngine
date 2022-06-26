@@ -53,9 +53,8 @@ void Chunk::Update(){
     ResetRect();
     for(int i=min_x_;i<=max_x_;i++){
         for(int j=min_y_;j<=max_y_;j++){
-            if(buffer_ptr_->buffer_[i][j].update_){
-                UpdateRect(i, j);
-            }
+            if(buffer_ptr_->IsExpired(i,j)) buffer_ptr_->RemoveMagicPixel(i, j);
+            if(buffer_ptr_->buffer_[i][j].update_) UpdateRect(i, j);
         }
     }
     int min_x,min_y,max_x,max_y;

@@ -6,30 +6,32 @@
 //
 
 #include "Fire.h"
-//ABGR
-Color Fire::color_array[3] = {Color(215, 53, 2,255),Color(252, 100, 0,255),Color(250, 192, 0,255)};
-//Color Fire::color_array[3] = {Color(215, 53, 2,255),Color(252, 100, 0,255),Color(250, 192, 0,255)};
-//Color Fire::color_array[3] = {Color(255,2, 53, 215),Color(255,0, 100, 252),Color(255,0, 192, 250)};
+
+Color Fire::colors[3] = {Color(215, 53, 2,255),Color(252, 100, 0,255),Color(250, 192, 0,255)};
+Uint32 Fire::min_temperature = 250;
+Uint32 Fire::max_temperature = 500;
+Uint32 Fire::default_ttl = 100;
 
 Fire::Fire(){
-    color_ = color_array[Random::IntOnInterval(0, 2)];
-    ttl_ = current_tick + Random::IntOnInterval(0, 100);
+    color_ = colors[0];
+    ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
     material_ = MaterialType::FIRE;
-    temperature_ = 250;
+    temperature_ = min_temperature;
+    if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.2));
 }
 
 void Fire::Update(Buffer &buffer, int x, int y){
-    temperature_ = std::min((int)temperature_+20,500);
-    int dx_[8] = {0, 0, 1,-1,1,-1, 1,-1};
-    int dy_[8] = {1,-1, 0, 0,1, 1,-1,-1};
+    temperature_ = std::min(temperature_+2,max_temperature);
     for(int i=0;i<8;i++){
-        int a = x + dx_[i], b = y + dy_[i];
+        int a = x + Navigation::dx[i], b = y + Navigation::dy[i];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kSimulationHeight) continue;
-        if(buffer.Ignites(a, b, temperature_)){
-            buffer.ReplacMagicPixel(MaterialType::FIRE,a,b);
-            buffer.buffer_[x][y].magic_pixel_ptr_->temperature_ = 1;
-            buffer.buffer_[x][y].magic_pixel_ptr_->ttl_ = current_tick + Random::IntOnInterval(1000, 2500);
+        if(!buffer.buffer_[a][b].Empty() && buffer.buffer_[a][b].GetMaterial() != MaterialType::FIRE){
+            buffer.buffer_[a][b].TransferHeat(temperature_);
+            buffer.buffer_[a][b].Burn(MaterialType::FIRE,default_ttl);
         }
     }
-    color_ = color_array[Random::IntOnInterval(0, 2)];
+    if(temperature_ <= 300) color_ = colors[0];
+    else if(temperature_ <= 450) color_ = colors[1];
+    else color_ = colors[2];
+    color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.2));
 }

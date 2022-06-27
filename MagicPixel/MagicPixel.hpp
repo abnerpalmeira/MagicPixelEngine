@@ -24,7 +24,8 @@ public:
     Vector2 velocity_;
     Color color_;
     MaterialType material_;
-    Uint32 temperature_;
+    Uint32 surface_area_ = 15;
+    Uint32 temperature_ = 0;
     Uint32 ignite_temperature_ = 0;
     Uint32 ttl_ = 0;
     int desinty_;

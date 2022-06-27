@@ -18,6 +18,7 @@ Simulation::Simulation(){
 }
 
 void Simulation::Reset(){
+    buffer_ptr_->Reset();
 }
 
 Simulation::~Simulation(){

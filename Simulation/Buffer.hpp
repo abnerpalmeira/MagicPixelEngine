@@ -26,6 +26,7 @@ public:
     void RemoveMagicPixel(int x,int y);
     void SwapCell(int x,int y,int a ,int b);
     void MoveCell(int x,int y,int a ,int b);
+    void Reset();
     std::array<std::array<Cell,kSimulationHeight>,kSimulationWidth> buffer_;
 private:
 //    static void Create(){

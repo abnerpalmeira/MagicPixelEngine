@@ -18,8 +18,8 @@ Color::Color(){
 
 Color::Color(int r,int g,int b,int a){
     r_ = r;
-    b_ = g;
-    g_ = b;
+    b_ = b;
+    g_ = g;
     a_ = a;
     changed_ = true;
 }

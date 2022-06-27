@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <stdio.h>
 #include <vector>
 #include "Buffer.hpp"
 #include "Global.hpp"

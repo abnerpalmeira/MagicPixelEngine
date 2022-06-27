@@ -67,3 +67,12 @@ void Buffer::MoveCell(int x,int y,int a ,int b){
         buffer_[a][b].update_ = true;
     }
 }
+
+void Buffer::Reset(){
+    for(int i=0;i<buffer_.size();i++){
+        for(int j=0;j<buffer_[i].size();j++){
+            buffer_[i][j].magic_pixel_ptr_.reset();
+            buffer_[i][j].update_ = false;
+        }
+    }
+}

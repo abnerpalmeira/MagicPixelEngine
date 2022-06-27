@@ -166,7 +166,7 @@ void  Game::LateUpdate(){
     tick_count_ += last_update - current_tick;
     if(count_++ == 60){
         count_ = 0;
-        stream << std::fixed << std::setprecision(2) << "Current: " << (1.0f / frame_time) << " fps Avg: " << (1000 / std::max<Uint32>(tick_count_/frame_count, 1)) << " fps Draw radius: "  << (draw_radius_);
+        stream << std::fixed << std::setprecision(2) << "Current: " << (1.0f / frame_time) << " fps Avg: " << (1000 / std::max<Uint32>(tick_count_/frame_count, 1)) << " fps";
         performance_bar_->text_.back().text_ = stream.str();
         performance_bar_->CreateTexture();
     }

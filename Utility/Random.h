@@ -1,14 +1,12 @@
 //
-//  Random.hpp
+//  Random.h
 //  MagicPixelEngine
 //
 //  Created by Abner Palmeira on 17/06/22.
 //
 
-#ifndef Random_hpp
-#define Random_hpp
+#pragma once
 
-#include <stdio.h>
 #include <utility>
 #include "Global.hpp"
 
@@ -26,5 +24,3 @@ public:
         return std::uniform_int_distribution<int>(0, 1)(rng);
     }
 };
-
-#endif /* Random_hpp */

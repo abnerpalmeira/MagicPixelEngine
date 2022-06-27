@@ -12,11 +12,15 @@
 #include "MagicPixel.hpp"
 #include "MaterialType.hpp"
 #include "Movable.hpp"
+#include "Navigation.h"
 #include "Random.h"
 
 class Fire : public MagicPixel{
 private:
-    static Color color_array[3];
+    static Color colors[3];
+    static Uint32 min_temperature;
+    static Uint32 max_temperature;
+    static Uint32 default_ttl;
 public:
     Fire();
     void Update(Buffer &buffer,int x,int y);

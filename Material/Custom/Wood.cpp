@@ -9,6 +9,7 @@
 
 Wood::Wood(){
     color_ = Color(58,50,50,255);
+    ignite_temperature_ = 250;
     if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::Black, Helper::RandomDoubleOnInterval(0.0, 0.15));
 }
 

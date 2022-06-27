@@ -5,9 +5,8 @@
 //  Created by Abner Palmeira on 31/05/22.
 //
 
-#ifndef Game_hpp
-#define Game_hpp
-#include <stdio.h>
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -48,22 +47,20 @@ private:
     void CreateUI();
     void ResetVariables();
     void InitFont();
-    bool is_running_ = false;
-    bool toggle_ = true;
-    bool debug_mode_ = false;
-    bool paused_ = false;
-    int count_;
-    Uint32 tick_count_;
-    Uint16 draw_radius_;
-    MaterialType material_;
     SDL_Event e_;
     SDL_Point last_cursor_;
+    SDL_Window *window_;
     Simulation *simulation_;
     GameObject *viewport_;
     UI *performance_bar_;
     UI *ui_;
     UI *material_ui_;
-    SDL_Window *window_;
+    Uint32 tick_count_;
+    Uint16 draw_radius_;
+    MaterialType material_;
+    int count_;
+    bool is_running_ = false;
+    bool toggle_ = true;
+    bool debug_mode_ = false;
+    bool paused_ = false;
 };
-
-#endif /* Game_hpp */

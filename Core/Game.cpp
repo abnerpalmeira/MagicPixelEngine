@@ -33,6 +33,7 @@ void Game::Init(const char *title, int x, int y, int w, int h){
     renderer_ = SDL_CreateRenderer(window_, -1,SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
     is_running_ = true;
+    count_ = 0;
 }
 
 void Game::InitFont(){
@@ -123,7 +124,6 @@ void Game::HandleEvents(){
 
 void Game::Update(){
     PreUpdate();
-    ui_->Update();
     if(SDL_PointInRect(&cursor,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
@@ -170,7 +170,6 @@ void  Game::LateUpdate(){
         performance_bar_->text_.back().text_ = stream.str();
         performance_bar_->CreateTexture();
     }
-    
 }
 
 void Game::Render(){
@@ -193,6 +192,5 @@ void Game::Clean(){
     SDL_DestroyWindow(window_);
     SDL_DestroyRenderer(renderer_);
     SDL_Quit();
-    std::cout << "Game Cleaned" << std::endl;
 }
 

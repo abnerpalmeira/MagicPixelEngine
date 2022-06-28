@@ -60,7 +60,7 @@ private:
     MaterialType material_;
     int count_;
     bool is_running_ = false;
-    bool toggle_ = true;
+    bool ui_mode_ = true;
     bool debug_mode_ = false;
     bool paused_ = false;
 };

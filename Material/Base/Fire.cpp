@@ -45,5 +45,4 @@ void Fire::Update(Buffer &buffer, int x, int y){
         color_ = Color::Interpolate(colors[0], colors[2], Helper::RandomDoubleOnInterval(0.0, 1));
     }
     buffer.buffer_[x][y].SetUpdateFlag();
-    
 }

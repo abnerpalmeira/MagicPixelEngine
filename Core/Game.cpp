@@ -124,7 +124,7 @@ void Game::HandleEvents(){
 
 void Game::Update(){
     PreUpdate();
-    if(SDL_PointInRect(&cursor,&ui_->rect_)){
+    if(ui_mode_ && SDL_PointInRect(&cursor,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
     }else if(SDL_PointInRect(&cursor, &kScreenRect)){
@@ -139,9 +139,15 @@ void Game::Update(){
             simulation_->SetCellInsideCircle(foo, draw_radius_, material_,true);
         }
     }
-    if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
-        viewport_->object_texture_ptr_->rect_.y = std::clamp(viewport_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
+    if(InputManager::Instance()->key_states_.contains(SDLK_TAB)  && InputManager::Instance()->key_states_[SDLK_TAB] == InputManager::KeyState::JUSTDOWN){
+        ui_mode_ = !ui_mode_;
     }
+    if(InputManager::Instance()->key_states_.contains(SDLK_r)  && InputManager::Instance()->key_states_[SDLK_r] == InputManager::KeyState::JUSTDOWN){
+        debug_mode_ = !debug_mode_;
+    }
+//    if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
+//        viewport_->object_texture_ptr_->rect_.y = std::clamp(viewport_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
+//    }
     if(!paused_) {
         int pitch = (kViewportWidth) * 8;
         SDL_LockTexture(viewport_->object_texture_ptr_->texture_, nullptr, (void**) &viewport_->draw_buffer_, &pitch);
@@ -177,8 +183,8 @@ void Game::Render(){
     SDL_RenderClear(renderer_);
     viewport_->Render();
     performance_bar_->Render();
-    ui_->Render();
-    if(false){
+    if(ui_mode_) ui_->Render();
+    if(debug_mode_){
         for(int i=0;i<64;i++){
             (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->object_texture_ptr_->GetScale());
         }

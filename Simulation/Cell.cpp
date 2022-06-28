@@ -30,7 +30,7 @@ void Cell::SetUpdateFlag(){
 }
 
 void Cell::TransferHeat(int temperature){
-    magic_pixel_ptr_->temperature_ += (int)(temperature * Random::DoubleOnInterval(0.02, 0.05));
+    magic_pixel_ptr_->temperature_ += (int)(temperature * Random::DoubleOnInterval(0.01, 0.02));
 }
 
 void Cell::CreateMagicPixel(MaterialType material){
@@ -57,6 +57,6 @@ void Cell::Burn(MaterialType material, int base_ttl){
     if(magic_pixel_ptr_->ignite_temperature_ && magic_pixel_ptr_->ignite_temperature_ <= magic_pixel_ptr_->temperature_){
         Uint32 surface_area = magic_pixel_ptr_->surface_area_;
         ReplacMagicPixel(material);
-        magic_pixel_ptr_->ttl_ = current_tick + base_ttl*surface_area;
+        magic_pixel_ptr_->ttl_ = current_tick + base_ttl*surface_area + Random::IntOnInterval(0, 1000);
     }
 }

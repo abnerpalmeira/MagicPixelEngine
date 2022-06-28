@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <functional>
-#include "Chunk.hpp"
+#include "Chunk.h"
 #include "MagicPixel.hpp"
 
 class Job{

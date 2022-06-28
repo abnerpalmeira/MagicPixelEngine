@@ -1,5 +1,5 @@
 //
-//  Chunk.hpp
+//  Chunk.h
 //  2D Sand
 //
 //  Created by Abner Palmeira on 05/06/22.

@@ -4,10 +4,27 @@
 //
 //  Created by Abner Palmeira on 14/06/22.
 //
+#pragma once
 
-#ifndef Liquid_hpp
-#define Liquid_hpp
+#include "Buffer.hpp"
+#include "MagicPixel.hpp"
+#include "MaterialType.hpp"
+#include "Movable.hpp"
+#include "Random.h"
 
-#include <stdio.h>
+class Liquid : public Movable{
+protected:
+    int dispersion_rate_;
+public:
+    Liquid();
+    int CanMove(Buffer &buffer, int x, int y);
+    void CelularAutomata(Buffer &buffer,int x,int y);
+    void Update(Buffer &buffer,int x,int y);
+};
 
-#endif /* Liquid_hpp */
+namespace{
+    std::unique_ptr<MagicPixel> CreateLiquid(){
+        return std::make_unique<Liquid>();
+    }
+    const bool registered_liquid = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::LIQUID, CreateLiquid);
+}

@@ -7,21 +7,14 @@
 
 #pragma once
 
-#include "Buffer.hpp"
 #include "MagicPixel.hpp"
 #include "MaterialType.hpp"
-#include "Movable.hpp"
+#include "Gas.hpp"
 #include "Random.h"
 
-
-class Steam : public Movable{
-private:
-    bool up_;
+class Steam : public Gas{
 public:
     Steam();
-    int CanMove(Buffer &buffer, int x, int y);
-    void CelularAutomata(Buffer &buffer,int x,int y);
-    void Update(Buffer &buffer,int x,int y);
 };
 
 namespace{

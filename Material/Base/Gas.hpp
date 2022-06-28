@@ -13,13 +13,19 @@
 
 
 class Gas : public Movable{
-private:
+protected:
     bool up_ = true;
 public:
-    Gas(int index, std::vector<MagicPixel*> *buffer);
-    void CelularAutomata();
-    virtual ~Gas(){}
-    int CanMove(int index);
-    void Update();
+    Gas();
+    int CanMove(Buffer &buffer, int x, int y);
+    void CelularAutomata(Buffer &buffer,int x,int y);
+    void Update(Buffer &buffer,int x,int y);
 };
+
+namespace{
+    std::unique_ptr<MagicPixel> CreateGas(){
+        return std::make_unique<Gas>();
+    }
+    const bool registered_gas = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::GAS, CreateGas);
+}
 

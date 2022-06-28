@@ -30,7 +30,7 @@ void Cell::SetUpdateFlag(){
 }
 
 void Cell::TransferHeat(int temperature){
-    magic_pixel_ptr_->temperature_ += (int)(temperature * Random::DoubleOnInterval(0.1, 0.2));
+    magic_pixel_ptr_->temperature_ += (int)(temperature * Random::DoubleOnInterval(0.02, 0.05));
 }
 
 void Cell::CreateMagicPixel(MaterialType material){

@@ -13,7 +13,7 @@ Uint32 Fire::max_temperature = 500;
 Uint32 Fire::default_ttl = 100;
 
 Fire::Fire(){
-    color_ = colors[0];
+    color_ = colors[Random::IntOnInterval(0, 2)];
     ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
     material_ = MaterialType::FIRE;
     temperature_ = min_temperature;
@@ -30,8 +30,7 @@ void Fire::Update(Buffer &buffer, int x, int y){
             buffer.buffer_[a][b].Burn(MaterialType::FIRE,default_ttl);
         }
     }
-    if(temperature_ <= 300) color_ = colors[0];
-    else if(temperature_ <= 450) color_ = colors[1];
-    else color_ = colors[2];
-    color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.2));
+    color_ = colors[Random::IntOnInterval(0, 2)];
+    buffer.buffer_[x][y].SetUpdateFlag();
+    
 }

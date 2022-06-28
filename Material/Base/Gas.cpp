@@ -8,45 +8,36 @@
 #include "Gas.hpp"
 
 
-Gas::Gas(int index, std::vector<MagicPixel*> *buffer){
-    color_ = Color(201,208,210,128);
-//    color_ = Color::Interpolate(Color(201,208,210,128), Color::White, Random::DoubleOnInterval(0.0, 0.4));
-    ttl_ = current_tick + Random::IntOnInterval(0, 50000);
-//    material_ = MaterialType::GAS;
+Gas::Gas(){
+//    color_ = Color(128,128,128,128);
+    material_ = MaterialType::GAS;
+    up_ = true;
 }
     
-int Gas::CanMove(int index){
-    MagicPixel *current = nullptr;
-    if(current == nullptr){
+int Gas::CanMove(Buffer &buffer, int x, int y){
+    if(buffer.IsCellEmpty(x, y)){
         return 1;
     }
-//    else if(current->material_ == MaterialType::GAS){
-//        return -1;
-//    }
+    else if(buffer.buffer_[x][y].magic_pixel_ptr_->material_ == material_){
+        return -1;
+    }
     return 0;
 }
 
-void Gas::CelularAutomata(){
-//    if(up_){
-//        MoveStep(4, Orientation::UP);
-//    }else{
-//        MoveStep(2, Orientation::DOWN);
-//    }
-//    up_ = !up_;
-////    if(IsUpdated()){
-////        return;
-////    }
-//    if(Random::CoinToss()){
-//        MoveStep(1, Orientation::UP_RIGHT);
-//        MoveStep(1, Orientation::UP_LEFT);
-//    }
-//    else{
-//        MoveStep(1, Orientation::UP_LEFT);
-//        MoveStep(1, Orientation::UP_RIGHT);
-//    }
+void Gas::CelularAutomata(Buffer &buffer, int x, int y){
+    if(up_ && MoveStep(buffer,4, Orientation::UP,x,y)) return;
+    if(MoveStep(buffer,1, Orientation::DOWN,x,y)) return;
+    if(Random::CoinToss()){
+        if(MoveStep(buffer,1, Orientation::UP_RIGHT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::UP_LEFT,x,y)) return;
+    }
+    else{
+        if(MoveStep(buffer,1, Orientation::UP_LEFT,x,y)) return;
+        if(MoveStep(buffer,1, Orientation::UP_RIGHT,x,y)) return;
+    }
 }
 
-void Gas::Update(){
-    CelularAutomata();
-
+void Gas::Update(Buffer &buffer, int x, int y){
+    CelularAutomata(buffer,x,y);
+    up_ = !up_;
 }

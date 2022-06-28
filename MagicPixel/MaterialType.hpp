@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <stdio.h>
-
 enum class MaterialType{
     EMPTY,
     ROCK,
@@ -17,4 +15,7 @@ enum class MaterialType{
     FIRE,
     STEAM,
     WOOD,
+    GAS,
+    LIQUID,
+    SOLID,
 };

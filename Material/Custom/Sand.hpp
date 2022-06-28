@@ -11,17 +11,12 @@
 #include "MagicPixel.hpp"
 #include "MagicPixelFactory.hpp"
 #include "MaterialType.hpp"
-#include "Movable.hpp"
+#include "Solid.hpp"
 #include "Random.h"
 
-class Sand : public Movable{
+class Sand : public Solid{
 public:
     Sand();
-    int CanMove(Buffer &buffer, int x, int y);
-    void Update(Buffer &buffer,int x,int y);
-private:
-    void CelularAutomata(Buffer &buffer,int x,int y);
-    void PhysicSimulation();
 };
 
 namespace{

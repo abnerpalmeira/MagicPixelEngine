@@ -8,17 +8,14 @@
 #pragma once
 
 #include "Buffer.hpp"
+#include "Liquid.hpp"
 #include "MagicPixel.hpp"
 #include "MaterialType.hpp"
-#include "Movable.hpp"
 #include "Random.h"
 
-class Water : public Movable{
+class Water : public Liquid{
 public:
     Water();
-    int CanMove(Buffer &buffer, int x, int y);
-    void CelularAutomata(Buffer &buffer,int x,int y);
-    void Update(Buffer &buffer,int x,int y);
 };
 
 namespace{

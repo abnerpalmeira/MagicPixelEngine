@@ -25,12 +25,26 @@ void Fire::Update(Buffer &buffer, int x, int y){
     for(int i=0;i<8;i++){
         int a = x + Navigation::dx[i], b = y + Navigation::dy[i];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kSimulationHeight) continue;
-        if(!buffer.buffer_[a][b].Empty() && buffer.buffer_[a][b].GetMaterial() != MaterialType::FIRE){
+        if(buffer.buffer_[a][b].Empty()){
+            int emiiter = Random::IntOnInterval(0,10);
+            if(emiiter <= 1){
+                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
+                buffer.buffer_[a][b].magic_pixel_ptr_->color_ = color_;
+                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 20;
+            }
+            else if(emiiter == 3){
+                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
+                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 100;
+            }
+        }
+        else if(buffer.buffer_[a][b].GetMaterial() != MaterialType::FIRE){
             buffer.buffer_[a][b].TransferHeat(temperature_);
             buffer.buffer_[a][b].Burn(MaterialType::FIRE,default_ttl);
         }
     }
-    color_ = colors[Random::IntOnInterval(0, 2)];
+    if(!Random::IntOnInterval(0, 3)){
+        color_ = colors[Random::IntOnInterval(0, 2)];
+    }
     buffer.buffer_[x][y].SetUpdateFlag();
     
 }

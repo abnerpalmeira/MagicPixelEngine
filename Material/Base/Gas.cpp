@@ -9,9 +9,11 @@
 
 
 Gas::Gas(){
-//    color_ = Color(128,128,128,128);
+    color_ = Color(128,128,128,128);
     material_ = MaterialType::GAS;
     up_ = true;
+    dispersion_rate_ = 2;
+    oscillation_rate_ = 1;
 }
     
 int Gas::CanMove(Buffer &buffer, int x, int y){
@@ -25,8 +27,8 @@ int Gas::CanMove(Buffer &buffer, int x, int y){
 }
 
 void Gas::CelularAutomata(Buffer &buffer, int x, int y){
-    if(up_ && MoveStep(buffer,4, Orientation::UP,x,y)) return;
-    if(MoveStep(buffer,1, Orientation::DOWN,x,y)) return;
+    if(up_ && MoveStep(buffer,dispersion_rate_, Orientation::UP,x,y)) return;
+    if(oscillation_rate_ && MoveStep(buffer,oscillation_rate_, Orientation::DOWN,x,y)) return;
     if(Random::CoinToss()){
         if(MoveStep(buffer,1, Orientation::UP_RIGHT,x,y)) return;
         if(MoveStep(buffer,1, Orientation::UP_LEFT,x,y)) return;

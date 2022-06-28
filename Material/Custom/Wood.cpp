@@ -14,9 +14,3 @@ Wood::Wood(){
     material_ = MaterialType::WOOD;
     if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::Black, Helper::RandomDoubleOnInterval(0.0, 0.4));
 }
-
-void Wood::Update(){}
-    
-bool Wood::CanMove(int idx){
-    return true;
-}

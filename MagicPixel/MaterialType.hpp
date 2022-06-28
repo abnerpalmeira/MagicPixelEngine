@@ -12,10 +12,11 @@ enum class MaterialType{
     ROCK,
     SAND,
     WATER,
-    FIRE,
     STEAM,
     WOOD,
+    FIRE,
     GAS,
     LIQUID,
     SOLID,
+    STATIC,
 };

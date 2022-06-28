@@ -10,12 +10,11 @@
 #include "MagicPixel.hpp"
 #include "MaterialType.hpp"
 #include "MagicPixelFactory.hpp"
+#include "Static.h"
 
-class Rock : public MagicPixel{
+class Rock : public Static{
 public:
     Rock();
-    void Update();
-    bool CanMove(int idx);
 };
 
 namespace{

@@ -14,7 +14,9 @@
 
 class Gas : public Movable{
 protected:
-    bool up_ = true;
+    int dispersion_rate_;
+    int oscillation_rate_;
+    bool up_;
 public:
     Gas();
     int CanMove(Buffer &buffer, int x, int y);

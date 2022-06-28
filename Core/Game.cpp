@@ -4,7 +4,7 @@
 //
 //  Created by Abner Palmeira on 31/05/22.
 //
-#include "Game.hpp"
+#include "Game.h"
 
 SDL_Renderer* Game::renderer_ = nullptr;
 

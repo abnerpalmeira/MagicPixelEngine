@@ -14,7 +14,7 @@
 #include "MagicPixel.hpp"
 #include "Graphics.hpp"
 #include "Vector2.hpp"
-#include "Chunk.hpp"
+#include "Chunk.h"
 #include "Job.hpp"
 #include "Buffer.hpp"
 

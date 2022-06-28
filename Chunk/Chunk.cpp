@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 05/06/22.
 //
 
-#include "Chunk.hpp"
+#include "Chunk.h"
 
 void Chunk::Init(int x, int y, std::shared_ptr<std::array<Chunk,kMaxChunk> > chunks, std::shared_ptr<Buffer> buffer){
     buffer_ptr_ = buffer;

@@ -1,5 +1,5 @@
 //
-//  GameObject.hpp
+//  GameObject.h
 //  MagicPixel
 //
 //  Created by Abner Palmeira on 01/06/22.

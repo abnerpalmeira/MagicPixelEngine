@@ -1,6 +1,6 @@
 #include "SDL2/SDL.h"
 #include "SDL2_ttf/SDL_ttf.h"
-#include "Game.hpp"
+#include "Game.h"
 #include "ThreadPool.hpp"
 #include "Simulation.hpp"
 #include "Graphics.hpp"

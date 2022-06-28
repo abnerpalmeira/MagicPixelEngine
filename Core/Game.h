@@ -1,5 +1,5 @@
 //
-//  Game.hpp
+//  Game.h
 //  MagicPixel
 //
 //  Created by Abner Palmeira on 31/05/22.
@@ -19,7 +19,7 @@
 #include "Simulation.hpp"
 #include "Global.hpp"
 #include "ThreadPool.hpp"
-#include "GameObject.hpp"
+#include "GameObject.h"
 #include "InputManager.hpp"
 #include "Texture.hpp"
 #include "UI.hpp"

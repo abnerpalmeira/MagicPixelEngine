@@ -13,7 +13,7 @@
 #include <string>
 #include "SDL2/SDL.h"
 #include "SDL2_ttf/SDL_ttf.h"
-#include "GameObject.hpp"
+#include "GameObject.h"
 #include "Texture.hpp"
 #include "Button.hpp"
 #include "Color.hpp"

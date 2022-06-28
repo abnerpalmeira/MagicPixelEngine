@@ -13,11 +13,10 @@ Uint32 Fire::max_temperature = 500;
 Uint32 Fire::default_ttl = 100;
 
 Fire::Fire(){
-    color_ = colors[Random::IntOnInterval(0, 2)];
     ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
     material_ = MaterialType::FIRE;
     temperature_ = min_temperature;
-    if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.2));
+    color_ = Color::Interpolate(colors[0], colors[2], Helper::RandomDoubleOnInterval(0.0, 1));
 }
 
 void Fire::Update(Buffer &buffer, int x, int y){
@@ -26,13 +25,13 @@ void Fire::Update(Buffer &buffer, int x, int y){
         int a = x + Navigation::dx[i], b = y + Navigation::dy[i];
         if(a < 0 || b < 0 || a >= kSimulationWidth || b >= kSimulationHeight) continue;
         if(buffer.buffer_[a][b].Empty()){
-            int emiiter = Random::IntOnInterval(0,10);
-            if(emiiter <= 1){
+            int should_emit = Random::IntOnInterval(0,10);
+            if(should_emit <= 1){
                 buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
                 buffer.buffer_[a][b].magic_pixel_ptr_->color_ = color_;
                 buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 20;
             }
-            else if(emiiter == 3){
+            else if(should_emit == 3){
                 buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
                 buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 100;
             }
@@ -43,7 +42,7 @@ void Fire::Update(Buffer &buffer, int x, int y){
         }
     }
     if(!Random::IntOnInterval(0, 3)){
-        color_ = colors[Random::IntOnInterval(0, 2)];
+        color_ = Color::Interpolate(colors[0], colors[2], Helper::RandomDoubleOnInterval(0.0, 1));
     }
     buffer.buffer_[x][y].SetUpdateFlag();
     

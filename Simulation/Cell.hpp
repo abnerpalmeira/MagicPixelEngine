@@ -10,6 +10,7 @@
 #include <memory>
 #include "MagicPixel.hpp"
 #include "MagicPixelFactory.hpp"
+#include "Random.h"
 
 class Buffer;
 class Cell{

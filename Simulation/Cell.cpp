@@ -5,8 +5,8 @@
 //  Created by Abner Palmeira on 23/06/22.
 //
 
-#include "Cell.hpp"
 #include "Buffer.hpp"
+#include "Cell.hpp"
 
 bool Cell::Empty(){
     return magic_pixel_ptr_ == nullptr;
@@ -30,7 +30,7 @@ void Cell::SetUpdateFlag(){
 }
 
 void Cell::TransferHeat(int temperature){
-    magic_pixel_ptr_->temperature_ += (int)(temperature * 0.1);
+    magic_pixel_ptr_->temperature_ += (int)(temperature * Random::DoubleOnInterval(0.1, 0.2));
 }
 
 void Cell::CreateMagicPixel(MaterialType material){
@@ -54,7 +54,7 @@ MaterialType Cell::GetMaterial(){
 }
 
 void Cell::Burn(MaterialType material, int base_ttl){
-    if(magic_pixel_ptr_->ignite_temperature_ <= magic_pixel_ptr_->temperature_){
+    if(magic_pixel_ptr_->ignite_temperature_ && magic_pixel_ptr_->ignite_temperature_ <= magic_pixel_ptr_->temperature_){
         Uint32 surface_area = magic_pixel_ptr_->surface_area_;
         ReplacMagicPixel(material);
         magic_pixel_ptr_->ttl_ = current_tick + base_ttl*surface_area;

@@ -1,2 +1,4 @@
 *.xcodeproj
+.vscode/
 .DS_Store
+build/

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include "editor/Engine.h"
+// #include "editor/Engine.h"
 //#include "SDL2/SDL.h"
 //#include "SDL2_ttf/SDL_ttf.h"
 //#include "imgui.h"
@@ -15,15 +15,15 @@
 //#include "Global.hpp"
 
 
-Engine *engine = nullptr;
+// Engine *engine = nullptr;
 
 int main(int argc, char **argv){
-    engine = new Engine();
-    while (engine->Running()) {
-        engine->HandleEvents();
-        engine->Update();
-        engine->Render();
-    }
-    engine->Clear();
+    // engine = new Engine();
+    // while (engine->Running()) {
+    //     engine->HandleEvents();
+    //     engine->Update();
+    //     engine->Render();
+    // }
+    // engine->Clear();
     return  0;
 }

@@ -1,9 +1,9 @@
 include(ExternalProject)
 
-set(SDL_VERSION "2.0.9")
+set(SDL_VERSION "2.0.22")
 set(SDL_VERSION_STRING "SDL2-${SDL_VERSION}")
 
-set(SDL_ROOT_DIR "${EXTERN_DIR}/${SDL_VERSION_STRING}")
+set(SDL_ROOT_DIR "${EXTERNAL_DIR}/${SDL_VERSION_STRING}")
 set(SDL_MSVC_DIR "${SDL_ROOT_DIR}/VisualC")
 
 if(OS_WINDOWS)
@@ -37,7 +37,7 @@ if(OS_MACOSX)
 
 	install(
 		FILES "${SDL_ROOT_DIR}/build/.libs/libSDL2-2.0.0.dylib"
-		DESTINATION "${CMAKE_INSTALL_PREFIX}/CompositeEngine.app/Contents/Frameworks")
+		DESTINATION "${CMAKE_INSTALL_PREFIX}/MagicPixelEngine.app/Contents/Frameworks")
 endif()
 
 ExternalProject_Add(

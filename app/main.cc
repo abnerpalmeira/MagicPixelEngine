@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <SDL.h>
 // #include "editor/Engine.h"
 //#include "SDL2/SDL.h"
 //#include "SDL2_ttf/SDL_ttf.h"
@@ -18,6 +19,7 @@
 // Engine *engine = nullptr;
 
 int main(int argc, char **argv){
+    std::cout << "Hello World" << std::endl;
     // engine = new Engine();
     // while (engine->Running()) {
     //     engine->HandleEvents();

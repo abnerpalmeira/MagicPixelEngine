@@ -40,6 +40,7 @@ if(OS_MACOSX)
 		DESTINATION "${CMAKE_INSTALL_PREFIX}/MagicPixelEngine.app/Contents/Frameworks")
 endif()
 
+
 ExternalProject_Add(
 	SDLExternal
 	PREFIX ${SDL_VERSION_STRING}
@@ -56,7 +57,6 @@ ExternalProject_Add(
 
 	BUILD_BYPRODUCTS ${BUILD_BYPRODUCTS}
 )
-
 add_library(SDL INTERFACE)
 add_dependencies(SDL SDLExternal)
 target_include_directories(SDL INTERFACE "${SDL_ROOT_DIR}/include")

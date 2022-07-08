@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "MagicPixel.hpp"
-#include "MaterialType.hpp"
-#include "Gas.hpp"
-#include "Random.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/material_type.h"
+#include "magicpixel/material/base/gas.h"
+#include  "common/utility/random.h"
 
 class Steam : public Gas{
 public:

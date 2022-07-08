@@ -12,10 +12,10 @@
 #include <vector>
 #include <functional>
 #include <sstream>
-#include "SDL2/SDL.h"
-#include "SDL2_ttf/SDL_ttf.h"
-#include "Global.hpp"
-#include "Color.hpp"
+#include <SDL.h>
+#include <SDL.h>
+#include "core/global.h"
+#include"graphics/color.h"
 
 
 template < class T, class... Args >

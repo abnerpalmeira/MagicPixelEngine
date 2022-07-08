@@ -9,11 +9,11 @@
 
 #include <algorithm>
 #include <memory>
-#include "SDL2/SDL.h"
-#include "Buffer.hpp"
-#include "Global.hpp"
-#include "MagicPixel.hpp"
-#include "MaterialType.hpp"
+#include <SDL.h>
+#include "simulation/buffer.h"
+#include "core/global.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/material_type.h"
 
 class Chunk{
 public:

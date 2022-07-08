@@ -8,10 +8,10 @@
 #pragma once
 
 #include <vector>
-#include "Buffer.hpp"
-#include "Global.hpp"
-#include "MagicPixel.hpp"
-#include "Vector2.hpp"
+#include "simulation/buffer.h"
+#include "core/global.h"
+#include "magicpixel/magic_pixel.h"
+#include "common/geometry/vector.h"
 
 class Movable : virtual public MagicPixel{
 public:

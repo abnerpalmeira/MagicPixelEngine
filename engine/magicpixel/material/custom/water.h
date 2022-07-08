@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include "Buffer.hpp"
-#include "Liquid.hpp"
-#include "MagicPixel.hpp"
-#include "MaterialType.hpp"
-#include "Random.h"
+#include "simulation/buffer.h"
+#include "magicpixel/material/base/liquid.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/material_type.h"
+#include  "common/utility/random.h"
 
 class Water : public Liquid{
 public:

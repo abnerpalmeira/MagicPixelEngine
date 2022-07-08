@@ -1,4 +1,5 @@
 include("${CMAKE_DIR}/SDL.cmake")
+include("${CMAKE_DIR}/SDL2_ttf.cmake")
 set(IMGUI_SOURCES
     "imgui/imgui.cpp"
     "imgui/imgui_draw.cpp"

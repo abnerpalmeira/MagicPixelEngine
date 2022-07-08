@@ -1,6 +1,6 @@
 //vector.cpp
 
-#include "vector.h"
+#include "common/geometry/vector.h"
 
 Vector2::Vector2() = default;
 Vector2::Vector2(int x, int y) : x_(x), y_(y) {}

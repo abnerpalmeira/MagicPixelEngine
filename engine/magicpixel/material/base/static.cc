@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 28/06/22.
 //
 
-#include "static.h"
+#include "magicpixel/material/base/static.h"
 
 Static::Static(){
     color_ = Color(128,128,128,255);

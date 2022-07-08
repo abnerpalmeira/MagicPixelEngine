@@ -5,12 +5,11 @@
 //  Created by Abner Palmeira on 03/06/22.
 //
 
-#ifndef Global_hpp
-#define Global_hpp
+#pragma once
 #include <random>
 #include <thread>
-#include "SDL2/SDL.h"
-#include "SDL2_ttf/SDL_ttf.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
 
 extern Uint32 frame_count;
 extern Uint32 current_tick;
@@ -54,5 +53,3 @@ constexpr Uint8 kButtonsInRow = 3;
 constexpr float kButtonMargin = 0.05f;
 
 constexpr SDL_Color kTextColor = {255, 255, 255, 255};
-
-#endif /* Global_hpp */

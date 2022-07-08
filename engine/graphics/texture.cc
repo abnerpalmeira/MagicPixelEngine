@@ -15,10 +15,10 @@ Texture::Texture(SDL_Renderer *renderer, float scale, SDL_Rect rect){
 }
 
 Texture::Texture(SDL_Renderer *renderer, float scale, const char *file){
-    SDL_Surface* surface = IMG_Load(file);
-    texture_= SDL_CreateTextureFromSurface(renderer, surface);
-    scale_ = scale;
-    SDL_FreeSurface(surface);
+    // SDL_Surface* surface = IMG_Load(file);
+    // texture_= SDL_CreateTextureFromSurface(renderer, surface);
+    // scale_ = scale;
+    // SDL_FreeSurface(surface);
 }
 
 Texture::Texture(SDL_Renderer *renderer, SDL_Rect rect, SDL_Surface *surface){

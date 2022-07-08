@@ -8,9 +8,9 @@
 #pragma once
 
 #include <array>
-#include "Cell.hpp"
-#include "MagicPixelFactory.hpp"
-#include "MaterialType.hpp"
+#include "simulation/cell.h"
+#include "magicpixel/magic_pixel_factory.h"
+#include "magicpixel/material/material_type.h"
 
 class Buffer{
 public:

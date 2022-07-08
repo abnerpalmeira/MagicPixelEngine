@@ -10,14 +10,13 @@
 #include <stdio.h>
 #include <sstream>
 #include <string>
-#include "SDL2/SDL.h"
-#include "SDL2_ttf/SDL_ttf.h"
-#include "GameObject.h"
-#include "Texture.hpp"
-#include "Button.hpp"
-#include "Color.hpp"
-#include "Global.hpp"
-#include "Text.hpp"
+#include <SDL.h>
+#include "core/game_object.h"
+#include "graphics/texture.h"
+#include "graphics/button.h"
+#include "graphics/color.h"
+#include "core/global.h"
+#include "graphics/text.h"
 
 class UI : public GameObject{
 public:

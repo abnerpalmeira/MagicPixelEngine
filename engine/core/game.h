@@ -13,16 +13,15 @@
 #include <filesystem>
 #include <algorithm>
 #include <unistd.h>
-#include "SDL2/SDL.h"
-#include "SDL2_ttf/SDL_ttf.h"
-#include "SDL2_image/SDL_image.h"
-#include "Simulation.hpp"
-#include "Global.hpp"
-#include "ThreadPool.hpp"
-#include "GameObject.h"
-#include "InputManager.hpp"
-#include "Texture.hpp"
-#include "UI.hpp"
+#include <SDL.h>
+#include "graphics/graphics.h"
+#include "simulation/simulation.h"
+#include "core/global.h"
+#include "common/thread/thread_pool.h"
+#include "core/game_object.h"
+#include "core/input_manager.h"
+#include "graphics/texture.h"
+#include "graphics/ui.h"
 
 class Game{
 public:

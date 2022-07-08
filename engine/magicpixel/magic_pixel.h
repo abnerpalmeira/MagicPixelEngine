@@ -8,12 +8,12 @@
 #pragma once
 
 #include <memory>
-#include "SDL2/SDL.h"
-#include "Color.hpp"
-#include "Global.hpp"
-#include "Helper.hpp"
-#include "MaterialType.hpp"
-#include "Vector2.hpp"
+#include <SDL.h>
+#include "graphics/color.h"
+#include "core/global.h"
+#include "common/utility/helper.h"
+#include "magicpixel/material/material_type.h"
+#include "common/geometry/vector.h"
 
 class Buffer;
 class MagicPixel{

@@ -32,10 +32,10 @@ if(OS_MACOSX)
 			"@executable_path/../Frameworks/libSDL2_ttf-2.0.0.dylib"
 			"${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib")
 	set(BUILD_BYPRODUCTS
-		"${SDL2_TTF_ROOT_DIR}/build/.libs/libSDL2_ttf-2.0.0.dylib")
+		"${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib")
 
 	install(
-		FILES "${SDL2_TTF_ROOT_DIR}/build/.libs/libSDL2_ttf-2.0.0.dylib"
+		FILES "${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib"
 		DESTINATION "${CMAKE_INSTALL_PREFIX}/MagicPixelEngine.app/Contents/Frameworks")
 endif()
 

@@ -10,10 +10,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(LIBRARY_NAME "engine")
 set(APP_DIR "${CMAKE_CURRENT_LIST_DIR}/app")
 set(CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake")
 set(EXTERNAL_DIR "${CMAKE_CURRENT_LIST_DIR}/external")
-# set(ENGINE_DIR "${CMAKE_CURRENT_LIST_DIR}/engine")
+set(ENGINE_DIR "${CMAKE_CURRENT_LIST_DIR}/engine")
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	set(OS_WINDOWS 1)
@@ -22,6 +23,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
 endif()
 
 add_subdirectory(${APP_DIR})
+add_subdirectory(${ENGINE_DIR})
 add_subdirectory(${EXTERNAL_DIR})
 
 

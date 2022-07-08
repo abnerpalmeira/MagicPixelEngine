@@ -7,9 +7,8 @@
 
 #ifndef Texture_hpp
 #define Texture_hpp
-#include "SDL2/SDL.h"
-#include "SDL2_image/SDL_image.h"
-#include "global.hpp"
+#include <SDL.h>
+#include "core/global.h"
 
 class Texture{
 public:

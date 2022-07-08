@@ -9,14 +9,14 @@
 #include <utility>
 #include <stdio.h>
 #include <algorithm>
-#include "ThreadPool.hpp"
-#include "Global.hpp"
-#include "MagicPixel.hpp"
-#include "Graphics.hpp"
-#include "Vector2.hpp"
-#include "Chunk.h"
-#include "Job.hpp"
-#include "Buffer.hpp"
+#include "common/thread/thread_pool.h"
+#include "core/global.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/base/static.h"
+#include "common/geometry/vector.h"
+#include "simulation/chunk.h"
+#include  "common/thread/job.h"
+#include "simulation/buffer.h"
 
 class Simulation{
 public:

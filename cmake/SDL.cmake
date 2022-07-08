@@ -57,6 +57,7 @@ ExternalProject_Add(
 
 	BUILD_BYPRODUCTS ${BUILD_BYPRODUCTS}
 )
+
 add_library(SDL INTERFACE)
 add_dependencies(SDL SDLExternal)
 target_include_directories(SDL INTERFACE "${SDL_ROOT_DIR}/include")

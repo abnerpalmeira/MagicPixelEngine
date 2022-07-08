@@ -10,9 +10,9 @@
 #include <vector>
 #include <utility>
 #include <iostream>
-#include "SDL2/SDL.h"
-#include "global.h"
-#include "vector.h"
+#include <SDL.h>
+#include "core/global.h"
+#include "common/geometry/vector.h"
 
 class Helper{
 public:

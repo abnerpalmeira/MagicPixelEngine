@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 #include <functional>
-#include "chunk.h"
-#include "magic_pixel.h"
+#include "simulation/chunk.h"
+#include "magicpixel/magic_pixel.h"
 
 class Job{
 public:
@@ -18,5 +18,3 @@ public:
     Job(){}
     Job(Chunk &chunk);
 };
-
-#endif /* Job_hpp */

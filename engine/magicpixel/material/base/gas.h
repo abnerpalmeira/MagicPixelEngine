@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "MagicPixel.hpp"
-#include "Movable.hpp"
-#include "Random.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/attribute/movable.h"
+#include  "common/utility/random.h"
 
 
 class Gas : public Movable{

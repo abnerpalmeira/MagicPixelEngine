@@ -8,12 +8,12 @@
 #pragma once
 
 #include <algorithm>
-#include "Buffer.hpp"
-#include "MagicPixel.hpp"
-#include "MaterialType.hpp"
-#include "Movable.hpp"
-#include "Navigation.h"
-#include "Random.h"
+#include "simulation/buffer.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/material_type.h"
+#include "magicpixel/material/attribute/movable.h"
+#include "common/utility/navigation.h"
+#include "common/utility/random.h"
 
 class Fire : public MagicPixel{
 private:

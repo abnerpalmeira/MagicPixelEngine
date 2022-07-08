@@ -8,7 +8,7 @@
 #pragma once
 
 #include <utility>
-#include "global.h"
+#include "core/global.h"
 
 class Random{
 public:

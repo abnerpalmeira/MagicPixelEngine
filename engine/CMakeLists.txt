@@ -1,16 +1,93 @@
 set(LIBRARY_SOURCES
+     #common
+     "common/geometry/vector.cc"
+     "common/thread/job.cc"
+     "common/thread/thread_pool.cc"
+     #core
+     "core/engine.cc"
+     "core/game.cc"
+     "core/game_object.cc"
+     "core/global.h"
+     "core/input_manager.cc"
+     #editor
      "editor/widgets/hierarchy.cc"
      "editor/widgets/inspector.cc"
      "editor/widgets/viewer.cc"
-     "core/engine.cc")
+     #graphics
+     "graphics/button.cc"
+     "graphics/color.cc"
+     "graphics/graphics.cc"
+     "graphics/text.cc"
+     "graphics/texture.cc"
+     "graphics/ui.cc"
+     #magicpixel
+     "magicpixel/magic_pixel_factory.cc"
+     "magicpixel/magic_pixel.cc"
+     "magicpixel/material/attribute/movable.cc"
+     "magicpixel/material/base/fire.cc"
+     "magicpixel/material/base/gas.cc"
+     "magicpixel/material/base/liquid.cc"
+     "magicpixel/material/base/solid.cc"
+     "magicpixel/material/base/static.cc"
+     "magicpixel/material/custom/rock.cc"
+     "magicpixel/material/custom/sand.cc"
+     "magicpixel/material/custom/steam.cc"
+     "magicpixel/material/custom/water.cc"
+     "magicpixel/material/custom/wood.cc"
+     #simulation
+     "simulation/buffer.cc"
+     "simulation/cell.cc"
+     "simulation/chunk.cc"
+     "simulation/simulation.cc")
 set(LIBRARY_HEADERS
+     #common
+     "common/geometry/vector.h"
+     "common/thread/job.h"
+     "common/thread/thread_pool.h"
+     "common/utility/helper.h"
+     "common/utility/navigation.h"
+     "common/utility/random.h"
+     #core
+     "core/engine.h"
+     "core/game.h"
+     "core/game_object.h"
+     "core/global.h"
+     "core/input_manager.h"
+     #editor
      "editor/widgets/hierarchy.h"
      "editor/widgets/inspector.h"
      "editor/widgets/viewer.h"
-     "core/engine.h")
+     #graphics
+     "graphics/button.h"
+     "graphics/color.h"
+     "graphics/graphics.h"
+     "graphics/sprite.h"
+     "graphics/text.h"
+     "graphics/texture.h"
+     "graphics/ui.h"
+     #magicpixel
+     "magicpixel/magic_pixel_factory.h"
+     "magicpixel/magic_pixel.h"
+     "magicpixel/material/material_type.h"
+     "magicpixel/material/attribute/movable.h"
+     "magicpixel/material/base/fire.h"
+     "magicpixel/material/base/gas.h"
+     "magicpixel/material/base/liquid.h"
+     "magicpixel/material/base/solid.h"
+     "magicpixel/material/base/static.h"
+     "magicpixel/material/custom/rock.h"
+     "magicpixel/material/custom/sand.h"
+     "magicpixel/material/custom/steam.h"
+     "magicpixel/material/custom/water.h"
+     "magicpixel/material/custom/wood.h"
+     #simulation
+     "simulation/buffer.h"
+     "simulation/cell.h"
+     "simulation/chunk.h"
+     "simulation/simulation.h")
 
 add_library(${LIBRARY_NAME} STATIC
     ${LIBRARY_SOURCES}
     ${LIBRARY_HEADERS})
-target_link_libraries(${LIBRARY_NAME} PUBLIC SDL imgui)
+target_link_libraries(${LIBRARY_NAME} PUBLIC SDL SDL2_TTF imgui)
 target_include_directories(${LIBRARY_NAME} PUBLIC ${ENGINE_DIR})

@@ -8,8 +8,8 @@
 #pragma once
 
 #include <stdio.h>
-#include <SDL2/SDL.h>
-#include "Global.hpp"
+#include <SDL.h>
+#include "core/global.h"
 
 class Color{
     bool changed_;

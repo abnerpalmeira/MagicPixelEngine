@@ -2,4 +2,4 @@
 .vscode/
 .DS_Store
 build/
-external/SDL2-2.0.22
+external/SDL2*

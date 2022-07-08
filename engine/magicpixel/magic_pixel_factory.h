@@ -8,7 +8,7 @@
 
 #include <map>
 #include "magic_pixel.h"
-#include "material_type.h"
+#include "magicpixel/material/material_type.h"
 
 class MagicPixelFactory{
 public:

@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "MagicPixel.hpp"
-#include "MaterialType.hpp"
-#include "MagicPixelFactory.hpp"
-#include "Static.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/material/material_type.h"
+#include "magicpixel/magic_pixel_factory.h"
+#include "magicpixel/material/base/static.h"
 
 class Wood : public Static{
 public:

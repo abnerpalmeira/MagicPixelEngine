@@ -9,9 +9,9 @@
 #define GameObject_hpp
 #include <stdio.h>
 #include <string>
-#include "SDL2/SDL.h"
-#include "Simulation.hpp"
-#include "Texture.hpp"
+#include <SDL.h>
+#include "simulation/simulation.h"
+#include "graphics/texture.h"
 
 class GameObject{
 public:

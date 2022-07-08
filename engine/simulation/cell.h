@@ -8,9 +8,9 @@
 #pragma once
 
 #include <memory>
-#include "MagicPixel.hpp"
-#include "MagicPixelFactory.hpp"
-#include "Random.h"
+#include "magicpixel/magic_pixel.h"
+#include "magicpixel/magic_pixel_factory.h"
+#include  "common/utility/random.h"
 
 class Buffer;
 class Cell{

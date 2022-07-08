@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 #include <string>
-#include "SDL2/SDL.h"
-#include "global.hpp"
+#include <SDL.h>
+#include "core/global.h"
 
 class Text{
 public:
@@ -19,5 +19,3 @@ public:
     std::string text_;
     SDL_Rect rect_;
 };
-
-#endif /* Text_hpp */

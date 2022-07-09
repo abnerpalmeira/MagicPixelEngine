@@ -18,7 +18,7 @@ public:
     Rock();
 };
 
-namespace{
+namespace {
     std::unique_ptr<MagicPixel> CreateRock(){
         return std::make_unique<Rock>();
     }

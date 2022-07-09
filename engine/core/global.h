@@ -16,7 +16,7 @@ extern Uint32 current_tick;
 extern Uint32 last_tick;
 extern Uint32 kEmptyPixelValue;
 extern float delta_time;
-extern SDL_PixelFormat* pixel_format;
+extern SDL_PixelFormat *pixel_format;
 extern SDL_Point cursor;
 extern TTF_Font *font;
 extern thread_local std::mt19937 rng;
@@ -39,7 +39,7 @@ constexpr SDL_Rect kViewportRect = {0, 0, kViewportWidth, kViewportHeight};
 constexpr SDL_Rect kScreenRect = {0, 0, kScreenWidth, kScreenHeight};
 constexpr SDL_Rect kUIRect = {kScreenWidth-((kScreenWidth >> 4) << 2), 0 , (kScreenWidth >> 4) << 2, kScreenHeight};
 
-constexpr char* kFontFilePath = "Assets/joystix-monospace.ttf";
+constexpr char const *kFontFilePath = "Assets/joystix-monospace.ttf";
 
 constexpr Uint16 kMinDrawRadius = 0;
 constexpr Uint16 kMaxDrawRadius = 75;

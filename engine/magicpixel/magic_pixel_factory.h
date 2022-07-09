@@ -7,7 +7,7 @@
 #pragma once
 
 #include <map>
-#include "magic_pixel.h"
+#include "magicpixel/magic_pixel.h"
 #include "magicpixel/material/material_type.h"
 
 class MagicPixelFactory{

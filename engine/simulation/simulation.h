@@ -9,13 +9,13 @@
 #include <utility>
 #include <stdio.h>
 #include <algorithm>
+#include "common/geometry/vector.h"
+#include "common/utility/helper.h"
+#include "common/thread/job.h"
 #include "common/thread/thread_pool.h"
 #include "core/global.h"
 #include "magicpixel/magic_pixel.h"
-#include "magicpixel/material/base/static.h"
-#include "common/geometry/vector.h"
 #include "simulation/chunk.h"
-#include  "common/thread/job.h"
 #include "simulation/buffer.h"
 
 class Simulation{

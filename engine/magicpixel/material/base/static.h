@@ -7,9 +7,11 @@
 
 #pragma once
 
+#include "core/global.h"
 #include "magicpixel/magic_pixel.h"
 #include "magicpixel/material/material_type.h"
 #include "magicpixel/magic_pixel_factory.h"
+#include "common/utility/random.h"
 
 class Static : public MagicPixel{
 public:

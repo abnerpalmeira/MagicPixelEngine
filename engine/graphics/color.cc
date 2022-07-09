@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 11/06/22.
 //
 
-#include "color.h"
+#include "graphics/color.h"
 
 Color::Color(){
     r_ = 0;

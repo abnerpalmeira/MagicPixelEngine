@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <stdio.h>
 #include <SDL.h>
 #include "core/global.h"
 

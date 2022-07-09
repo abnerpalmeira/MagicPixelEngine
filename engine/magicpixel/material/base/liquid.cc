@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#include "liquid.h"
+#include "magicpixel/material/base/liquid.h"
 
 Liquid::Liquid(){
     color_ = Color(128,128,128,180);

@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 23/06/22.
 //
 
-#include "buffer.h"
+#include "simulation/buffer.h"
 
 Buffer::Buffer(){
     for(int i=0;i<buffer_.size();i++){

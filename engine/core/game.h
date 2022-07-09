@@ -14,7 +14,6 @@
 #include <algorithm>
 #include <unistd.h>
 #include <SDL.h>
-#include "graphics/graphics.h"
 #include "simulation/simulation.h"
 #include "core/global.h"
 #include "common/thread/thread_pool.h"
@@ -22,6 +21,7 @@
 #include "core/input_manager.h"
 #include "graphics/texture.h"
 #include "graphics/ui.h"
+#include "graphics/graphics.h"
 
 class Game{
 public:

@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#include "gas.h"
+#include "magicpixel/material/base/gas.h"
 
 
 Gas::Gas(){

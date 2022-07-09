@@ -12,7 +12,7 @@
 #include "magicpixel/magic_pixel_factory.h"
 #include "magicpixel/material/material_type.h"
 #include "magicpixel/material/attribute/movable.h"
-#include  "common/utility/random.h"
+#include "common/utility/random.h"
 
 class Solid : public Movable{
 public:

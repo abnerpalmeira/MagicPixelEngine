@@ -6,7 +6,7 @@
 //
 
 
-#include "movable.h"
+#include "magicpixel/material/attribute/movable.h"
 
 bool Movable::MoveStep(Buffer &buffer,int step,int direction,int x,int y){
     int a = x, b = y;

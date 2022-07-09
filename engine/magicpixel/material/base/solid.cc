@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 14/06/22.
 //
 
-#include "solid.h"
+#include "magicpixel/material/base/solid.h"
 
 Solid::Solid(){
     color_ = Color::Interpolate(Color(128,128,128,255), Color::Black, Random::DoubleOnInterval(0.0, 0.15));

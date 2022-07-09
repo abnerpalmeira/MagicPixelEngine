@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 26/06/22.
 //
 
-#include "fire.h"
+#include "magicpixel/material/base/fire.h"
 
 Color Fire::colors[3] = {Color(215, 53, 2,255),Color(252, 100, 0,255),Color(250, 192, 0,255)};
 Uint32 Fire::min_temperature = 250;
@@ -16,7 +16,7 @@ Fire::Fire(){
     ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
     material_ = MaterialType::FIRE;
     temperature_ = min_temperature;
-    color_ = Color::Interpolate(colors[0], colors[2], Helper::RandomDoubleOnInterval(0.0, 1));
+    color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
 }
 
 void Fire::Update(Buffer &buffer, int x, int y){
@@ -42,7 +42,7 @@ void Fire::Update(Buffer &buffer, int x, int y){
         }
     }
     if(!Random::IntOnInterval(0, 3)){
-        color_ = Color::Interpolate(colors[0], colors[2], Helper::RandomDoubleOnInterval(0.0, 1));
+        color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
     }
     buffer.buffer_[x][y].SetUpdateFlag();
 }

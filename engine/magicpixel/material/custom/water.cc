@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 21/06/22.
 //
 
-#include "water.h"
+#include "magicpixel/material/custom/water.h"
 
 Water::Water(){
     color_ = Color(131,215,238,180);

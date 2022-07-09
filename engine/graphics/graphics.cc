@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "graphics.h"
+#include "graphics/graphics.h"
 
 void Graphics::DrawCircle(SDL_Renderer *renderer, const SDL_Point *center, const SDL_Rect *bounds, Uint16 radius){
 	if(!SDL_PointInRect(center, bounds)) { return; }

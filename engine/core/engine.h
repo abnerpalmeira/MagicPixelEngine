@@ -7,13 +7,13 @@
 
 #pragma once
 
-#include <SDL.h>
 #include <imgui.h>
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_sdlrenderer.h>
 #include "editor/widgets/hierarchy.h"
 #include "editor/widgets/inspector.h"
 #include "editor/widgets/viewer.h"
+#include <SDL.h>
 
 
 class Engine{

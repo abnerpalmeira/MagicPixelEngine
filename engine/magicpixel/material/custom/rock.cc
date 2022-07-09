@@ -5,9 +5,9 @@
 //  Created by Abner Palmeira on 21/06/22.
 //
 
-#include "rock.h"
+#include "magicpixel/material/custom/rock.h"
 
 Rock::Rock(){
     color_ = Color(58,50,50,255);
-    if(Helper::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Helper::RandomDoubleOnInterval(0.0, 0.15));
+    if(Random::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Random::DoubleOnInterval(0.0, 0.15));
 }

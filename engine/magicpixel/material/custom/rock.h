@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "common/utility/random.h"
 #include "magicpixel/magic_pixel.h"
 #include "magicpixel/material/material_type.h"
 #include "magicpixel/magic_pixel_factory.h"

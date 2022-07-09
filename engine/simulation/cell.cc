@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 23/06/22.
 //
 
-#include "buffer.h"
+#include "simulation/buffer.h"
 #include "cell.h"
 
 bool Cell::Empty(){

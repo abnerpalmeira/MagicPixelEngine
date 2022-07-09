@@ -8,6 +8,7 @@
 #pragma once
 
 #include <array>
+#include "graphics/color.h"
 #include "simulation/cell.h"
 #include "magicpixel/magic_pixel_factory.h"
 #include "magicpixel/material/material_type.h"

@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 25/06/22.
 //
 
-#include "steam.h"
+#include "magicpixel/material/custom/steam.h"
 
 Steam::Steam(){
     color_ = Color(201,208,255,128);

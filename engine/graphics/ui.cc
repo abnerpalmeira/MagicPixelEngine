@@ -5,7 +5,7 @@
 //  Created by Abner Palmeira on 17/06/22.
 //
 
-#include "ui.h"
+#include "graphics/ui.h"
 
 UI::UI(SDL_Renderer *renderer, SDL_Rect rect, Color color){
     renderer_ = renderer;

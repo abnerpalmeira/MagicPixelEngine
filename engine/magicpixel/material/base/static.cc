@@ -9,7 +9,7 @@
 
 Static::Static(){
     color_ = Color(128,128,128,255);
-    // if(Random::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Random::DoubleOnInterval(0, 0.15));
+    if(Random::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Random::DoubleOnInterval(0, 0.15));
 }
 
 void Static::Update(){}

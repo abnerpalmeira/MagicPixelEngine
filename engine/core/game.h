@@ -14,14 +14,24 @@
 #include <algorithm>
 #include <unistd.h>
 #include <SDL.h>
-#include "simulation/simulation.h"
-#include "core/global.h"
 #include "common/thread/thread_pool.h"
 #include "core/game_object.h"
+#include "core/global.h"
 #include "core/input_manager.h"
+#include "magicpixel/material/base/fire.h"
+#include "magicpixel/material/base/gas.h"
+#include "magicpixel/material/base/liquid.h"
+#include "magicpixel/material/base/solid.h"
+#include "magicpixel/material/base/static.h"
+#include "magicpixel/material/custom/rock.h"
+#include "magicpixel/material/custom/sand.h"
+#include "magicpixel/material/custom/steam.h"
+#include "magicpixel/material/custom/water.h"
+#include "magicpixel/material/custom/wood.h"
 #include "graphics/texture.h"
 #include "graphics/ui.h"
 #include "graphics/graphics.h"
+#include "simulation/simulation.h"
 
 class Game{
 public:

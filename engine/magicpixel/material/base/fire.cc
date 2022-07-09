@@ -5,6 +5,7 @@
 //  Created by Abner Palmeira on 26/06/22.
 //
 
+#include "common/utility/navigation.h"
 #include "magicpixel/material/base/fire.h"
 
 Color Fire::colors[3] = {Color(215, 53, 2,255),Color(252, 100, 0,255),Color(250, 192, 0,255)};

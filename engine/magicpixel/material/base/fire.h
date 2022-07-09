@@ -8,12 +8,11 @@
 #pragma once
 
 #include <algorithm>
-#include "simulation/buffer.h"
+#include "common/utility/random.h"
 #include "magicpixel/magic_pixel.h"
 #include "magicpixel/material/material_type.h"
 #include "magicpixel/material/attribute/movable.h"
-#include "common/utility/navigation.h"
-#include "common/utility/random.h"
+#include "simulation/buffer.h"
 
 class Fire : public MagicPixel{
 private:
@@ -30,5 +29,5 @@ namespace{
     std::unique_ptr<MagicPixel> CreateFire(){
         return std::make_unique<Fire>();
     }
-    const bool registered_steam = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::FIRE, CreateFire);
+    const bool registered_fire = MagicPixelFactory::Instance()->RegisterMagicPixel(MaterialType::FIRE, CreateFire);
 }

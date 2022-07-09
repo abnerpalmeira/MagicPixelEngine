@@ -7,7 +7,7 @@ set(LIBRARY_SOURCES
      "core/engine.cc"
      "core/game.cc"
      "core/game_object.cc"
-     "core/global.h"
+     "core/global.cc"
      "core/input_manager.cc"
      #editor
      "editor/widgets/hierarchy.cc"

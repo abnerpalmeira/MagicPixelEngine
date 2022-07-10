@@ -16,7 +16,7 @@ void run_engine(){
     engine->Clear();
 }
 
-int main(int argc, char **argv){
+void run_game(){
     game = new Game("Magic Pixel Engine",0,0,kScreenWidth, kScreenHeight,false);
     while (game->Running()) {
         game->HandleEvents();
@@ -24,5 +24,9 @@ int main(int argc, char **argv){
         game->Render();
     }
     game->Clean();
+}
+
+int main(int argc, char **argv){
+    run_game();
     return  0;
 }

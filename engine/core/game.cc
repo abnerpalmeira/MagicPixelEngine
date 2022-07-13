@@ -104,17 +104,12 @@ void Game::HandleEvents(){
             case SDL_KEYUP:
             case SDL_MOUSEBUTTONDOWN:
             case SDL_MOUSEBUTTONUP:
-                InputManager::Instance()->Handle(&e_);
-                break;
+            case SDL_MOUSEMOTION:
             case SDL_MOUSEWHEEL:
-                draw_radius_ = std::clamp<Sint16>(draw_radius_ + e_.wheel.y,kMinDrawRadius,kMaxDrawRadius);
+                InputManager::Instance()->Handle(e_);
                 break;
             case SDL_QUIT:
                 is_running_ = false;
-                break;
-            case SDL_MOUSEMOTION:
-                cursor.x = e_.button.x;
-                cursor.y = e_.button.y;
                 break;
             default:
                 break;
@@ -124,12 +119,12 @@ void Game::HandleEvents(){
 
 void Game::Update(){
     PreUpdate();
-    if(ui_mode_ && SDL_PointInRect(&cursor,&ui_->rect_)){
+    if(ui_mode_ && SDL_PointInRect(&InputManager::Instance()->mouse_position_,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
-    }else if(SDL_PointInRect(&cursor, &kScreenRect)){
+    }else if(SDL_PointInRect(&InputManager::Instance()->mouse_position_, &kScreenRect)){
         SDL_ShowCursor(SDL_DISABLE);
-        SDL_Point foo = cursor;
+        SDL_Point foo = InputManager::Instance()->mouse_position_;
         foo.x = foo.x/viewport_->object_texture_ptr_->scale_;
         foo.y = foo.y/viewport_->object_texture_ptr_->scale_;
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
@@ -164,7 +159,7 @@ void Game::Update(){
 }
 
 void  Game::LateUpdate(){
-    last_cursor_ = cursor;
+    last_cursor_ = InputManager::Instance()->mouse_position_;
     std::ostringstream stream;
     Uint32 last_update = SDL_GetTicks();
     last_tick = current_tick;
@@ -190,7 +185,7 @@ void Game::Render(){
         }
     }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);
-    Graphics::DrawCircle(renderer_, &cursor, &kScreenRect, draw_radius_*viewport_->object_texture_ptr_->GetScale());
+    Graphics::DrawCircle(renderer_, &InputManager::Instance()->mouse_position_, &kScreenRect, draw_radius_*viewport_->object_texture_ptr_->GetScale());
     SDL_RenderPresent(renderer_);
 }
 

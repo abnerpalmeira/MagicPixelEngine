@@ -4,11 +4,14 @@ set(LIBRARY_SOURCES
      "common/thread/job.cc"
      "common/thread/thread_pool.cc"
      #core
+     "core/camera.cc"
      "core/engine.cc"
      "core/game.cc"
      "core/game_object.cc"
      "core/global.cc"
      "core/input_manager.cc"
+     "core/renderer.cc"
+     "core/window.cc"
      #editor
      "editor/widgets/hierarchy.cc"
      "editor/widgets/inspector.cc"
@@ -48,11 +51,14 @@ set(LIBRARY_HEADERS
      "common/utility/navigation.h"
      "common/utility/random.h"
      #core
+     "core/camera.h"
      "core/engine.h"
      "core/game.h"
      "core/game_object.h"
      "core/global.h"
      "core/input_manager.h"
+     "core/renderer.h"
+     "core/window.h"
      #editor
      "editor/widgets/hierarchy.h"
      "editor/widgets/inspector.h"

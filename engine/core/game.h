@@ -7,14 +7,16 @@
 
 #pragma once
 
+#include <algorithm>
+#include <filesystem>
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <filesystem>
-#include <algorithm>
 #include <unistd.h>
+#include <vector>
 #include <SDL.h>
 #include "common/thread/thread_pool.h"
+#include "core/camera.h"
 #include "core/game_object.h"
 #include "core/global.h"
 #include "core/input_manager.h"
@@ -48,22 +50,17 @@ public:
     void Pause(int x);
     void ResetSimulation(int x);
     static SDL_Renderer *renderer_;
+    std::vector<GameObject> game_objects_; 
 private:
-    void Init(const char* title,int x,int y,int width,int height);
+    void CreateCamera();
     void CreateSimulation();
-    void CreateViewPort();
     void CreatePerfomanceBar();
     void CreateUI();
     void ResetVariables();
     void InitFont();
     SDL_Event e_;
     SDL_Point last_cursor_;
-    SDL_Window *window_;
     Simulation *simulation_;
-    GameObject *viewport_;
-    UI *performance_bar_;
-    UI *ui_;
-    UI *material_ui_;
     Uint32 tick_count_;
     Uint16 draw_radius_;
     MaterialType material_;

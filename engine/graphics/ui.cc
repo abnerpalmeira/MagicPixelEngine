@@ -7,15 +7,13 @@
 
 #include "graphics/ui.h"
 
-UI::UI(SDL_Renderer *renderer, SDL_Rect rect, Color color){
-    renderer_ = renderer;
+UI::UI(SDL_Rect rect, Color color){
     rect_ = rect;
     color_ = color;
     CreateTexture();
 }
 
 void UI::CreateTexture(){
-    if(object_texture_ptr_ != NULL) delete object_texture_ptr_;
     SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0,rect_.w,rect_.h,32,kPixelFormat);
     SDL_FillRect(surf, NULL, color_.GetSDLMap());
     for(int i=0;i<button_group_.size();i++){
@@ -29,12 +27,8 @@ void UI::CreateTexture(){
         SDL_FreeSurface(temp_surf);
         
     }
-    object_texture_ptr_ = new Texture(renderer_,rect_, surf);
+    texture_ = Texture(1,rect_, surf);
     SDL_FreeSurface(surf);
-}
-
-UI::~UI(){
-    delete object_texture_ptr_;
 }
 
 void UI::AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,std::function<void(int)> fn){
@@ -45,6 +39,10 @@ void UI::AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string te
 void UI::AddText(SDL_Rect text_rect, std::string text){
     text_.push_back(Text(text_rect,text));
     CreateTexture();
+}
+
+bool UI::IsClicked(){
+    return false;
 }
 
 void UI::Click(){
@@ -59,14 +57,5 @@ void UI::Click(){
 void UI::Update(){
 }
 
-//void Texture::changeText(std::string _text){
-//    SDL_Surface *surf = TTF_RenderText_Solid(font_, _text.c_str(), kTextColor);
-//    SDL_Texture *tempTex = SDL_CreateTextureFromSurface(renderer_, surf);
-//    SDL_FreeSurface(surf);
-//    if(tempTex)
-//    {
-//        if(object_texture_) { SDL_DestroyTexture(object_texture_); }
-//        object_texture_ = tempTex;
-//        SDL_QueryTexture(object_texture_, nullptr, nullptr, &rect_->w, &rect_->h);
-//    }
-//}
+void UI::Render(){
+}

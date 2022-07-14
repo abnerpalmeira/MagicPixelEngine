@@ -20,15 +20,14 @@
 
 class UI : public GameObject{
 public:
-    UI(SDL_Renderer *renderer, SDL_Rect rect, Color color);
-    ~UI();
+    UI(SDL_Rect rect, Color color);
     void Update();
     void Click();
     void CreateTexture();
     void AddText(SDL_Rect text_rect, std::string text);
     void AddButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text, std::function<void(int)> fn);
-    SDL_Rect rect_;
     std::vector<Text> text_;
+    Texture texture_;
 private:
     Color color_;
     std::vector<ButtonGroup> button_group_;

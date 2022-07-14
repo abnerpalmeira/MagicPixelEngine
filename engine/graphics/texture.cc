@@ -7,25 +7,26 @@
 
 #include "texture.h"
 
-Texture::Texture(SDL_Renderer *renderer, float scale, SDL_Rect rect){
-    rect_ = rect;
-    scale_ = scale;
-    renderer_ = renderer;
-    texture_ = SDL_CreateTexture(renderer, kPixelFormat, SDL_TEXTUREACCESS_STREAMING, rect.w, rect.h);
+Texture::Texture(){
 }
 
-Texture::Texture(SDL_Renderer *renderer, float scale, const char *file){
+Texture::Texture(float scale, SDL_Rect rect){
+    rect_ = rect;
+    scale_ = scale;
+    texture_ = SDL_CreateTexture(Renderer::Instance()->renderer_, kPixelFormat, SDL_TEXTUREACCESS_STREAMING, rect.w, rect.h);
+}
+
+Texture::Texture(float scale, const char *file){
     // SDL_Surface* surface = IMG_Load(file);
     // texture_= SDL_CreateTextureFromSurface(renderer, surface);
     // scale_ = scale;
     // SDL_FreeSurface(surface);
 }
 
-Texture::Texture(SDL_Renderer *renderer, SDL_Rect rect, SDL_Surface *surface){
+Texture::Texture(float scale, SDL_Rect rect, SDL_Surface *surface){
     rect_ = rect;
-    scale_ = 1;
-    renderer_ = renderer;
-    texture_= SDL_CreateTextureFromSurface(renderer, surface);
+    scale_ = scale;
+    texture_= SDL_CreateTextureFromSurface(Renderer::Instance()->renderer_, surface);
 }
 
 Texture::~Texture(){
@@ -47,9 +48,9 @@ void Texture::SetTextureAlphaMod(Uint8 alpha){
 void Texture::Render(){
     if(scale_ != 1){
         SDL_FRect temp = {(float)rect_.x,(float)rect_.y,scale_*rect_.w,scale_*rect_.h};
-        SDL_RenderCopyF(renderer_, texture_, nullptr, &temp);
+        SDL_RenderCopyF(Renderer::Instance()->renderer_, texture_, nullptr, &temp);
     }
-    else SDL_RenderCopy(renderer_, texture_, nullptr, &rect_);
+    else SDL_RenderCopy(Renderer::Instance()->renderer_, texture_, nullptr, &rect_);
 }
 
 float Texture::GetScale(){

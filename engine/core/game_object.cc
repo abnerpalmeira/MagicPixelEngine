@@ -9,8 +9,6 @@
 
 GameObject::GameObject(){}
 
-void GameObject::Update(){}
-
-void GameObject::Render(){
-    if(object_texture_ptr_ != NULL) object_texture_ptr_->Render();
+bool GameObject::Enabled(){
+    return enabled_;
 }

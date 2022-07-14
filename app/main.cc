@@ -1,6 +1,11 @@
-#include <core/global.h>
 #include <core/engine.h>
 #include <core/game.h>
+#include <core/global.h>
+#include <core/input_manager.h>
+#include <core/renderer.h>
+#include <core/window.h>
+#include <SDL.h>
+
 
 
 Engine *engine = nullptr;
@@ -27,6 +32,12 @@ void run_game(){
 }
 
 int main(int argc, char **argv){
-    run_game();
+    SDL_Init(SDL_INIT_EVERYTHING);
+    InputManager::Instance();
+    Window::Instance();
+    SDL_SetRenderDrawBlendMode(Renderer::Instance()->renderer_, SDL_BLENDMODE_BLEND);
+    // SDL_DestroyWindow(window_);
+    // SDL_DestroyRenderer(renderer_);
+    SDL_Quit();
     return  0;
 }

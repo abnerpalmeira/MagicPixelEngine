@@ -5,24 +5,26 @@
 //  Created by Abner Palmeira on 01/06/22.
 //
 
-#ifndef GameObject_hpp
-#define GameObject_hpp
+#pragma once
+
 #include <stdio.h>
 #include <string>
 #include <SDL.h>
-#include "simulation/simulation.h"
+#include "core/input_manager.h"
 #include "graphics/texture.h"
+#include "simulation/simulation.h"
 
 class GameObject{
 public:
     GameObject();
-//    ~GameObject();
-    void Update();
-    void Render();
-    Texture *object_texture_ptr_;
-    SDL_Renderer *renderer_;
-    Uint32 *draw_buffer_;
+    virtual ~GameObject(){}
+    bool Enabled();
+    virtual bool IsClicked(){return false;}
+    virtual void Click(){}
+    virtual void Update(){}
+    virtual void Render(){}
+protected:
+    bool enabled_ = true;
+    SDL_Rect rect_ = {0,0,0,0};
 private:
 };
-
-#endif /* GameObject_hpp */

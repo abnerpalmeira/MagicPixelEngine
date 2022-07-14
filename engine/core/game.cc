@@ -9,31 +9,18 @@
 SDL_Renderer* Game::renderer_ = nullptr;
 
 Game::Game(const char *title, int x, int y, int w, int h, bool fullscreen){
-    Init(title,x,y,w,h);
+    is_running_ = true;
+    count_ = 0;
     InitFont();
     CreateSimulation();
-    CreatePerfomanceBar();
-    CreateViewPort();
     CreateUI();
+    CreateCamera();
+    CreatePerfomanceBar();
     ResetVariables();
 }
 
 Game::~Game(){
-    delete simulation_;
-    delete [] viewport_->draw_buffer_;
-    delete viewport_;
-    delete ui_;
-    delete material_ui_;
     TTF_CloseFont(font);
-}
-
-void Game::Init(const char *title, int x, int y, int w, int h){
-    SDL_Init(SDL_INIT_EVERYTHING);
-    window_ = SDL_CreateWindow(title, x, y, w, h,SDL_WINDOW_MAXIMIZED);
-    renderer_ = SDL_CreateRenderer(window_, -1,SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
-    is_running_ = true;
-    count_ = 0;
 }
 
 void Game::InitFont(){
@@ -41,31 +28,29 @@ void Game::InitFont(){
     font = TTF_OpenFont(kFontFilePath, 16);
 }
 
+void Game::CreateCamera(){
+    game_objects_.push_back(Camera((float)kScreenWidth/kViewportWidth,kViewportRect));
+}
+
 void Game::CreateSimulation() {
     simulation_ = new Simulation();
 }
 
 void Game::CreatePerfomanceBar() {
-    performance_bar_ = new UI(renderer_,{Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0));
-    performance_bar_->AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
-}
-
-void Game::CreateViewPort() {
-    viewport_ = new GameObject();
-    viewport_->object_texture_ptr_ =  new Texture(renderer_,(float)kScreenWidth/kViewportWidth,kViewportRect);
-    viewport_->object_texture_ptr_->SetTextureBlendMode(SDL_BLENDMODE_BLEND);
-    viewport_->object_texture_ptr_->SetTextureAlphaMod(255);
-    viewport_->draw_buffer_ = new Uint32[kViewportWidth*kViewportHeight];
+    game_objects_.push_back(UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0)));
+    UI *performance_bar = dynamic_cast<UI*>(&game_objects_.back());
+    performance_bar->AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
 }
 
 void Game::CreateUI() {
     auto set_material = std::bind(&Game::SetMaterial,this,std::placeholders::_1);
     auto pause = std::bind(&Game::Pause,this,std::placeholders::_1);
     auto reset = std::bind(&Game::ResetSimulation,this,std::placeholders::_1);
-    ui_ = new UI(renderer_,{Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255));
-    ui_->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
-    ui_->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
-    ui_->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Steam Wood Fire",set_material);
+    game_objects_.push_back(UI({Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255)));
+    UI *ui = dynamic_cast<UI*>(&game_objects_.back());
+    ui->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
+    ui->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
+    ui->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Steam Wood Fire",set_material);
 }
 
 bool Game::Running(){
@@ -119,14 +104,21 @@ void Game::HandleEvents(){
 
 void Game::Update(){
     PreUpdate();
+    //check for click
+    for(int i=0;i<game_objects_.size();i++){
+        if(game_objects_[i].IsClicked()){
+            game_objects_[i].Click();
+            break;
+        }
+    }
     if(ui_mode_ && SDL_PointInRect(&InputManager::Instance()->mouse_position_,&ui_->rect_)){
         SDL_ShowCursor(SDL_ENABLE);
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
     }else if(SDL_PointInRect(&InputManager::Instance()->mouse_position_, &kScreenRect)){
         SDL_ShowCursor(SDL_DISABLE);
         SDL_Point foo = InputManager::Instance()->mouse_position_;
-        foo.x = foo.x/viewport_->object_texture_ptr_->scale_;
-        foo.y = foo.y/viewport_->object_texture_ptr_->scale_;
+        foo.x = foo.x/camera_->object_texture_ptr_->scale_;
+        foo.y = foo.y/camera_->object_texture_ptr_->scale_;
         if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
             simulation_->SetCellInsideCircle(foo, draw_radius_, material_);
         }
@@ -141,19 +133,19 @@ void Game::Update(){
         debug_mode_ = !debug_mode_;
     }
 //    if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
-//        viewport_->object_texture_ptr_->rect_.y = std::clamp(viewport_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
+//        camera_->object_texture_ptr_->rect_.y = std::clamp(camera_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
 //    }
     if(!paused_) {
         int pitch = (kViewportWidth) * 8;
-        SDL_LockTexture(viewport_->object_texture_ptr_->texture_, nullptr, (void**) &viewport_->draw_buffer_, &pitch);
+        SDL_LockTexture(camera_->object_texture_ptr_->texture_, nullptr, (void**) &camera_->draw_buffer_, &pitch);
         simulation_->Update();
         for(int i=0;i<kViewportWidth;i++){
             for(int j=0;j<kViewportHeight;j++){
                 int foo = i + j * kViewportWidth;
-                viewport_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
+                camera_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
             }
         }
-        SDL_UnlockTexture(viewport_->object_texture_ptr_->texture_);
+        SDL_UnlockTexture(camera_->object_texture_ptr_->texture_);
     }
     LateUpdate();
 }
@@ -176,22 +168,19 @@ void  Game::LateUpdate(){
 void Game::Render(){
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
     SDL_RenderClear(renderer_);
-    viewport_->Render();
+    camera_->Render();
     performance_bar_->Render();
     if(ui_mode_) ui_->Render();
     if(debug_mode_){
         for(int i=0;i<64;i++){
-            (*simulation_->chunks_ptr_)[i].Debug(renderer_,viewport_->object_texture_ptr_->GetScale());
+            (*simulation_->chunks_ptr_)[i].Debug(renderer_,camera_->object_texture_ptr_->GetScale());
         }
     }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);
-    Graphics::DrawCircle(renderer_, &InputManager::Instance()->mouse_position_, &kScreenRect, draw_radius_*viewport_->object_texture_ptr_->GetScale());
+    Graphics::DrawCircle(renderer_, &InputManager::Instance()->mouse_position_, &kScreenRect, draw_radius_*camera_->object_texture_ptr_->GetScale());
     SDL_RenderPresent(renderer_);
 }
 
 void Game::Clean(){
-    SDL_DestroyWindow(window_);
-    SDL_DestroyRenderer(renderer_);
-    SDL_Quit();
 }
 

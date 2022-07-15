@@ -1,5 +1,5 @@
 //
-//  game_object.h
+//  entity.h
 //  MagicPixelEngine
 //
 //  Created by Abner Palmeira on 01/06/22.
@@ -14,10 +14,10 @@
 #include "graphics/texture.h"
 #include "simulation/simulation.h"
 
-class GameObject{
+class Entity{
 public:
-    GameObject();
-    virtual ~GameObject(){}
+    Entity();
+    virtual ~Entity(){}
     bool Enabled();
     virtual bool IsClicked(){return false;}
     virtual void Click(){}

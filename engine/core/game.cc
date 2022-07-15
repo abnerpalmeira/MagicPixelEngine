@@ -29,7 +29,7 @@ void Game::InitFont(){
 }
 
 void Game::CreateCamera(){
-    game_objects_.push_back(Camera((float)kScreenWidth/kViewportWidth,kViewportRect));
+    entitys_.push_back(Camera((float)kScreenWidth/kViewportWidth,kViewportRect));
 }
 
 void Game::CreateSimulation() {
@@ -37,8 +37,8 @@ void Game::CreateSimulation() {
 }
 
 void Game::CreatePerfomanceBar() {
-    game_objects_.push_back(UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0)));
-    UI *performance_bar = dynamic_cast<UI*>(&game_objects_.back());
+    entitys_.push_back(UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0)));
+    UI *performance_bar = dynamic_cast<UI*>(&entitys_.back());
     performance_bar->AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
 }
 
@@ -46,8 +46,8 @@ void Game::CreateUI() {
     auto set_material = std::bind(&Game::SetMaterial,this,std::placeholders::_1);
     auto pause = std::bind(&Game::Pause,this,std::placeholders::_1);
     auto reset = std::bind(&Game::ResetSimulation,this,std::placeholders::_1);
-    game_objects_.push_back(UI({Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255)));
-    UI *ui = dynamic_cast<UI*>(&game_objects_.back());
+    entitys_.push_back(UI({Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255)));
+    UI *ui = dynamic_cast<UI*>(&entitys_.back());
     ui->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
     ui->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
     ui->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Steam Wood Fire",set_material);
@@ -105,9 +105,9 @@ void Game::HandleEvents(){
 void Game::Update(){
     PreUpdate();
     //check for click
-    for(int i=0;i<game_objects_.size();i++){
-        if(game_objects_[i].IsClicked()){
-            game_objects_[i].Click();
+    for(int i=0;i<entitys_.size();i++){
+        if(entitys_[i].IsClicked()){
+            entitys_[i].Click();
             break;
         }
     }
@@ -132,9 +132,7 @@ void Game::Update(){
     if(InputManager::Instance()->key_states_.contains(SDLK_r)  && InputManager::Instance()->key_states_[SDLK_r] == InputManager::KeyState::JUSTDOWN){
         debug_mode_ = !debug_mode_;
     }
-//    if(InputManager::Instance()->key_states_.find(SDLK_s) != InputManager::Instance()->key_states_.end() && (InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::DOWN || InputManager::Instance()->key_states_[SDLK_s] == InputManager::KeyState::JUSTDOWN)){
-//        camera_->object_texture_ptr_->rect_.y = std::clamp(camera_->object_texture_ptr_->rect_.y+1,0,(int)kSimulationHeight-(int)kViewportHeight);
-//    }
+
     if(!paused_) {
         int pitch = (kViewportWidth) * 8;
         SDL_LockTexture(camera_->object_texture_ptr_->texture_, nullptr, (void**) &camera_->draw_buffer_, &pitch);

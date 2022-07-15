@@ -11,14 +11,14 @@
 #include <sstream>
 #include <string>
 #include <SDL.h>
-#include "core/game_object.h"
+#include "core/entity.h"
 #include "graphics/texture.h"
 #include "graphics/button.h"
 #include "graphics/color.h"
 #include "core/global.h"
 #include "graphics/text.h"
 
-class UI : public GameObject{
+class UI : public Entity{
 public:
     UI(SDL_Rect rect, Color color);
     void Update();

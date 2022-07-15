@@ -17,7 +17,7 @@
 #include <SDL.h>
 #include "common/thread/thread_pool.h"
 #include "core/camera.h"
-#include "core/game_object.h"
+#include "core/entity.h"
 #include "core/global.h"
 #include "core/input_manager.h"
 #include "magicpixel/material/base/fire.h"
@@ -50,7 +50,7 @@ public:
     void Pause(int x);
     void ResetSimulation(int x);
     static SDL_Renderer *renderer_;
-    std::vector<GameObject> game_objects_; 
+    std::vector<Entity> entitys_; 
 private:
     void CreateCamera();
     void CreateSimulation();

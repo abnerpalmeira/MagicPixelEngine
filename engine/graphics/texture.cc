@@ -10,7 +10,7 @@
 Texture::Texture(){
 }
 
-Texture::Texture(float scale, SDL_Rect rect){
+Texture::Texture(SDL_Rect rect,  float scale){
     rect_ = rect;
     scale_ = scale;
     texture_ = SDL_CreateTexture(Renderer::Instance()->renderer_, kPixelFormat, SDL_TEXTUREACCESS_STREAMING, rect.w, rect.h);
@@ -23,7 +23,7 @@ Texture::Texture(float scale, const char *file){
     // SDL_FreeSurface(surface);
 }
 
-Texture::Texture(float scale, SDL_Rect rect, SDL_Surface *surface){
+Texture::Texture(SDL_Rect rect, SDL_Surface *surface, float scale){
     rect_ = rect;
     scale_ = scale;
     texture_= SDL_CreateTextureFromSurface(Renderer::Instance()->renderer_, surface);

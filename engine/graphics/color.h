@@ -11,14 +11,13 @@
 #include "core/global.h"
 
 class Color{
-    bool changed_;
-   
-    int r_,g_,b_,a_;
+    Uint8 r_,g_,b_,a_;
 public:
     Uint32 pixel_value_;
     Color();
     Color(int r,int g,int b,int a);
     Uint32 GetSDLMap();
+    SDL_Color GetSDLColor();
     static Color Interpolate(Color x, Color y, float t){
         int r = (int)(x.r_ + (y.r_ - x.r_)*t);
         int g = (int)(x.g_ + (y.g_ - x.g_)*t);

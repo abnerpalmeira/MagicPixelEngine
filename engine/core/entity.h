@@ -19,8 +19,6 @@ public:
     Entity();
     virtual ~Entity(){}
     bool Enabled();
-    virtual bool IsClicked(){return false;}
-    virtual void Click(){}
     virtual void Update(){}
     virtual void Render(){}
 protected:

@@ -14,9 +14,9 @@
 class Texture{
 public:
     Texture();
-    Texture(float scale, SDL_Rect rect);
-    Texture(float scale, SDL_Rect rect, SDL_Surface *surface);
-    Texture(float scale, const char *file);
+    Texture(SDL_Rect rect,float scale = 1);
+    Texture(SDL_Rect rect, SDL_Surface *surface, float scale = 1);
+    Texture(const char *file, float scale = 1);
     ~Texture();
     void UpdateTexture(const void *pixels);
     void SetTextureBlendMode(SDL_BlendMode blend_mode);

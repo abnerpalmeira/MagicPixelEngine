@@ -31,7 +31,7 @@
 #include "magicpixel/material/custom/water.h"
 #include "magicpixel/material/custom/wood.h"
 #include "graphics/texture.h"
-#include "graphics/ui.h"
+#include "graphics/ui/ui.h"
 #include "graphics/graphics.h"
 #include "simulation/simulation.h"
 

@@ -20,7 +20,6 @@ Game::Game(const char *title, int x, int y, int w, int h, bool fullscreen){
 }
 
 Game::~Game(){
-    TTF_CloseFont(font);
 }
 
 void Game::InitFont(){
@@ -37,9 +36,9 @@ void Game::CreateSimulation() {
 }
 
 void Game::CreatePerfomanceBar() {
-    entitys_.push_back(UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0)));
-    UI *performance_bar = dynamic_cast<UI*>(&entitys_.back());
-    performance_bar->AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
+    UI performance_bar = UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0));
+    performance_bar.AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
+    entitys_.push_back(performance_bar);
 }
 
 void Game::CreateUI() {

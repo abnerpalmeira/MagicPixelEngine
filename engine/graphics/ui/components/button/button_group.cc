@@ -1,12 +1,3 @@
-//
-//  button.cc
-//  MagicPixelEngine
-//
-//  Created by Abner Palmeira on 17/06/22.
-//
-
-#include "button.h"
-
 ButtonGroup::ButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,std::function<void(int)> fn){
     fn_ = fn;
     rect_ = group_rect;
@@ -52,5 +43,4 @@ void ButtonGroup::Click(SDL_Point click_position){
         }
     }
 }
-
 

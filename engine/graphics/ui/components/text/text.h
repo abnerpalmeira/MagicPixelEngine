@@ -14,7 +14,7 @@
 #include "graphics/font/font.h"
 #include "graphics/ui/ui_component.h"
 
-class Text : public UIComponent{
+class Text : virtual public UIComponent{
 public:
     Text();
     Text(SDL_Rect rect, Color color, std::string text, char *font_file_path, int size);
@@ -22,8 +22,9 @@ public:
     void SetColor(Color color);
     void SetFont(char *font_file_path, int size);
     void SetText(std::string text);
-private:
+protected:
     Color color_;
     Font font_;
     std::string text_;
+private:
 };

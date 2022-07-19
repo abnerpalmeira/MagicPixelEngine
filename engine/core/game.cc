@@ -37,7 +37,7 @@ void Game::CreateSimulation() {
 
 void Game::CreatePerfomanceBar() {
     UI performance_bar = UI({Helper::ScreenWidthPoint(1),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(128,128,128,0));
-    performance_bar.AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
+    // performance_bar.AddText({0,0,Helper::ScreenWidthPoint(8),Helper::ScreenHeightPoint(1)}, "Hello World!");
     entitys_.push_back(performance_bar);
 }
 
@@ -47,9 +47,9 @@ void Game::CreateUI() {
     auto reset = std::bind(&Game::ResetSimulation,this,std::placeholders::_1);
     entitys_.push_back(UI({Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255)));
     UI *ui = dynamic_cast<UI*>(&entitys_.back());
-    ui->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
-    ui->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
-    ui->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Steam Wood Fire",set_material);
+    // ui->AddButtonGroup({0,0,Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(1)}, {0,0,120,64},"Pause",pause);
+    // ui->AddButtonGroup({0,Helper::ScreenHeightPoint(1),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(2)}, {0,0,120,64},"Reset",reset);
+    // ui->AddButtonGroup({0,Helper::ScreenWidthPoint(2),Helper::ScreenWidthPoint(4),Helper::ScreenWidthPoint(5)}, {0,0,120,64},"Empty Rock Sand Water Steam Wood Fire",set_material);
 }
 
 bool Game::Running(){
@@ -104,46 +104,46 @@ void Game::HandleEvents(){
 void Game::Update(){
     PreUpdate();
     //check for click
-    for(int i=0;i<entitys_.size();i++){
-        if(entitys_[i].IsClicked()){
-            entitys_[i].Click();
-            break;
-        }
-    }
-    if(ui_mode_ && SDL_PointInRect(&InputManager::Instance()->mouse_position_,&ui_->rect_)){
-        SDL_ShowCursor(SDL_ENABLE);
-        if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
-    }else if(SDL_PointInRect(&InputManager::Instance()->mouse_position_, &kScreenRect)){
-        SDL_ShowCursor(SDL_DISABLE);
-        SDL_Point foo = InputManager::Instance()->mouse_position_;
-        foo.x = foo.x/camera_->object_texture_ptr_->scale_;
-        foo.y = foo.y/camera_->object_texture_ptr_->scale_;
-        if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
-            simulation_->SetCellInsideCircle(foo, draw_radius_, material_);
-        }
-        else if(InputManager::Instance()->mouse_states_[SDL_BUTTON_RIGHT] == InputManager::KeyState::DOWN) {
-            simulation_->SetCellInsideCircle(foo, draw_radius_, material_,true);
-        }
-    }
-    if(InputManager::Instance()->key_states_.contains(SDLK_TAB)  && InputManager::Instance()->key_states_[SDLK_TAB] == InputManager::KeyState::JUSTDOWN){
-        ui_mode_ = !ui_mode_;
-    }
-    if(InputManager::Instance()->key_states_.contains(SDLK_r)  && InputManager::Instance()->key_states_[SDLK_r] == InputManager::KeyState::JUSTDOWN){
-        debug_mode_ = !debug_mode_;
-    }
+    // for(int i=0;i<entitys_.size();i++){
+    //     if(entitys_[i].IsClicked()){
+    //         entitys_[i].Click();
+    //         break;
+    //     }
+    // }
+    // if(ui_mode_ && SDL_PointInRect(&InputManager::Instance()->mouse_position_,&ui_->rect_)){
+    //     SDL_ShowCursor(SDL_ENABLE);
+    //     if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN) ui_->Click();
+    // }else if(SDL_PointInRect(&InputManager::Instance()->mouse_position_, &kScreenRect)){
+    //     SDL_ShowCursor(SDL_DISABLE);
+    //     SDL_Point foo = InputManager::Instance()->mouse_position_;
+    //     foo.x = foo.x/camera_->object_texture_ptr_->scale_;
+    //     foo.y = foo.y/camera_->object_texture_ptr_->scale_;
+    //     if(InputManager::Instance()->mouse_states_[SDL_BUTTON_LEFT] == InputManager::KeyState::DOWN){
+    //         simulation_->SetCellInsideCircle(foo, draw_radius_, material_);
+    //     }
+    //     else if(InputManager::Instance()->mouse_states_[SDL_BUTTON_RIGHT] == InputManager::KeyState::DOWN) {
+    //         simulation_->SetCellInsideCircle(foo, draw_radius_, material_,true);
+    //     }
+    // }
+    // if(InputManager::Instance()->key_states_.contains(SDLK_TAB)  && InputManager::Instance()->key_states_[SDLK_TAB] == InputManager::KeyState::JUSTDOWN){
+    //     ui_mode_ = !ui_mode_;
+    // }
+    // if(InputManager::Instance()->key_states_.contains(SDLK_r)  && InputManager::Instance()->key_states_[SDLK_r] == InputManager::KeyState::JUSTDOWN){
+    //     debug_mode_ = !debug_mode_;
+    // }
 
-    if(!paused_) {
-        int pitch = (kViewportWidth) * 8;
-        SDL_LockTexture(camera_->object_texture_ptr_->texture_, nullptr, (void**) &camera_->draw_buffer_, &pitch);
-        simulation_->Update();
-        for(int i=0;i<kViewportWidth;i++){
-            for(int j=0;j<kViewportHeight;j++){
-                int foo = i + j * kViewportWidth;
-                camera_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
-            }
-        }
-        SDL_UnlockTexture(camera_->object_texture_ptr_->texture_);
-    }
+    // if(!paused_) {
+    //     int pitch = (kViewportWidth) * 8;
+    //     SDL_LockTexture(camera_->object_texture_ptr_->texture_, nullptr, (void**) &camera_->draw_buffer_, &pitch);
+    //     simulation_->Update();
+    //     for(int i=0;i<kViewportWidth;i++){
+    //         for(int j=0;j<kViewportHeight;j++){
+    //             int foo = i + j * kViewportWidth;
+    //             camera_->draw_buffer_[foo] = simulation_->buffer_ptr_->GetCellColor(i, j);
+    //         }
+    //     }
+    //     SDL_UnlockTexture(camera_->object_texture_ptr_->texture_);
+    // }
     LateUpdate();
 }
 
@@ -157,24 +157,24 @@ void  Game::LateUpdate(){
     if(count_++ == 60){
         count_ = 0;
         stream << std::fixed << std::setprecision(2) << "Current: " << (1.0f / frame_time) << " fps Avg: " << (1000 / std::max<Uint32>(tick_count_/frame_count, 1)) << " fps";
-        performance_bar_->text_.back().text_ = stream.str();
-        performance_bar_->CreateTexture();
+        // performance_bar_->text_.back().text_ = stream.str();
+        // performance_bar_->CreateTexture();
     }
 }
 
 void Game::Render(){
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
     SDL_RenderClear(renderer_);
-    camera_->Render();
-    performance_bar_->Render();
-    if(ui_mode_) ui_->Render();
-    if(debug_mode_){
-        for(int i=0;i<64;i++){
-            (*simulation_->chunks_ptr_)[i].Debug(renderer_,camera_->object_texture_ptr_->GetScale());
-        }
-    }
+    // camera_->Render();
+    // performance_bar_->Render();
+    // if(ui_mode_) ui_->Render();
+    // if(debug_mode_){
+    //     for(int i=0;i<64;i++){
+    //         (*simulation_->chunks_ptr_)[i].Debug(renderer_,camera_->object_texture_ptr_->GetScale());
+    //     }
+    // }
     SDL_SetRenderDrawColor(renderer_, kCursorColor.r, kCursorColor.g, kCursorColor.b, kCursorColor.a);
-    Graphics::DrawCircle(renderer_, &InputManager::Instance()->mouse_position_, &kScreenRect, draw_radius_*camera_->object_texture_ptr_->GetScale());
+    // Graphics::DrawCircle(renderer_, &InputManager::Instance()->mouse_position_, &kScreenRect, draw_radius_*camera_->object_texture_ptr_->GetScale());
     SDL_RenderPresent(renderer_);
 }
 

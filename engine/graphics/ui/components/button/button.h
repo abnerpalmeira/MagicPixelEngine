@@ -13,17 +13,17 @@
 #include "graphics/color.h"
 #include "graphics/ui/ui_component.h"
 
-class Button : public UIComponent{
+class Button : virtual public UIComponent{
 public:
     Button();
     Button(SDL_Rect rect,Color background_color, std::function<void()> fn);
     ~Button();
     SDL_Surface* Surface();
-    void OnClick(){}
-    void OnHover(){}
+    void OnClick();
+    void OnHover();
 protected:
     Color background_color_;
-private:
     std::function<void()> fn_;
+private:
 };
 

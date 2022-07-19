@@ -8,10 +8,10 @@
 
 class ButtonGroup : public UIComponent{
 public:
-    ButtonGroup(SDL_Rect group_rect,SDL_Rect button_rect, std::string text,std::function<void(int)> fn);
+    ButtonGroup(SDL_Rect rect_);
     ~ButtonGroup();
-    SDL_Surface* ToSurface();
-    SDL_Rect rect_;
+    SDL_Surface* Surface();
+    void AddButtons(std::vector<Button> buttons);
     void Click();
 private:
     std::vector<Button> buttons_;

@@ -16,7 +16,7 @@ Texture::Texture(SDL_Rect rect,  float scale){
     texture_ = SDL_CreateTexture(Renderer::Instance()->renderer_, kPixelFormat, SDL_TEXTUREACCESS_STREAMING, rect.w, rect.h);
 }
 
-Texture::Texture(float scale, const char *file){
+Texture::Texture(const char *file, float scale){
     // SDL_Surface* surface = IMG_Load(file);
     // texture_= SDL_CreateTextureFromSurface(renderer, surface);
     // scale_ = scale;

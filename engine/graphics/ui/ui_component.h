@@ -7,12 +7,12 @@ public:
     virtual ~UIComponent(){
         SDL_FreeSurface(surface_);
     }
-    virtual SDL_Surface* Surface(){}
+    virtual SDL_Surface* Surface(){ return nullptr; }
     virtual void OnClick(){}
     virtual void OnHover(){}
     virtual void Update(){}
-protected:
-    SDL_Rect rect_;
     SDL_Surface *surface_ = nullptr;
+    SDL_Rect rect_;
+protected:
 private:
 };

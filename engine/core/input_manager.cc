@@ -39,7 +39,7 @@ void InputManager::Handle(const SDL_Event &event){
             mouse_position_.x = event.button.x;
             mouse_position_.y = event.button.y;
         case SDL_MOUSEWHEEL:
-            mouse_wheel_ + event.wheel.y;
+            mouse_wheel_ += event.wheel.y;
         default:
             break;
     }

@@ -18,7 +18,7 @@ public:
     Button();
     Button(SDL_Rect rect,Color background_color, std::function<void()> fn);
     ~Button();
-    SDL_Surface* Surface();
+    SDL_Surface* GetUpdatedSurface();
     void OnClick();
     void OnHover();
 protected:

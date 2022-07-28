@@ -2,17 +2,22 @@
 
 Font::Font(){}
 
-Font::Font(char *font_file_path, int size){
-    TTF_Init();
-    font_ = TTF_OpenFont(font_file_path, size);
+std::string GetCurrentWorkingDir()
+{
+    std::string cwd("\0",FILENAME_MAX+1);
+    return getcwd(&cwd[0],cwd.capacity());
+}
+
+Font::Font(const char *font_file_path, int size){
+    path_ = font_file_path;
+    size_ = size;
 }
 
 Font::~Font(){
-    TTF_CloseFont(font_);
 }
 
 TTF_Font* Font::GetFont(){
-    return font_;
+    return TTF_OpenFont(path_.c_str(), size_);
 }
 
 

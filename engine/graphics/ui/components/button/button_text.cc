@@ -7,10 +7,10 @@ ButtonText::ButtonText(SDL_Rect rect,Color background_color, Color text_color, s
     color_ = text_color;
     font_ = Font(font_file_path,size);
     fn_ = fn;
-    surface_ = Surface();
+    surface_ = GetUpdatedSurface();
 }
 
-SDL_Surface* ButtonText::Surface(){
+SDL_Surface* ButtonText::GetUpdatedSurface(){
     SDL_Surface* surf = SDL_CreateRGBSurfaceWithFormat(0, rect_.w, rect_.h, 32, kPixelFormat);
     SDL_FillRect(surf, NULL, background_color_.GetSDLMap());
     SDL_Surface *temp_surf = TTF_RenderText_Solid(font_.GetFont(), text_.c_str(), color_.GetSDLColor());

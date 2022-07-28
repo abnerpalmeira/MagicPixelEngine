@@ -50,7 +50,7 @@ void Texture::Render(){
         SDL_FRect temp = {(float)rect_.x,(float)rect_.y,scale_*rect_.w,scale_*rect_.h};
         SDL_RenderCopyF(Renderer::Instance()->renderer_, texture_, nullptr, &temp);
     }
-    else SDL_RenderCopy(Renderer::Instance()->renderer_, texture_, nullptr, &rect_);
+    else SDL_RenderCopy(Renderer::Instance()->renderer_, texture_, NULL, &rect_);
 }
 
 float Texture::GetScale(){

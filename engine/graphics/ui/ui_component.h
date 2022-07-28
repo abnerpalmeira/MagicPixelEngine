@@ -7,7 +7,7 @@ public:
     virtual ~UIComponent(){
         SDL_FreeSurface(surface_);
     }
-    virtual SDL_Surface* Surface(){ return nullptr; }
+    virtual SDL_Surface* GetUpdatedSurface(){ return nullptr; }
     virtual void OnClick(){}
     virtual void OnHover(){}
     virtual void Update(){}

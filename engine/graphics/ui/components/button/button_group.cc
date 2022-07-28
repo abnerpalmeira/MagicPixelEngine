@@ -24,7 +24,7 @@ void ButtonGroup::AddButtons(std::vector<Button> buttons){
 
 ButtonGroup::~ButtonGroup(){}
 
-SDL_Surface* ButtonGroup::Surface(){
+SDL_Surface* ButtonGroup::GetUpdatedSurface(){
     SDL_Surface* surf = SDL_CreateRGBSurfaceWithFormat(0, rect_.w, rect_.h, 32, kPixelFormat);
     for(int i=0;i<buttons_.size();i++){
         Button *button = &buttons_[i];

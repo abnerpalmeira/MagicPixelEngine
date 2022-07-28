@@ -20,6 +20,7 @@
 #include "core/entity.h"
 #include "core/global.h"
 #include "core/input_manager.h"
+#include "core/renderer.h"
 #include "magicpixel/material/base/fire.h"
 #include "magicpixel/material/base/gas.h"
 #include "magicpixel/material/base/liquid.h"
@@ -31,6 +32,10 @@
 #include "magicpixel/material/custom/water.h"
 #include "magicpixel/material/custom/wood.h"
 #include "graphics/texture.h"
+#include "graphics/ui/components/button/button.h"
+#include "graphics/ui/components/button/button_group.h"
+#include "graphics/ui/components/button/button_text.h"
+#include "graphics/ui/components/text/text.h"
 #include "graphics/ui/ui.h"
 #include "graphics/graphics.h"
 #include "simulation/simulation.h"
@@ -50,14 +55,13 @@ public:
     void Pause(int x);
     void ResetSimulation(int x);
     static SDL_Renderer *renderer_;
-    std::vector<Entity> entitys_; 
+    std::vector<Entity*> entities_; 
 private:
     void CreateCamera();
     void CreateSimulation();
     void CreatePerfomanceBar();
     void CreateUI();
     void ResetVariables();
-    void InitFont();
     SDL_Event e_;
     SDL_Point last_cursor_;
     Simulation *simulation_;

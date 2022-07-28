@@ -10,7 +10,7 @@ class ButtonGroup : public UIComponent{
 public:
     ButtonGroup(SDL_Rect rect_);
     ~ButtonGroup();
-    SDL_Surface* Surface();
+    SDL_Surface* GetUpdatedSurface();
     void AddButtons(std::vector<Button> buttons);
     void Click();
 private:

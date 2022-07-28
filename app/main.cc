@@ -5,6 +5,7 @@
 #include <core/renderer.h>
 #include <core/window.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 
 
@@ -33,9 +34,11 @@ void run_game(){
 
 int main(int argc, char **argv){
     SDL_Init(SDL_INIT_EVERYTHING);
+    TTF_Init();
     InputManager::Instance();
     Window::Instance();
     SDL_SetRenderDrawBlendMode(Renderer::Instance()->renderer_, SDL_BLENDMODE_BLEND);
+    run_game();
     // SDL_DestroyWindow(window_);
     // SDL_DestroyRenderer(renderer_);
     SDL_Quit();

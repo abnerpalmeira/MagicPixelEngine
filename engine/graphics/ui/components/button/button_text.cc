@@ -1,6 +1,6 @@
 #include "button_text.h"
 
-ButtonText::ButtonText(SDL_Rect rect,Color background_color, Color text_color, std::string text, char *font_file_path, int size, std::function<void()> fn){
+ButtonText::ButtonText(SDL_Rect rect, Color background_color, Color text_color, std::string text, const char *font_file_path, int size, std::function<void()> fn){
     rect_ = rect;
     background_color_ = background_color;
     text_ = text;
@@ -8,6 +8,10 @@ ButtonText::ButtonText(SDL_Rect rect,Color background_color, Color text_color, s
     font_ = Font(font_file_path,size);
     fn_ = fn;
     surface_ = GetUpdatedSurface();
+}
+
+ButtonText::~ButtonText(){
+    
 }
 
 SDL_Surface* ButtonText::GetUpdatedSurface(){

@@ -25,6 +25,7 @@ public:
         int a = (int)(x.a_ + (y.a_ - x.a_)*t);
         return Color(r,g,b,a);
     }
+    static const Color Transparent;
     static const Color Black;
     static const Color White;
 };

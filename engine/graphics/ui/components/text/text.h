@@ -18,6 +18,7 @@ class Text : virtual public UIComponent{
 public:
     Text();
     Text(SDL_Rect rect, Color color, std::string text, const char *font_file_path, int size);
+    ~Text();
     SDL_Surface* GetUpdatedSurface();
     void SetColor(Color color);
     void SetFont(char *font_file_path, int size);

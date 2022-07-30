@@ -18,6 +18,10 @@ Button::Button(SDL_Rect rect,Color background_color, std::function<void()> fn){
     surface_ = GetUpdatedSurface();
 }
 
+Button::~Button(){
+    
+}
+
 SDL_Surface* Button::GetUpdatedSurface(){
     SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0,rect_.w,rect_.h,32,kPixelFormat);
     SDL_FillRect(surf, NULL, background_color_.GetSDLMap());

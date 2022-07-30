@@ -31,5 +31,6 @@ SDL_Color Color::GetSDLColor(){
     return {r_,g_,b_,a_};
 }
 
+const Color Color::Transparent(0,0,0,0);
 const Color Color::Black(0, 0, 0,255);
 const Color Color::White(255, 255, 255,255);

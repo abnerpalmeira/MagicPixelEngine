@@ -52,8 +52,8 @@ public:
     void Clean();
     void SetMaterial(int material);
     bool Running();
-    void Pause(int x);
-    void ResetSimulation(int x);
+    void Pause();
+    void ResetSimulation();
     static SDL_Renderer *renderer_;
     std::vector<Entity*> entities_; 
 private:

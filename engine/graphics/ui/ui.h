@@ -19,12 +19,12 @@ class UI : public Entity{
 public:
     UI(SDL_Rect rect, Color background_color = Color(128,128,128,0));
     ~UI();
-    void AddComponent(UIComponent *ui_component);
+    void AddComponent(SDL_Rect rect, UIComponent *ui_component);
     void Update();
     void Render();
     void UpdateTexture();
 private:
-    std::vector<UIComponent*> ui_components_;
+    std::vector< std::pair<SDL_Rect,UIComponent*> > ui_components_;
     Color background_color_;
     Texture *texture_ = nullptr;
     

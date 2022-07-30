@@ -12,7 +12,7 @@ Game::Game(const char *title, int x, int y, int w, int h, bool fullscreen){
     is_running_ = true;
     count_ = 0;
     // CreateSimulation();
-    // CreateUI();
+    CreateUI();
     // CreateCamera();
     CreatePerfomanceBar();
     // ResetVariables();
@@ -31,13 +31,17 @@ void Game::CreateSimulation() {
 
 void Game::CreatePerfomanceBar() {
     UI *performance_bar = new UI({Helper::ScreenWidthPoint(0),0,Helper::ScreenWidthPoint(8), Helper::ScreenHeightPoint(1)},Color(0,0,0,255));
-    Text *text = new Text({0,0,120,120}, Color::White, "Hello World!", kFontFilePath, 16);
-    performance_bar->AddComponent(text);
+    performance_bar->AddComponent({0,0,240,120},new Text({0,0,240,120}, Color::White, "Hello World!", kFontFilePath, 16));
     performance_bar->UpdateTexture();
     entities_.push_back(performance_bar);
 }
 
 void Game::CreateUI() {
+    UI *ui = new UI({Helper::ScreenWidthPoint(11),0,(int)kScreenWidth-Helper::ScreenWidthPoint(11), (int)kScreenHeight},Color(128,128,128,255));
+    ui->AddComponent({0,0,120,60},new ButtonText({0,0,120,60}, Color::Transparent, Color::White , "Pause", kFontFilePath, 16, std::bind(&Game::Pause,this)));
+    ui->AddComponent({120,0,120,60},new ButtonText({0,0,120,60}, Color::Transparent, Color::White , "Reset", kFontFilePath, 16, std::bind(&Game::ResetSimulation,this)));
+    ui->UpdateTexture();
+    entities_.push_back(ui);
     // auto set_material = std::bind(&Game::SetMaterial,this,std::placeholders::_1);
     // auto pause = std::bind(&Game::Pause,this,std::placeholders::_1);
     // auto reset = std::bind(&Game::ResetSimulation,this,std::placeholders::_1);
@@ -56,11 +60,11 @@ void Game::SetMaterial(int material){
     material_ = static_cast<MaterialType>(material);
 }
 
-void Game::Pause(int x){
+void Game::Pause(){
     paused_ = !paused_;
 }
 
-void Game::ResetSimulation(int x){
+void Game::ResetSimulation(){
     simulation_->Reset();
 }
 

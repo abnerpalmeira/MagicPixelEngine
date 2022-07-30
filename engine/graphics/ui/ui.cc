@@ -22,14 +22,14 @@ void UI::UpdateTexture(){
     SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0,rect_.w,rect_.h,32,kPixelFormat);
     SDL_FillRect(surf, NULL, background_color_.GetSDLMap());
     for(auto component: ui_components_){
-        int x = SDL_BlitSurface(component->surface_, NULL, surf, &component->rect_);
+        SDL_BlitSurface(component.second->surface_, NULL, surf, &component.first);
     }
     texture_ = new Texture(rect_, surf);
     SDL_FreeSurface(surf);
 }
 
-void UI::AddComponent(UIComponent *ui_component){
-    ui_components_.push_back(ui_component);
+void UI::AddComponent(SDL_Rect rect,UIComponent *ui_component){
+    ui_components_.push_back({rect, ui_component});
 }
 
 void UI::Update(){

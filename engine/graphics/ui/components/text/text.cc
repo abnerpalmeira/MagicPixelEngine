@@ -10,13 +10,17 @@
 Text::Text(){
 
 }
-
+            
 Text::Text(SDL_Rect rect, Color color, std::string text, const char *font_file_path, int size){
     rect_ = rect;
     text_ = text;
     color_ = color;
     font_ = Font(font_file_path,size);
     surface_ = GetUpdatedSurface();
+}
+
+Text::~Text(){
+
 }
 
 SDL_Surface* Text::GetUpdatedSurface(){

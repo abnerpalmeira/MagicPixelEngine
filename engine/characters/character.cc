@@ -27,16 +27,16 @@ Character::~Character() {
 
 void Character::PlaceCharacterPixels() {
     if (!simulation_) return;
+    //SDL_Log("Placing Character at (%d, %d)", position_.x_, position_.y_); // Log Start
     for (int i = 0; i < width_; ++i) {
         for (int j = 0; j < height_; ++j) {
             int sim_x = position_.x_ + i;
             int sim_y = position_.y_ + j;
-            // Check boundaries
             if (sim_x >= 0 && sim_x < kSimulationWidth && sim_y >= 0 && sim_y < kSimulationHeight) {
-                // Overwrite whatever is there with the character material
+                //SDL_Log("  Placing pixel at (%d, %d)", sim_x, sim_y); // Log Each Pixel
                 simulation_->buffer_ptr_->ReplacMagicPixel(character_material_, sim_x, sim_y);
-                // Optional: Customize the pixel further (e.g., color)
-                // simulation_->buffer_ptr_->buffer_[sim_x][sim_y].magic_pixel_ptr_->color_ = Color(0, 255, 0, 255); // Example: Green
+                // Optional: Customize color
+                // simulation_->buffer_ptr_->buffer_[sim_x][sim_y].magic_pixel_ptr_->color_ = Color(0, 255, 0, 255);
             }
         }
     }
@@ -44,16 +44,26 @@ void Character::PlaceCharacterPixels() {
 
 void Character::RemoveCharacterPixels() {
     if (!simulation_) return;
+    //SDL_Log("Removing Character from (%d, %d)", position_.x_, position_.y_); // Log Start
     for (int i = 0; i < width_; ++i) {
         for (int j = 0; j < height_; ++j) {
             int sim_x = position_.x_ + i;
             int sim_y = position_.y_ + j;
-            // Check boundaries and if the pixel is actually part of the character
             if (sim_x >= 0 && sim_x < kSimulationWidth && sim_y >= 0 && sim_y < kSimulationHeight) {
-                 // Only remove if it's character material (avoid erasing unrelated pixels if logic gets complex)
+                // --- Modification: Force removal for debugging trail ---
+                //SDL_Log("  Removing pixel at (%d, %d)", sim_x, sim_y); // Log Each Pixel
+                // Remove whatever is there, assuming it *should* be the character
+                simulation_->buffer_ptr_->RemoveMagicPixel(sim_x, sim_y);
+
+                /* --- Original Check (commented out for testing) ---
                  if(simulation_->buffer_ptr_->GetMaterial(sim_x, sim_y) == character_material_){
                     simulation_->buffer_ptr_->RemoveMagicPixel(sim_x, sim_y);
+                 } else {
+                    // Log if we expected character pixel but found something else (or empty)
+                    MaterialType found = simulation_->buffer_ptr_->GetMaterial(sim_x, sim_y);
+                    // SDL_Log("Warning: Expected character pixel at (%d, %d) but found %d", sim_x, sim_y, (int)found);
                  }
+                */
             }
         }
     }

@@ -34,6 +34,9 @@ set(LIBRARY_SOURCES
      "magicpixel/material/custom/steam.cc"
      "magicpixel/material/custom/water.cc"
      "magicpixel/material/custom/wood.cc"
+     "magicpixel/material/custom/oil.cc"
+     "magicpixel/material/custom/ice.cc"
+     "magicpixel/material/custom/lava.cc"
      #simulation
      "simulation/buffer.cc"
      "simulation/cell.cc"
@@ -80,6 +83,9 @@ set(LIBRARY_HEADERS
      "magicpixel/material/custom/steam.h"
      "magicpixel/material/custom/water.h"
      "magicpixel/material/custom/wood.h"
+     "magicpixel/material/custom/oil.h"
+     "magicpixel/material/custom/ice.h"
+     "magicpixel/material/custom/lava.h"
      #simulation
      "simulation/buffer.h"
      "simulation/cell.h"

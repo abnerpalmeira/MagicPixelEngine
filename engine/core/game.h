@@ -38,9 +38,11 @@
 #include "graphics/ui.h"
 #include "graphics/graphics.h"
 #include "simulation/simulation.h"
+#include "characters/character.h" // Include the character header
 
 class Game{
 public:
+    Character* player_character_; // Add a pointer to the character
     Game(const char *title, int x, int y, int w, int h, bool fullscreen);
     ~Game();
     void HandleEvents();
@@ -57,6 +59,7 @@ public:
 private:
     void Init(const char* title,int x,int y,int width,int height);
     void CreateSimulation();
+    void CreateCharacter();
     void CreateViewPort();
     void CreatePerfomanceBar();
     void CreateUI();

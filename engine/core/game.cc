@@ -12,6 +12,7 @@ Game::Game(const char *title, int x, int y, int w, int h, bool fullscreen){
     Init(title,x,y,w,h);
     InitFont();
     CreateSimulation();
+    CreateCharacter();  // Create the character
     CreateViewPort();
     ResetVariables();
     
@@ -42,6 +43,14 @@ Game::~Game(){
     ImGui_ImplSDLRenderer_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
+}
+
+void Game::CreateCharacter() {
+    // Create the character, passing the renderer and simulation
+    // Place it at a starting position (e.g., center of the simulation area)
+    int start_x = kSimulationWidth / 2 - 1; // Adjust for character width
+    int start_y = kSimulationHeight / 2 - 1; // Adjust for character height
+    player_character_ = new Character(renderer_, simulation_, start_x, start_y, 3, 3); // Example 3x3 character
 }
 
 void Game::Init(const char *title, int x, int y, int w, int h){
@@ -216,6 +225,11 @@ void Game::Update(){
     ShowDebugPanel();
     
     if(!paused_) {
+
+        if (player_character_) {
+            player_character_->Update();
+        }
+
         if(SDL_PointInRect(&cursor, &kScreenRect)){
             SDL_ShowCursor(SDL_DISABLE);
             SDL_Point foo = cursor;
@@ -255,6 +269,10 @@ void Game::Render(){
     SDL_RenderClear(renderer_);
     
     viewport_->Render();
+
+    if (player_character_ && debug_mode_) {
+        player_character_->Render(renderer_); // Pass the renderer
+    }
     
     if(debug_mode_){
         for(int i=0;i<64;i++){

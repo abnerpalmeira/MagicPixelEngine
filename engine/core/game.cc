@@ -219,6 +219,15 @@ void Game::Update(){
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     
+    // Show/hide cursor based on ImGui and simulation area
+    if (ImGui::GetIO().WantCaptureMouse) {
+        SDL_ShowCursor(SDL_ENABLE);
+    } else if (SDL_PointInRect(&cursor, &kScreenRect)) {
+        SDL_ShowCursor(SDL_DISABLE);
+    } else {
+        SDL_ShowCursor(SDL_ENABLE);
+    }
+    
     ShowMainMenuBar();
     ShowMaterialPanel();
     ShowPerformancePanel();
@@ -230,8 +239,7 @@ void Game::Update(){
             player_character_->Update();
         }
 
-        if(SDL_PointInRect(&cursor, &kScreenRect)){
-            SDL_ShowCursor(SDL_DISABLE);
+        if(!ImGui::GetIO().WantCaptureMouse && SDL_PointInRect(&cursor, &kScreenRect)){
             SDL_Point foo = cursor;
             foo.x = foo.x/viewport_->object_texture_ptr_->scale_;
             foo.y = foo.y/viewport_->object_texture_ptr_->scale_;

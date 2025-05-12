@@ -6,7 +6,6 @@ Oil::Oil() {
     dispersion_rate_ = 2;
     ignite_temperature_ = 150;
     surface_area_ = 30;
-    desinty_ = 2; // Higher density than water
 }
 
 void Oil::Update(Buffer &buffer, int x, int y) {

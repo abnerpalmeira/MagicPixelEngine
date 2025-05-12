@@ -106,7 +106,10 @@ void Game::ShowMaterialPanel() {
     
     ImGui::Separator();
     
-    const char* materials[] = { "Empty", "Rock", "Sand", "Water", "Steam", "Wood", "Fire", "Oil", "Ice", "Lava" };
+    const char* materials[] = {
+        "Empty","Rock","Sand","Water","Steam","Wood","Fire",
+        "Gas","Liquid","Solid","Static","Oil","Ice","Lava"
+    };
     for (int i = 0; i < IM_ARRAYSIZE(materials); i++) {
         if (ImGui::Selectable(materials[i], material_ == static_cast<MaterialType>(i))) {
             SetMaterial(i);

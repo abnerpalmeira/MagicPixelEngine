@@ -13,6 +13,7 @@ enum class MaterialType{
     SAND,
     WATER,
     STEAM,
+    OIL
     WOOD,
     FIRE,
     GAS,

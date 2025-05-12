@@ -41,7 +41,9 @@ set(LIBRARY_SOURCES
      "simulation/buffer.cc"
      "simulation/cell.cc"
      "simulation/chunk.cc"
-     "simulation/simulation.cc")
+     "simulation/simulation.cc"
+     #characters
+     "characters/character.cc")
 set(LIBRARY_HEADERS
      #common
      "common/geometry/vector.h"

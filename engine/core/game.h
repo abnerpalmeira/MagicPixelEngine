@@ -14,6 +14,9 @@
 #include <algorithm>
 #include <unistd.h>
 #include <SDL.h>
+#include <imgui.h>
+#include <backends/imgui_impl_sdl.h>
+#include <backends/imgui_impl_sdlrenderer.h>
 #include "common/thread/thread_pool.h"
 #include "core/game_object.h"
 #include "core/global.h"
@@ -59,6 +62,11 @@ private:
     void CreateUI();
     void ResetVariables();
     void InitFont();
+    void ShowMainMenuBar();
+    void ShowMaterialPanel();
+    void ShowPerformancePanel();
+    void ShowDebugPanel();
+    
     SDL_Event e_;
     SDL_Point last_cursor_;
     SDL_Window *window_;
@@ -75,4 +83,8 @@ private:
     bool ui_mode_ = true;
     bool debug_mode_ = false;
     bool paused_ = false;
+    bool show_material_panel_ = true;
+    bool show_performance_panel_ = true;
+    bool show_debug_panel_ = false;
+    ImVec4 clear_color_ = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 };

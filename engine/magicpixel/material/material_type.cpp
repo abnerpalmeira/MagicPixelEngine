@@ -19,7 +19,4 @@ enum class MaterialType{
     LIQUID,
     SOLID,
     STATIC,
-    OIL,
-    ICE,
-    LAVA,
 };

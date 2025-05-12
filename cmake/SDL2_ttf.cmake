@@ -1,44 +1,35 @@
 include(ExternalProject)
 
-set(SDL2_TTF_VERSION "2.0.13")
+set(SDL2_TTF_VERSION "2.0.18")
 set(SDL2_TTF_VERSION_STRING "SDL2_ttf-${SDL2_TTF_VERSION}")
 
 set(SDL2_TTF_ROOT_DIR "${EXTERNAL_DIR}/${SDL2_TTF_VERSION_STRING}")
 set(SDL2_TTF_MSVC_DIR "${SDL2_TTF_ROOT_DIR}/VisualC")
 
-# if(OS_WINDOWS)
-# 	set(CONFIGURE_COMMAND "")
-# 	set(BUILD_COMMAND
-# 		MSBuild
-# 			"${SDL2_TTF_MSVC_DIR}/SDL2_TTF.sln"
-# 			/p:PlatformToolset=v142 # Default: v100
-# 			/p:Configuration=${CMAKE_BUILD_TYPE}
-# 			/p:Platform=x64
-# 			/m)
-# 	set(BUILD_BYPRODUCTS
-# 		"${SDL2_TTF_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2_TTF2.lib"
-# 		"${SDL2_TTF_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2_TTF2main.lib")
-
-# 	install(
-# 		FILES "${SDL2_TTF_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2_TTF2.dll"
-# 		DESTINATION "${CMAKE_INSTALL_PREFIX}")
-# endif()
-
-if(OS_MACOSX)
-	set(CONFIGURE_COMMAND ./configure)
-	set(BUILD_COMMAND make
-		COMMAND install_name_tool
-			-id
-			"@executable_path/../Frameworks/libSDL2_ttf-2.0.0.dylib"
-			"${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib")
+if(OS_WINDOWS)
+	set(CONFIGURE_COMMAND "")
+	set(BUILD_COMMAND
+		MSBuild
+			"${SDL2_TTF_MSVC_DIR}/SDL2_ttf.sln"
+			/p:PlatformToolset=v142 # Default: v100
+			/p:Configuration=${CMAKE_BUILD_TYPE}
+			/p:Platform=x64
+			/m)
 	set(BUILD_BYPRODUCTS
-		"${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib")
+		"${SDL2_TTF_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2_ttf.lib")
 
 	install(
-		FILES "${SDL2_TTF_ROOT_DIR}/.libs/libSDL2_ttf-2.0.0.dylib"
-		DESTINATION "${CMAKE_INSTALL_PREFIX}/MagicPixelEngine.app/Contents/Frameworks")
+		FILES "${SDL2_TTF_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2_ttf.dll"
+		DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
 
+if(OS_MACOSX)
+	find_package(SDL2_ttf REQUIRED)
+	add_library(SDL2_TTF INTERFACE)
+	target_include_directories(SDL2_TTF INTERFACE ${SDL2_TTF_INCLUDE_DIRS})
+	target_link_libraries(SDL2_TTF INTERFACE ${SDL2_TTF_LIBRARIES})
+	return()
+endif()
 
 ExternalProject_Add(
 	SDL2_TTFExternal
@@ -56,6 +47,7 @@ ExternalProject_Add(
 
 	BUILD_BYPRODUCTS ${BUILD_BYPRODUCTS}
 )
+
 add_library(SDL2_TTF INTERFACE)
 add_dependencies(SDL2_TTF SDL2_TTFExternal)
 target_include_directories(SDL2_TTF INTERFACE "${SDL2_TTF_ROOT_DIR}")

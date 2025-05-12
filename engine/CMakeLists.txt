@@ -91,3 +91,9 @@ add_library(${LIBRARY_NAME} STATIC
     ${LIBRARY_HEADERS})
 target_link_libraries(${LIBRARY_NAME} PUBLIC SDL SDL2_TTF imgui)
 target_include_directories(${LIBRARY_NAME} PUBLIC ${ENGINE_DIR})
+
+if(APPLE)
+    target_include_directories(${LIBRARY_NAME} PUBLIC /opt/homebrew/include/SDL2)
+    target_link_directories(${LIBRARY_NAME} PUBLIC /opt/homebrew/lib)
+    target_link_libraries(${LIBRARY_NAME} PUBLIC SDL2_ttf)
+endif()

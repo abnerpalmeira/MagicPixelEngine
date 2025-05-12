@@ -25,21 +25,12 @@ if(OS_WINDOWS)
 endif()
 
 if(OS_MACOSX)
-	set(CONFIGURE_COMMAND ./configure)
-	set(BUILD_COMMAND make
-		COMMAND install_name_tool
-			-id
-			"@executable_path/../Frameworks/libSDL2-2.0.0.dylib"
-			"${SDL_ROOT_DIR}/build/.libs/libSDL2-2.0.0.dylib")
-	set(BUILD_BYPRODUCTS
-		"${SDL_ROOT_DIR}/build/.libs/libSDL2-2.0.0.dylib"
-		"${SDL_ROOT_DIR}/build/.libs/libSDL2main.a")
-
-	install(
-		FILES "${SDL_ROOT_DIR}/build/.libs/libSDL2-2.0.0.dylib"
-		DESTINATION "${CMAKE_INSTALL_PREFIX}/MagicPixelEngine.app/Contents/Frameworks")
+	find_package(SDL2 REQUIRED)
+	add_library(SDL INTERFACE)
+	target_include_directories(SDL INTERFACE ${SDL2_INCLUDE_DIRS})
+	target_link_libraries(SDL INTERFACE ${SDL2_LIBRARIES})
+	return()
 endif()
-
 
 ExternalProject_Add(
 	SDLExternal

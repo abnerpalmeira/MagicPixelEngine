@@ -20,9 +20,15 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	set(OS_WINDOWS 1)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
 	set(OS_MACOSX 1)
-	find_package(X11 REQUIRED)
-	link_libraries(${X11_LIBRARIES})
-	include_directories(${X11_INCLUDE_DIR})
+	# Add macOS-specific frameworks
+	find_library(COCOA_LIBRARY Cocoa)
+	find_library(OPENGL_LIBRARY OpenGL)
+	find_library(IOKIT_LIBRARY IOKit)
+	find_library(COREVIDEO_LIBRARY CoreVideo)
+	
+	if(NOT COCOA_LIBRARY OR NOT OPENGL_LIBRARY OR NOT IOKIT_LIBRARY OR NOT COREVIDEO_LIBRARY)
+		message(FATAL_ERROR "Required macOS frameworks not found")
+	endif()
 endif()
 
 add_subdirectory(${APP_DIR})

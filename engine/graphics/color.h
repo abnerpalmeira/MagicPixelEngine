@@ -28,4 +28,8 @@ public:
     }
     static const Color Black;
     static const Color White;
+    int GetR() const;
+    int GetG() const;
+    int GetB() const;
+    int GetA() const;
 };

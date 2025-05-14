@@ -32,5 +32,10 @@ Uint32 Color::GetSDLMap(){
     return pixel_value_;
 }
 
+int Color::GetR() const { return r_; }
+int Color::GetG() const { return g_; }
+int Color::GetB() const { return b_; }
+int Color::GetA() const { return a_; }
+
 const Color Color::Black(0, 0, 0,255);
 const Color Color::White(255, 255, 255,255);

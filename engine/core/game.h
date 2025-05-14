@@ -34,6 +34,7 @@
 #include "magicpixel/material/custom/oil.h"
 #include "magicpixel/material/custom/ice.h"
 #include "magicpixel/material/custom/lava.h"
+#include "magicpixel/material/custom/sun.h"
 #include "graphics/texture.h"
 #include "graphics/ui.h"
 #include "graphics/graphics.h"

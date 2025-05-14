@@ -37,6 +37,7 @@ set(LIBRARY_SOURCES
      "magicpixel/material/custom/oil.cc"
      "magicpixel/material/custom/ice.cc"
      "magicpixel/material/custom/lava.cc"
+     "magicpixel/material/custom/sun.cc"
      #simulation
      "simulation/buffer.cc"
      "simulation/cell.cc"
@@ -88,6 +89,7 @@ set(LIBRARY_HEADERS
      "magicpixel/material/custom/oil.h"
      "magicpixel/material/custom/ice.h"
      "magicpixel/material/custom/lava.h"
+     "magicpixel/material/custom/sun.h"
      #simulation
      "simulation/buffer.h"
      "simulation/cell.h"

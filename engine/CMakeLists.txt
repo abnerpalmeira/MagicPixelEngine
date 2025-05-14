@@ -2,6 +2,7 @@ set(LIBRARY_SOURCES
      #common
      "common/geometry/vector.cc"
      "common/thread/job.cc"
+     "common/utility/navigation.cc"
      "common/thread/thread_pool.cc"
      #core
      "core/engine.cc"

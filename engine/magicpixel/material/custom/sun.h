@@ -9,20 +9,22 @@
 
 class Sun : public MagicPixel {
 private:
-    static constexpr Uint32 MELTING_TEMPERATURE = 1000;
-    static constexpr Uint32 VAPORIZATION_TEMPERATURE = 2000;
-    static constexpr Uint32 MAX_TEMPERATURE = 5000;
-    static constexpr Uint32 DEFAULT_TTL = 1000;
-    static constexpr float HEAT_RADIUS = 5.0f;
+    static constexpr Uint32 MELTING_TEMPERATURE = 500;
+    static constexpr Uint32 VAPORIZATION_TEMPERATURE = 1000;
+    static constexpr Uint32 MAX_TEMPERATURE = 1000;
+    static constexpr float HEAT_RADIUS = 2.0f;
+    static constexpr int FLAME_HEIGHT = 3;
     
     Color original_color_;
-    static Color colors[3];  // Define colors for Sun (e.g., bright yellow, orange, red)
+    static Color colors[3];  // Fire-like colors
     static Uint32 min_temperature;
     static Uint32 max_temperature;
     static Uint32 default_ttl;
+    
     void CreateSmoke(Buffer &buffer, int x, int y, const Color &color);
     void HeatSurroundings(Buffer &buffer, int x, int y);
     void TransformMaterial(Buffer &buffer, int x, int y);
+    void CreateFlameParticle(Buffer &buffer, int x, int y, int height);
 
 public:
     Sun();

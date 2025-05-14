@@ -22,4 +22,5 @@ enum class MaterialType{
     OIL,
     ICE,
     LAVA,
+    SUN
 };

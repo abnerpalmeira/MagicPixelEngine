@@ -96,12 +96,41 @@ void Sun::TransformMaterial(Buffer &buffer, int x, int y) {
                 Color original_color = pixel->color_;
                 
                 if (pixel->temperature_ >= VAPORIZATION_TEMPERATURE) {
-                    // Vaporize the material
-                    CreateSmoke(buffer, x + offset_x, y + offset_y, original_color);
+                    // Vaporize the material and create colored gas
+                    for (int i = 0; i < 4; i++) {  // Increased from 3 to 4 particles
+                        int gas_x = x + offset_x + Random::IntOnInterval(-2, 2);  // Increased spread
+                        int gas_y = y + offset_y + Random::IntOnInterval(-2, 2);
+                        
+                        if (gas_x >= 0 && gas_x < kSimulationWidth && 
+                            gas_y >= 0 && gas_y < kSimulationHeight &&
+                            buffer.buffer_[gas_x][gas_y].Empty()) {
+                            
+                            buffer.buffer_[gas_x][gas_y].CreateMagicPixel(MaterialType::GAS);
+                            auto& gas = buffer.buffer_[gas_x][gas_y].magic_pixel_ptr_;
+                            gas->color_ = Color(original_color.GetR(), original_color.GetG(), original_color.GetB(), 200);
+                            gas->ttl_ = current_tick + Random::IntOnInterval(150, 300);  // Increased duration
+                        }
+                    }
                     buffer.RemoveMagicPixel(x + offset_x, y + offset_y);
                 }
                 else if (pixel->temperature_ >= MELTING_TEMPERATURE) {
-                    // Melt the material
+                    // Melt the material and create colored gas
+                    for (int i = 0; i < 2; i++) {
+                        int gas_x = x + offset_x + Random::IntOnInterval(-1, 1);
+                        int gas_y = y + offset_y + Random::IntOnInterval(-1, 1);
+                        
+                        if (gas_x >= 0 && gas_x < kSimulationWidth && 
+                            gas_y >= 0 && gas_y < kSimulationHeight &&
+                            buffer.buffer_[gas_x][gas_y].Empty()) {
+                            
+                            buffer.buffer_[gas_x][gas_y].CreateMagicPixel(MaterialType::GAS);
+                            auto& gas = buffer.buffer_[gas_x][gas_y].magic_pixel_ptr_;
+                            gas->color_ = Color(original_color.GetR(), original_color.GetG(), original_color.GetB(), 150);
+                            gas->ttl_ = current_tick + Random::IntOnInterval(50, 100);  // Increased duration
+                        }
+                    }
+                    
+                    // Transform the material
                     switch (pixel->material_) {
                         case MaterialType::ROCK:
                             buffer.CreateMagicPixel(MaterialType::LAVA, x + offset_x, y + offset_y);

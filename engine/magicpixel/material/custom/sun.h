@@ -9,8 +9,8 @@
 
 class Sun : public MagicPixel {
 private:
-    static constexpr Uint32 MELTING_TEMPERATURE = 500;
-    static constexpr Uint32 VAPORIZATION_TEMPERATURE = 1000;
+    static constexpr Uint32 MELTING_TEMPERATURE = 300;
+    static constexpr Uint32 VAPORIZATION_TEMPERATURE = 800;
     static constexpr Uint32 MAX_TEMPERATURE = 1000;
     static constexpr float HEAT_RADIUS = 2.0f;
     static constexpr int FLAME_HEIGHT = 3;

@@ -7,9 +7,12 @@
 
 #include "magicpixel/material/base/static.h"
 
-Static::Static(){
-    color_ = Color(128,128,128,255);
-    if(Random::CoinToss()) color_ = Color::Interpolate(color_, Color::White, Random::DoubleOnInterval(0, 0.15));
+Static::Static() {
+    color_ = Color(128, 128, 128, 255);
+    material_ = MaterialType::STATIC;
 }
 
-void Static::Update(){}
+void Static::Update(Buffer &buffer, int x, int y) {
+    // Static objects don't move or change
+    MagicPixel::Update(buffer, x, y);
+}

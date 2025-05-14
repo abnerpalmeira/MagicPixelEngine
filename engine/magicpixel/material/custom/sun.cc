@@ -8,12 +8,16 @@
 #include "magicpixel/material/custom/oil.h"
 #include "magicpixel/material/custom/ice.h"
 
+Color Sun::colors[3] = {Color(255, 255, 0, 255), Color(255, 165, 0, 255), Color(255, 0, 0, 255)};  // Bright yellow, orange, red
+Uint32 Sun::min_temperature = 250;
+Uint32 Sun::max_temperature = 5000;
+Uint32 Sun::default_ttl = 1000;
+
 Sun::Sun() {
-    color_ = Color(255, 255, 0, 255);  // Bright yellow
+    ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
     material_ = MaterialType::SUN;
-    temperature_ = MAX_TEMPERATURE;
-    ttl_ = current_tick + DEFAULT_TTL;
-    original_color_ = color_;
+    temperature_ = max_temperature;
+    color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
 }
 
 void Sun::CreateSmoke(Buffer &buffer, int x, int y, const Color &color) {
@@ -92,23 +96,31 @@ void Sun::TransformMaterial(Buffer &buffer, int x, int y) {
 }
 
 void Sun::Update(Buffer &buffer, int x, int y) {
-    // Update the sun's color based on temperature
-    float temperature_factor = static_cast<float>(temperature_) / MAX_TEMPERATURE;
-    color_ = Color(
-        static_cast<Uint8>(255 * temperature_factor),
-        static_cast<Uint8>(255 * (1.0f - temperature_factor * 0.5f)),
-        static_cast<Uint8>(255 * (1.0f - temperature_factor)),
-        255
-    );
-    
-    // Heat surrounding materials
-    HeatSurroundings(buffer, x, y);
-    
-    // Transform materials based on temperature
-    TransformMaterial(buffer, x, y);
-    
-    // Check if the sun should disappear
-    if (current_tick >= ttl_) {
-        buffer.RemoveMagicPixel(x, y);
+    temperature_ = std::min(temperature_ + 10, max_temperature);
+    for (int i = 0; i < 8; i++) {
+        int a = x + Navigation::dx[i], b = y + Navigation::dy[i];
+        if (a < 0 || b < 0 || a >= kSimulationWidth || b >= kSimulationHeight) continue;
+        if (buffer.buffer_[a][b].Empty()) {
+            int should_emit = Random::IntOnInterval(0, 10);
+            if (should_emit <= 1) {
+                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
+                buffer.buffer_[a][b].magic_pixel_ptr_->color_ = color_;
+                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 20;
+            } else if (should_emit == 3) {
+                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
+                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 100;
+            }
+        } else if (buffer.buffer_[a][b].GetMaterial() != MaterialType::SUN) {
+            buffer.buffer_[a][b].TransferHeat(temperature_);
+            if (buffer.Ignites(a, b, temperature_)) {
+                buffer.ReplacMagicPixel(MaterialType::FIRE, a, b);
+            } else {
+                buffer.ReplacMagicPixel(MaterialType::SUN, a, b);
+            }
+        }
     }
+    if (!Random::IntOnInterval(0, 3)) {
+        color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
+    }
+    buffer.buffer_[x][y].SetUpdateFlag();
 } 

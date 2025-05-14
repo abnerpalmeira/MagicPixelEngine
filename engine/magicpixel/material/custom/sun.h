@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algorithm>
-#include "common/utility/random.h"
 #include "magicpixel/magic_pixel.h"
 #include "magicpixel/material/material_type.h"
 #include "magicpixel/material/attribute/movable.h"
+#include "common/utility/navigation.h"
 #include "simulation/buffer.h"
 
 class Sun : public MagicPixel {
@@ -16,6 +16,10 @@ private:
     static constexpr float HEAT_RADIUS = 5.0f;
     
     Color original_color_;
+    static Color colors[3];  // Define colors for Sun (e.g., bright yellow, orange, red)
+    static Uint32 min_temperature;
+    static Uint32 max_temperature;
+    static Uint32 default_ttl;
     void CreateSmoke(Buffer &buffer, int x, int y, const Color &color);
     void HeatSurroundings(Buffer &buffer, int x, int y);
     void TransformMaterial(Buffer &buffer, int x, int y);

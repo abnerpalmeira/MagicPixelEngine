@@ -16,7 +16,7 @@
 class Static : public MagicPixel{
 public:
     Static();
-    void Update();
+    virtual void Update(Buffer &buffer, int x, int y) override;
 };
 
 namespace{

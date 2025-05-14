@@ -8,10 +8,11 @@
 #include "magicpixel/material/custom/oil.h"
 #include "magicpixel/material/custom/ice.h"
 
-Color Sun::colors[3] = {Color(255, 255, 0, 255), Color(255, 165, 0, 255), Color(255, 0, 0, 255)};  // Bright yellow, orange, red
+// Fire-like colors: bright yellow core, orange middle, red outer
+Color Sun::colors[3] = {Color(255, 255, 0, 255), Color(255, 165, 0, 255), Color(255, 0, 0, 255)};
 Uint32 Sun::min_temperature = 250;
-Uint32 Sun::max_temperature = 5000;
-Uint32 Sun::default_ttl = 1000;
+Uint32 Sun::max_temperature = 1000;  // Reduced from 5000
+Uint32 Sun::default_ttl = 100;  // Reduced from 1000
 
 Sun::Sun() {
     ttl_ = current_tick + default_ttl + Random::IntOnInterval(0, 20);
@@ -20,17 +21,44 @@ Sun::Sun() {
     color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
 }
 
+void Sun::CreateFlameParticle(Buffer &buffer, int x, int y, int height) {
+    if (height <= 0) return;
+    
+    // Create a flame particle that rises and fades
+    int offset_x = Random::IntOnInterval(-1, 1);
+    int offset_y = -1;  // Always move upward
+    
+    if (x + offset_x >= 0 && x + offset_x < kSimulationWidth && 
+        y + offset_y >= 0 && y + offset_y < kSimulationHeight) {
+        
+        if (buffer.buffer_[x + offset_x][y + offset_y].Empty()) {
+            buffer.buffer_[x + offset_x][y + offset_y].CreateMagicPixel(MaterialType::GAS);
+            auto& particle = buffer.buffer_[x + offset_x][y + offset_y].magic_pixel_ptr_;
+            
+            // Color fades from yellow to red as it rises
+            float height_factor = static_cast<float>(height) / FLAME_HEIGHT;
+            particle->color_ = Color::Interpolate(colors[0], colors[2], height_factor);
+            particle->ttl_ = current_tick + height * 10;  // Shorter lifetime for higher particles
+            
+            // Recursively create more particles with decreasing height
+            if (Random::IntOnInterval(0, 2) == 0) {  // 33% chance to create another particle
+                CreateFlameParticle(buffer, x + offset_x, y + offset_y, height - 1);
+            }
+        }
+    }
+}
+
 void Sun::CreateSmoke(Buffer &buffer, int x, int y, const Color &color) {
     // Create smoke particles with the color of the vaporized material
-    for (int i = 0; i < 3; i++) {
-        int offset_x = Random::IntOnInterval(-2, 2);
-        int offset_y = Random::IntOnInterval(-2, 2);
+    for (int i = 0; i < 2; i++) {  // Reduced from 3
+        int offset_x = Random::IntOnInterval(-1, 1);  // Reduced spread
+        int offset_y = Random::IntOnInterval(-1, 1);
         
         if (!buffer.IsCellEmpty(x + offset_x, y + offset_y)) {
             auto& pixel = buffer.buffer_[x + offset_x][y + offset_y].magic_pixel_ptr_;
             if (pixel->material_ == MaterialType::EMPTY) {
                 auto steam = std::make_unique<Steam>();
-                steam->color_ = Color(color.GetR(), color.GetG(), color.GetB(), 128);  // Make it semi-transparent
+                steam->color_ = Color(color.GetR(), color.GetG(), color.GetB(), 128);
                 buffer.CreateMagicPixel(MaterialType::STEAM, x + offset_x, y + offset_y);
             }
         }
@@ -38,7 +66,7 @@ void Sun::CreateSmoke(Buffer &buffer, int x, int y, const Color &color) {
 }
 
 void Sun::HeatSurroundings(Buffer &buffer, int x, int y) {
-    // Heat up surrounding materials
+    // Heat up surrounding materials with reduced radius
     for (int offset_y = -HEAT_RADIUS; offset_y <= HEAT_RADIUS; offset_y++) {
         for (int offset_x = -HEAT_RADIUS; offset_x <= HEAT_RADIUS; offset_x++) {
             if (offset_x == 0 && offset_y == 0) continue;
@@ -96,31 +124,21 @@ void Sun::TransformMaterial(Buffer &buffer, int x, int y) {
 }
 
 void Sun::Update(Buffer &buffer, int x, int y) {
-    temperature_ = std::min(temperature_ + 10, max_temperature);
-    for (int i = 0; i < 8; i++) {
-        int a = x + Navigation::dx[i], b = y + Navigation::dy[i];
-        if (a < 0 || b < 0 || a >= kSimulationWidth || b >= kSimulationHeight) continue;
-        if (buffer.buffer_[a][b].Empty()) {
-            int should_emit = Random::IntOnInterval(0, 10);
-            if (should_emit <= 1) {
-                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
-                buffer.buffer_[a][b].magic_pixel_ptr_->color_ = color_;
-                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 20;
-            } else if (should_emit == 3) {
-                buffer.buffer_[a][b].CreateMagicPixel(MaterialType::GAS);
-                buffer.buffer_[a][b].magic_pixel_ptr_->ttl_ = current_tick + 100;
-            }
-        } else if (buffer.buffer_[a][b].GetMaterial() != MaterialType::SUN) {
-            buffer.buffer_[a][b].TransferHeat(temperature_);
-            if (buffer.Ignites(a, b, temperature_)) {
-                buffer.ReplacMagicPixel(MaterialType::FIRE, a, b);
-            } else {
-                buffer.ReplacMagicPixel(MaterialType::SUN, a, b);
-            }
-        }
+    temperature_ = std::min(temperature_ + 5, max_temperature);  // Reduced temperature increase
+    
+    // Create flame particles
+    if (Random::IntOnInterval(0, 2) == 0) {  // 33% chance each update
+        CreateFlameParticle(buffer, x, y, FLAME_HEIGHT);
     }
-    if (!Random::IntOnInterval(0, 3)) {
+    
+    // Heat and transform surrounding materials
+    HeatSurroundings(buffer, x, y);
+    TransformMaterial(buffer, x, y);
+    
+    // Update color with more dynamic variation
+    if (!Random::IntOnInterval(0, 2)) {  // 33% chance to change color
         color_ = Color::Interpolate(colors[0], colors[2], Random::DoubleOnInterval(0.0, 1));
     }
+    
     buffer.buffer_[x][y].SetUpdateFlag();
 } 

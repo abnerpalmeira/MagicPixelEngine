@@ -25,3 +25,14 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 [SDL2]: https://www.libsdl.org
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf
+
+## Building a Windows executable with Docker
+
+You can cross compile the engine for Windows using the provided Dockerfile. First install Docker, then run the following commands from the project root:
+
+```bash
+docker build -t magicpixel-builder .
+docker run --rm -v $(pwd):/build magicpixel-builder
+```
+
+The resulting `.exe` can be found in `build/app/Release/` inside the container or in the mounted `build` directory.

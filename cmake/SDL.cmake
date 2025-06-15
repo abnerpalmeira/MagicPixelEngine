@@ -7,21 +7,29 @@ set(SDL_ROOT_DIR "${EXTERNAL_DIR}/${SDL_VERSION_STRING}")
 set(SDL_MSVC_DIR "${SDL_ROOT_DIR}/VisualC")
 
 if(OS_WINDOWS)
-	set(CONFIGURE_COMMAND "")
-	set(BUILD_COMMAND
-		MSBuild
-			"${SDL_MSVC_DIR}/SDL.sln"
-			/p:PlatformToolset=v142 # Default: v100
-			/p:Configuration=${CMAKE_BUILD_TYPE}
-			/p:Platform=x64
-			/m)
-	set(BUILD_BYPRODUCTS
-		"${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2.lib"
-		"${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2main.lib")
+    if(CMAKE_CROSSCOMPILING)
+        find_package(SDL2 REQUIRED)
+        add_library(SDL INTERFACE)
+        target_include_directories(SDL INTERFACE ${SDL2_INCLUDE_DIRS})
+        target_link_libraries(SDL INTERFACE ${SDL2_LIBRARIES})
+        return()
+    endif()
 
-	install(
-		FILES "${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2.dll"
-		DESTINATION "${CMAKE_INSTALL_PREFIX}")
+    set(CONFIGURE_COMMAND "")
+    set(BUILD_COMMAND
+            MSBuild
+                    "${SDL_MSVC_DIR}/SDL.sln"
+                    /p:PlatformToolset=v142 # Default: v100
+                    /p:Configuration=${CMAKE_BUILD_TYPE}
+                    /p:Platform=x64
+                    /m)
+    set(BUILD_BYPRODUCTS
+            "${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2.lib"
+            "${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2main.lib")
+
+    install(
+            FILES "${SDL_MSVC_DIR}/x64/${CMAKE_BUILD_TYPE}/SDL2.dll"
+            DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
 
 if(OS_MACOSX)

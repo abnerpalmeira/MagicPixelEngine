@@ -55,6 +55,9 @@ void Buffer::RemoveMagicPixel(int x,int y){
 }
 
 void Buffer::SwapCell(int x,int y,int a ,int b){
+    std::swap(buffer_[x][y].magic_pixel_ptr_,buffer_[a][b].magic_pixel_ptr_);
+    buffer_[x][y].update_ = true;
+    buffer_[a][b].update_ = true;
 }
 
 void Buffer::MoveCell(int x,int y,int a ,int b){

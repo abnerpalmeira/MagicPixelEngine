@@ -25,7 +25,7 @@ Engine::Engine(){
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
-    ImGui_ImplSDLRenderer2_Init(renderer_);
+    ImGui_ImplSDLRenderer_Init(renderer_);
     show_demo_window = true;
     show_another_window = true;
     clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -33,7 +33,7 @@ Engine::Engine(){
 }
 
 void Engine::Clear(){
-    ImGui_ImplSDLRenderer2_Shutdown();
+    ImGui_ImplSDLRenderer_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
@@ -73,7 +73,7 @@ void Engine::ShowAppMainMenuBar(){
 
 void Engine::Update(){
     // Start the Dear ImGui frame
-    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDLRenderer_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     
@@ -136,7 +136,7 @@ void Engine::Render(){
     ImGui::Render();
     SDL_SetRenderDrawColor(renderer_, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
     SDL_RenderClear(renderer_);
-    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
+    ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
     SDL_RenderPresent(renderer_);
 }
 

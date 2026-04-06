@@ -15,8 +15,8 @@
 #include <unistd.h>
 #include <SDL.h>
 #include <imgui.h>
-#include <backends/imgui_impl_sdl2.h>
-#include <backends/imgui_impl_sdlrenderer2.h>
+#include <backends/imgui_impl_sdl.h>
+#include <backends/imgui_impl_sdlrenderer.h>
 #include "common/thread/thread_pool.h"
 #include "core/game_object.h"
 #include "core/global.h"

@@ -8,8 +8,8 @@
 #pragma once
 
 #include <imgui.h>
-#include <backends/imgui_impl_sdl.h>
-#include <backends/imgui_impl_sdlrenderer.h>
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_sdlrenderer2.h>
 #include "editor/widgets/hierarchy.h"
 #include "editor/widgets/inspector.h"
 #include "editor/widgets/viewer.h"

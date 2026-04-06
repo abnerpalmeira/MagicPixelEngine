@@ -28,7 +28,7 @@ Game::Game(const char *title, int x, int y, int w, int h, bool fullscreen){
     
     // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
-    ImGui_ImplSDLRenderer_Init(renderer_);
+    ImGui_ImplSDLRenderer2_Init(renderer_);
 }
 
 Game::~Game(){
@@ -40,7 +40,7 @@ Game::~Game(){
     TTF_CloseFont(font);
     
     // Cleanup ImGui
-    ImGui_ImplSDLRenderer_Shutdown();
+    ImGui_ImplSDLRenderer2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 }
@@ -215,7 +215,7 @@ void Game::Update(){
     PreUpdate();
     
     // Start the Dear ImGui frame
-    ImGui_ImplSDLRenderer_NewFrame();
+    ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     
@@ -293,7 +293,7 @@ void Game::Render(){
     
     // Render ImGui
     ImGui::Render();
-    ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
     
     SDL_RenderPresent(renderer_);
 }
